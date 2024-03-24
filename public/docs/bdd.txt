@@ -1,0 +1,101 @@
+#------------------------------------------------------------
+#        Script MySQL.
+#------------------------------------------------------------
+
+
+#------------------------------------------------------------
+# Table: c_account
+#------------------------------------------------------------
+
+CREATE TABLE c_account(
+        id_account       Int  Auto_increment  NOT NULL ,
+        nickname_account Varchar (255) NOT NULL ,
+        email_account    Varchar (50) NOT NULL ,
+        password_account Varchar (255) NOT NULL
+	,CONSTRAINT c_account_PK PRIMARY KEY (id_account)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: c_user
+#------------------------------------------------------------
+
+CREATE TABLE c_user(
+        id_user       Int  Auto_increment  NOT NULL ,
+        nickname_user Varchar (50) NOT NULL ,
+        picture_user  Varchar (50) NOT NULL ,
+        question_user Varchar (255) NOT NULL ,
+        response_user Varchar (50) NOT NULL ,
+        role_user     Bool NOT NULL ,
+        id_account    Int NOT NULL
+	,CONSTRAINT c_user_PK PRIMARY KEY (id_user)
+
+	,CONSTRAINT c_user_c_account_FK FOREIGN KEY (id_account) REFERENCES c_account(id_account)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: c_gift
+#------------------------------------------------------------
+
+CREATE TABLE c_gift(
+        id_gift          Int  Auto_increment  NOT NULL ,
+        name_gift        Varchar (50) NOT NULL ,
+        description_gift Varchar (255) NOT NULL ,
+        reserved_gift    Bool NOT NULL
+	,CONSTRAINT c_gift_PK PRIMARY KEY (id_gift)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: c_category
+#------------------------------------------------------------
+
+CREATE TABLE c_category(
+        id_category   Int  Auto_increment  NOT NULL ,
+        name_category Varchar (50) NOT NULL
+	,CONSTRAINT c_category_PK PRIMARY KEY (id_category)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: c_giftcomment
+#------------------------------------------------------------
+
+CREATE TABLE c_giftcomment(
+        id_giftcomment   Int  Auto_increment  NOT NULL ,
+        text_giftcomment Text NOT NULL ,
+        id_gift          Int NOT NULL
+	,CONSTRAINT c_giftcomment_PK PRIMARY KEY (id_giftcomment)
+
+	,CONSTRAINT c_giftcomment_c_gift_FK FOREIGN KEY (id_gift) REFERENCES c_gift(id_gift)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: c_categorygift
+#------------------------------------------------------------
+
+CREATE TABLE c_categorygift(
+        id_gift     Int NOT NULL ,
+        id_category Int NOT NULL
+	,CONSTRAINT c_categorygift_PK PRIMARY KEY (id_gift,id_category)
+
+	,CONSTRAINT c_categorygift_c_gift_FK FOREIGN KEY (id_gift) REFERENCES c_gift(id_gift)
+	,CONSTRAINT c_categorygift_c_category0_FK FOREIGN KEY (id_category) REFERENCES c_category(id_category)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: c_giftlist
+#------------------------------------------------------------
+
+CREATE TABLE c_giftlist(
+        id_gift Int NOT NULL ,
+        id_user Int NOT NULL
+	,CONSTRAINT c_giftlist_PK PRIMARY KEY (id_gift,id_user)
+
+	,CONSTRAINT c_giftlist_c_gift_FK FOREIGN KEY (id_gift) REFERENCES c_gift(id_gift)
+	,CONSTRAINT c_giftlist_c_user0_FK FOREIGN KEY (id_user) REFERENCES c_user(id_user)
+)ENGINE=InnoDB;
+
