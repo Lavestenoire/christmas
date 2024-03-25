@@ -1,13 +1,10 @@
 <?php
 
+use App\Autoloader;
+use App\Core\Routeur;
 
-include '../Core/Routeur.php';
-include '../Controllers/Controller.php';
-include '../Controllers/HomeController.php';
-// include '../Controllers/UserController.php';
-/* Ici on inclie tous les controllers + on instancie le Router et on exécute à l'objet la méthode route
- */
-
+include '../Autoloader.php';
+Autoloader::register();
 $route = new Routeur();
 
 $route->routes();

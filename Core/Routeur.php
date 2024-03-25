@@ -1,6 +1,8 @@
 <?php
 
+
 namespace App\Core;
+
 // Dans la structure MVC, il n'y a qu'un seul point d'entrée. Il est représenté par un fichier, quelle que soit la page appelée. Ce fichier est le routeur qui a le rôle d'aller demander auprès du bon contrôleur, le bon chemin pour diriger l'utilisateur sur la bonne page. D'où le nom de routeur.
 
 // premier élément sollicité par l'utilisateur
@@ -13,10 +15,9 @@ class Routeur
      */
     public function routes()
     {
-        session_start();/* pour garder le nom d'utilisateur, à revoir quand je reverrai le login */
         $controller = isset($_GET['controller']) ? ucfirst($_GET['controller']) : 'home'; /* le isset($_GET['controller']) vérifie si le paramètre controller est présent dans la requete GET
         S'il est présent, il est stocké dans la propriété $controller avec une majuscule, sinon c'est home qui est stocké*/
-        $controller = $controller . 'Controller';
+        $controller = '\\App\\Controllers\\' . $controller . 'Controller';
 
         $action = isset($_GET['action']) ? $_GET['action'] : 'index';
 
