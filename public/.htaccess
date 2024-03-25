@@ -4,3 +4,4 @@ RewriteCond %{REQUEST_FILENAME} !-d
 
 
 RewriteRule ^home$ index.php?controller=home&action=index [QSA,L]
+RewriteRule ^createAccount$ index.php?controller=account&action=createAccount [QSA,L]
