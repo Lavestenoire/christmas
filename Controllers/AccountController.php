@@ -32,26 +32,45 @@ class AccountController extends Controller
         // pour gérer le formulaire, je peux utiliser la même méthode, en mettant un lien action (eéecriture d'url correspondant à la méthode) sur le formulaire qui indiquera que c'est cette méthode (dans laquelle je met ce commentaire) qui va gérer les infos du formulaire
         // il faut mettre une condition: si $_POST['valider'] -> gérer la requête et faire un header location
         // sinon, $this->render('user/login');
-        $error = [];
-        Token::tokenGenerator();
         // si formulaire validé
         if (isset($_POST['addAccount'])) {
             // si token non validé
-            if (!Token::tokenValidator()) {
-                // var_dump($_SESSION['token']);
-                $error[] = "Erreur de jeton CSRF.";
+            if (!Token::tokenValidator($_POST['token'])) {
+                $_SESSION['error_messageC'] = "Erreur de jeton CSRF.";
+                header("Location: viewLogin");
+                exit();
             }
+            if (!isset($_POST['nickname_account']) || !isset($_POST['email_account']) || !isset($_POST['password']) || !isset($_POST['confirmPassword'])) {
+                $_SESSION['error_messageC'] = "Toutes les valeurs ne sont pas soumises.";
+                header("Location: viewLogin");
+                exit();
+            }
+
             // sinon : récupérer les données du model
             else {
                 $account = new Account();
-                $nickameAccount = $this->protectedValues($_POST['nickname_account']);
+
+                $nicknameAccount = $this->protectedValues($_POST['nickname_account']);
                 $emailAccount = $this->protectedValues($_POST['email_account']);
                 $password = trim($_POST['password']);
                 $confirmPassword = trim($_POST['confirmPassword']);
+                if (!filter_var($emailAccount, FILTER_VALIDATE_EMAIL)) {
+                    $_SESSION['error_messageC'] = "L'adresse e-mail n'est pas valide.";
+                    header("Location: viewLogin");
+                    exit();
+                }
+
+
+                // if (strlen($password) < 8) {
+                //     $_SESSION['error_message'] = "Le mot de passe doit contenir au moins 8 caractères.";
+                //     header("Location: viewLogin");
+                //     exit();
+                // }
+
                 // vous ne devez pas convertir les caractères spéciaux en entités HTML pour le mot de passe, car cela pourrait modifier le mot de passe original et empêcher l'utilisateur de se connecter correctement.
                 // $password = trim($_POST['password']);
 
-                $account->setNickname_account($nickameAccount);
+                $account->setNickname_account($nicknameAccount);
                 $account->setEmail_account($emailAccount);
                 $account->setPassword_account($password);
 
@@ -62,30 +81,27 @@ class AccountController extends Controller
                     $existingAccount = $accountModel->getAccountByEmail($emailAccount);
                     // si mail existe déjà, afficher message d'erreur
                     if ($existingAccount) {
-                        $error[] = "Cet email existe déjà, merci d'en sélectionner un autre.";
+                        $_SESSION['error_messageC'] = "Cet email existe déjà, merci d'en sélectionner un autre.";
+                        header("Location: viewLogin");
                     }
                     // sinon on appelle la méthode de création de compte du model et on met le nickname en session, puis on redirige vers la maison
                     else {
                         $accountInfos = $accountModel->createAccount($account, $password);
                         $_SESSION['nicknameLogin'] = $accountInfos['nickname_account'];
-
                         header('Location: home');
                         exit();
                     }
                 } else {
-                    $error[] = "Les mots de passe ne correspondent pas.";
+                    $_SESSION['error_messageC'] = "Les mots de passe ne correspondent pas.";
+                    header("Location: viewLogin");
                 }
                 unset($_SESSION['token']);
             }
             // la méthode header attend une URL relative, ce qui est le cas puisque index.php?controller=login&action=login est bien une url, même si elle renvoie vers une méthode
             // redirige le navigateur vers une nouvelle URL, ce qui entraîne une nouvelle requête HTTP.
         } else {
-            //var_dump($_SESSION['token']);
-            $this->render('account/loginAccount');
-        }
-        // Stocker les messages d'erreur dans la session pour les afficher dans la vue
-        if (!empty($error)) {
-            $_SESSION['error_messages'] = $error;
+            $_SESSION['error_messageC'] = "L'inscription a échouée, veuillez recommencer";
+            header("Location: viewLogin");
         }
     }
 

@@ -21,6 +21,8 @@ $title = "Christmas - LogIn";
             <?php endif;
             unset($_SESSION['error_message']);
             ?>
+            <?php var_dump($_SESSION['token']) ?>
+
 
             <button type="submit" name="connectionAccount" class="btn btn-primary">Connexion</button>
         </form>
@@ -54,11 +56,16 @@ $title = "Christmas - LogIn";
             <div class="mb-3 col-4">
                 <label for="password_account" class="form-label">Vérifier le mot de passe</label>
                 <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" required>
-                <?php if (isset($error['confirm_password'])) : ?>
-                    <div class="text-danger"><?= htmlspecialchars($error['confirm_password']) ?></div>
-                <?php endif; ?>
             </div>
             <input type="hidden" name="token" value='<?= isset($_SESSION['token']) ? $_SESSION['token'] : ''; ?>'>
+            <?php
+            if (isset($_SESSION['error_messageC'])) : ?>
+                <div class="text-danger"><?= htmlspecialchars($_SESSION['error_messageC']) ?></div>
+            <?php endif;
+            unset($_SESSION['error_messageC']);
+            ?>
+            <?php var_dump($_SESSION['token']) ?>
+
             <button type="submit" name="addAccount" class="btn btn-primary">Valider</button>
         </form>
     </div>

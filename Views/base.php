@@ -33,6 +33,9 @@
                             <a class="nav-link" href="#">Page Secrète</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="#">Profile</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="#">Contact</a>
                         </li>
                         <li class="nav-item">

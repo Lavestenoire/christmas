@@ -24,6 +24,18 @@ class AccountModel extends DbConnect
             $this->request->bindValue(":password", $hashpassword);
             // Dans le modèle, la méthode createAccount() récupère les données de l'objet Account en utilisant les getters, prépare la requête d'insertion et lie les valeurs aux paramètres nommés. Enfin, elle exécute la requête pour insérer les données dans la base de données.
             $this->request->execute();
+
+            // requète utile pour la connexion une fois inscrit
+            // Récupérer l'ID du dernier compte inséré
+            $accountId = $this->connection->lastInsertId();
+
+            // Récupérer les informations du compte à partir de la base de données
+            $this->request = $this->connection->prepare("SELECT * FROM c_account WHERE id_account = :id");
+            $this->request->bindValue(":id", $accountId);
+            $this->request->execute();
+
+            // Renvoie les informations du compte sous forme de tableau associatif
+            return $this->request->fetch(PDO::FETCH_ASSOC);
         } catch (Exception $e) {
             echo "Erreur lors de la connexion à la base de données : " . $e->getMessage();
         }
