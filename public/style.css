@@ -1,0 +1,14 @@
+#connexionInscription {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+#createAccount,
+#loginAccount {
+    width: 50%;
+}
+
+.text-danger {
+    color: red;
+}
