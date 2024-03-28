@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/68ae4d1766.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
 
     <title><?= $title ?></title>
 </head>
@@ -32,12 +33,19 @@
                             <a class="nav-link" href="#">Page Secrète</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="#">Profile</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="#">Contact</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/christmas/public/createAccount">
+                            <a class="nav-link" href="/christmas/public/viewLogin">
                                 <img src="pictures/gnome1.jpg" alt="icone gnome" width="100">
                             </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/christmas/public/logoutAccount">
+                                <i class="fa-solid fa-right-from-bracket"></i> </a>
                         </li>
                     </ul>
                 </div>
