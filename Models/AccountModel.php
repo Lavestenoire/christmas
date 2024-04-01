@@ -18,7 +18,8 @@ class AccountModel extends DbConnect
         try {
             $hashpassword = password_hash($password, PASSWORD_DEFAULT);
 
-            $this->request = $this->connection->prepare("INSERT into c_account VALUES (NULL, :nickname, :email, :password)");
+            $this->request = $this->connection->prepare("INSERT INTO c_account (nickname_account, email_account, password_account) VALUES (:nickname, :email, :password)
+            ");
             $this->request->bindValue(":nickname", $account->getNickname_account());
             $this->request->bindValue(":email", $account->getEmail_account());
             $this->request->bindValue(":password", $hashpassword);
@@ -43,11 +44,15 @@ class AccountModel extends DbConnect
 
     public function getAccountByEmail($email)
     {
-        $this->request = $this->connection->prepare('SELECT * FROM c_account WHERE email_account = :email');
-        $this->request->bindValue(":email", $email);
-        $this->request->execute();
+        try {
+            $this->request = $this->connection->prepare('SELECT * FROM c_account WHERE email_account = :email');
+            $this->request->bindValue(":email", $email);
+            $this->request->execute();
 
-        return $this->request->fetch(PDO::FETCH_ASSOC);
+            return $this->request->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            echo "Erreur lors de la connexion à la base de données : " . $e->getMessage();
+        }
     }
 
 

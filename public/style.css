@@ -12,3 +12,21 @@
 .text-danger {
     color: red;
 }
+
+/* EYE BUTTON ON INPUT PASSWORD*/
+
+/* mdp = div contenant les 3 éléments (label input et div eye)< */
+.mdp {
+    position: relative;
+}
+
+/* eye = div contenant l'icone */
+.eye {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    height: 150%;
+    top: 0;
+    right: 0;
+    padding-right: 1em;
+}

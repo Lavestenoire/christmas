@@ -10,6 +10,7 @@ class User
     private $question_user;
     private $response_user;
     private $role_user;
+    private $status_user;
     private $id_account;
 
     /**
@@ -148,6 +149,26 @@ class User
     public function setId_account($id_account)
     {
         $this->id_account = $id_account;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of status_user
+     */
+    public function getStatus_user()
+    {
+        return $this->status_user;
+    }
+
+    /**
+     * Set the value of status_user
+     *
+     * @return  self
+     */
+    public function setStatus_user($status_user)
+    {
+        $this->status_user = $status_user;
 
         return $this;
     }

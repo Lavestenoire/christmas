@@ -17,29 +17,26 @@ class AccountController extends Controller
 
     public function viewLogin()
     {
-        // tokenGenerator mis là puisqu'il doit être généré avant l'affichage du formulaire
         Token::tokenGenerator();
-
         $this->render('account/loginAccount');
     }
 
     // ############################################################
-    // ####################### CREATE ACCOUNT #######################
+    // ####################### CREATE AND LOGIN ACCOUNT ###########
     // ############################################################
-    public function createAccount()
+    public function loginAccount()
     {
-        // le lien sur le menu de la base href="/christmas/public/login" va vers la page login de la vue user
-        // pour gérer le formulaire, je peux utiliser la même méthode, en mettant un lien action (eéecriture d'url correspondant à la méthode) sur le formulaire qui indiquera que c'est cette méthode (dans laquelle je met ce commentaire) qui va gérer les infos du formulaire
-        // il faut mettre une condition: si $_POST['valider'] -> gérer la requête et faire un header location
-        // sinon, $this->render('user/login');
-        // si formulaire validé
+        // Condition valisation formulaire CREATION
         if (isset($_POST['addAccount'])) {
-            // si token non validé
-            if (!Token::tokenValidator($_POST['token'])) {
+
+            // vérification TOKEN
+            if (isset($_POST['csrf_token']) && !Token::tokenValidator($_POST['csrf_token'])) {
+
                 $_SESSION['error_messageC'] = "Erreur de jeton CSRF.";
                 header("Location: viewLogin");
                 exit();
             }
+            // si une variable est définie (donc déclarée) et différente de null > message d'erreur
             if (!isset($_POST['nickname_account']) || !isset($_POST['email_account']) || !isset($_POST['password']) || !isset($_POST['confirmPassword'])) {
                 $_SESSION['error_messageC'] = "Toutes les valeurs ne sont pas soumises.";
                 header("Location: viewLogin");
@@ -60,16 +57,6 @@ class AccountController extends Controller
                     exit();
                 }
 
-
-                // if (strlen($password) < 8) {
-                //     $_SESSION['error_message'] = "Le mot de passe doit contenir au moins 8 caractères.";
-                //     header("Location: viewLogin");
-                //     exit();
-                // }
-
-                // vous ne devez pas convertir les caractères spéciaux en entités HTML pour le mot de passe, car cela pourrait modifier le mot de passe original et empêcher l'utilisateur de se connecter correctement.
-                // $password = trim($_POST['password']);
-
                 $account->setNickname_account($nicknameAccount);
                 $account->setEmail_account($emailAccount);
                 $account->setPassword_account($password);
@@ -87,7 +74,9 @@ class AccountController extends Controller
                     // sinon on appelle la méthode de création de compte du model et on met le nickname en session, puis on redirige vers la maison
                     else {
                         $accountInfos = $accountModel->createAccount($account, $password);
-                        $_SESSION['nicknameLogin'] = $accountInfos['nickname_account'];
+                        $_SESSION['idAccount'] = $accountInfos['idAccount'];
+                        var_dump($_SESSION['idAccount']);
+                        die;
                         header('Location: home');
                         exit();
                     }
@@ -95,27 +84,14 @@ class AccountController extends Controller
                     $_SESSION['error_messageC'] = "Les mots de passe ne correspondent pas.";
                     header("Location: viewLogin");
                 }
-                unset($_SESSION['token']);
             }
-            // la méthode header attend une URL relative, ce qui est le cas puisque index.php?controller=login&action=login est bien une url, même si elle renvoie vers une méthode
-            // redirige le navigateur vers une nouvelle URL, ce qui entraîne une nouvelle requête HTTP.
-        } else {
-            $_SESSION['error_messageC'] = "L'inscription a échouée, veuillez recommencer";
-            header("Location: viewLogin");
         }
-    }
-
-
-    // ############################################################
-    // ######################### LOGIN ############################
-    // ############################################################
-
-    public function loginAccount()
-    {
-
-        if (isset($_POST['connectionAccount'])) {
+        // Condition valisation formulaire CONNEXION
+        elseif (isset($_POST['connectionAccount'])) {
             // Vérification du jeton CSRF
-            if (!Token::tokenValidator($_POST['token'])) {
+            if (isset($_POST['csrf_token']) && !Token::tokenValidator($_POST['csrf_token'])) {
+                // var_dump($_POST['csrf_token']);
+                // die;
                 $_SESSION['error_message'] = "Erreur de jeton CSRF.";
                 header("Location: viewLogin");
                 exit();
@@ -127,6 +103,8 @@ class AccountController extends Controller
             // Vérification si les valeurs sont vides
             if (!$nickname || !$password) {
                 $_SESSION['error_message'] = "Merci de saisir un pseudo et un mot de passe";
+                header("Location: viewLogin");
+                exit();
             } else {
                 // Récupération des données
                 $account = new Account();
@@ -136,12 +114,15 @@ class AccountController extends Controller
                 $loginAccount = new AccountModel();
 
                 $accountInfos = $loginAccount->loginAccount($account);
+                // var_dump($accountInfos);
+                // die;
 
                 // Si les données ne sont pas nulles, cela veut dire que la requête a renvoyé une ligne de la table account et que le nickname saisi par l'utilisateur correspond à celui de la BDD
                 if ($accountInfos !== NULL) {
                     // Si le mdp inscrit est le même que dans la BDD
                     if (password_verify($password, $accountInfos['password_account'])) {
                         $_SESSION['nicknameLogin'] = $accountInfos['nickname_account'];
+                        $_SESSION['idAccount'] = $accountInfos['id_account'];
                         header("Location: home");
                     } else {
                         $_SESSION['error_message'] = "Le pseudo ou le mot de passe sont invalides";
@@ -153,7 +134,9 @@ class AccountController extends Controller
                 }
             }
         } else {
-            echo 'La connexion a échouée';
+            header("Location: viewLogin");
+            // $this->render("account/viewLogin");
+            $_SESSION['error_message'] = 'La connexion a échouée';
         }
     }
 
