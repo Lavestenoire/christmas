@@ -8,25 +8,25 @@ class Token
     const CSRF_TOKEN_KEY = 'csrf_token';
 
 
-    public static function tokenGenerator()
+    public static function tokenGenerator($formIdentifier)
     {
-        // Génère un nouveau jeton CSRF
-        $token = bin2hex(openssl_random_pseudo_bytes(32));
-        // Stocke le jeton en session
-        // $_SESSION[self::CSRF_TOKEN_KEY] = $token;
-        // pour avoir un jeton différent pour chaque formulaire:
-        $_SESSION[self::CSRF_TOKEN_KEY] = $token;
+        if (!isset($_SESSION['csrf_token'][$formIdentifier])) {
+            // Génère un nouveau jeton CSRF
+            $token = bin2hex(openssl_random_pseudo_bytes(32));
+            // Stocke le jeton en session
+            $_SESSION['csrf_token'][$formIdentifier] = $token;
+        }
 
         // Retourne le jeton généré
-        return $token;
+        return $_SESSION['csrf_token'][$formIdentifier];
     }
 
-    public static function tokenValidator($submittedToken)
+    public static function tokenValidator($submittedToken, $formIdentifier)
     {
-        // Vérifie si le jeton soumis est identique à celui stocké en session
-        if (isset($_SESSION[self::CSRF_TOKEN_KEY]) && $_SESSION[self::CSRF_TOKEN_KEY] === $submittedToken) {
+        // Vérifie si le jeton soumis est identique à celui stocké en session pour le formulaire spécifié
+        if (isset($_SESSION['csrf_token'][$formIdentifier]) && $_SESSION['csrf_token'][$formIdentifier] === $submittedToken) {
             // Le jeton est valide, on le supprime de la session pour qu'il ne puisse être réutilisé
-            unset($_SESSION[self::CSRF_TOKEN_KEY]);
+            unset($_SESSION['csrf_token'][$formIdentifier]);
 
             // Retourne vrai pour indiquer que la validation a réussi
             return true;

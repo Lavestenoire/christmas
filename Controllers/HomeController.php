@@ -12,27 +12,30 @@ class HomeController extends Controller
 {
     public function index()
     {
-        if (isset($_SESSION['idAccount'])) {
+        if (isset($_SESSION['id_Account'])) {
+            // var_dump($_SESSION['id_Account']);
             $account = new Account();
-            $account->setId_account($_SESSION['idAccount']);
+
+            $account->setId_account($_SESSION['id_Account']);
 
             $userModel = new UserModel();
-            $userAdminExists = $userModel->statusAdminExists($account);
-            // var_dump($userAdminExists);
-            // die;
-
-            if ($userAdminExists) {
+            // vérifier qu'au moins 1 account est admin
+            $userCount = $userModel->userCount($account);
+            //    var_dump($userCount);     
+            if ($userCount > 0) {
                 $showProfiles = true;
                 $showForm = false;
+                $users = $userModel->getUsersByAccountId($account);
             } else {
                 $showProfiles = false;
                 $showForm = true;
+                $users = [];
             }
             // var_dump($userAdminExists);
-
-            $this->render("home/index", ["showProfiles" => $showProfiles, "showForm" => $showForm]);
+            $this->render("home/index", ["showProfiles" => $showProfiles, "showForm" => $showForm, 'users' => $users]);
         } else {
-            $this->render("home/index");
+            $users = [];
+            $this->render("home/index", ["showProfiles" => false, "showForm" => true, 'users' => $users]);
         }
     }
 }

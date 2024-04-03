@@ -4,5 +4,10 @@ RewriteCond %{REQUEST_FILENAME} !-d
 
 RewriteRule ^home$ index.php?controller=home&action=index [QSA,L]
 RewriteRule ^loginAccount$ index.php?controller=Account&action=loginAccount [QSA,L]
+RewriteRule ^createAccount$ index.php?controller=Account&action=createAccount [QSA,L]
 RewriteRule ^logoutAccount$ index.php?controller=Account&action=logoutAccount [QSA,L]
 RewriteRule ^viewLogin$ index.php?controller=Account&action=viewLogin [QSA,L]
+
+RewriteRule ^addUser$ index.php?controller=User&action=addUser [QSA,L]
+RewriteRule ^addUserPage$ index.php?controller=User&action=addUserPage [QSA,L]
+

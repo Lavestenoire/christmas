@@ -27,6 +27,9 @@
                             <a class="nav-link active" aria-current="page" href="/christmas/public/home">Accueil</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="#">Créer un cadeau</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="#">Ma liste</a>
                         </li>
                         <li class="nav-item">
