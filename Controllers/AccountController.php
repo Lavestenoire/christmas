@@ -17,144 +17,135 @@ class AccountController extends Controller
 
     public function viewLogin()
     {
-        // tokenGenerator mis là puisqu'il doit être généré avant l'affichage du formulaire
-        Token::tokenGenerator();
-
+        // les :: sont utilisés pour appeler une méthode statique de la classe Token. Elle peut être appelée sur la classe elle-même plutôt que sur une instance de classe
+        Token::tokenGenerator('create_account');
+        Token::tokenGenerator('login_account');
         $this->render('account/loginAccount');
     }
 
     // ############################################################
-    // ####################### CREATE ACCOUNT #######################
+    // ####################### CREATE AND LOGIN ACCOUNT ###########
     // ############################################################
     public function createAccount()
     {
-        // le lien sur le menu de la base href="/christmas/public/login" va vers la page login de la vue user
-        // pour gérer le formulaire, je peux utiliser la même méthode, en mettant un lien action (eéecriture d'url correspondant à la méthode) sur le formulaire qui indiquera que c'est cette méthode (dans laquelle je met ce commentaire) qui va gérer les infos du formulaire
-        // il faut mettre une condition: si $_POST['valider'] -> gérer la requête et faire un header location
-        // sinon, $this->render('user/login');
-        // si formulaire validé
-        if (isset($_POST['addAccount'])) {
-            // si token non validé
-            if (!Token::tokenValidator($_POST['token'])) {
+        // var_dump($_SESSION['csrf_token']);
+        // die;
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // vérification TOKEN
+            if (!Token::tokenValidator($_POST['csrf_token'], 'create_account')) {
+                http_response_code(400);
                 $_SESSION['error_messageC'] = "Erreur de jeton CSRF.";
                 header("Location: viewLogin");
                 exit();
             }
+
+            $nicknameAccount = $this->protectedValues($_POST['nickname_account']);
+            $emailAccount = $this->protectedValues($_POST['email_account']);
+            $password = trim($_POST['password']);
+            $confirmPassword = trim($_POST['confirmPassword']);
+
+            // si une variable est définie (donc déclarée) et différente de null > message d'erreur
             if (!isset($_POST['nickname_account']) || !isset($_POST['email_account']) || !isset($_POST['password']) || !isset($_POST['confirmPassword'])) {
+                http_response_code(400);
                 $_SESSION['error_messageC'] = "Toutes les valeurs ne sont pas soumises.";
                 header("Location: viewLogin");
                 exit();
             }
-
-            // sinon : récupérer les données du model
-            else {
-                $account = new Account();
-
-                $nicknameAccount = $this->protectedValues($_POST['nickname_account']);
-                $emailAccount = $this->protectedValues($_POST['email_account']);
-                $password = trim($_POST['password']);
-                $confirmPassword = trim($_POST['confirmPassword']);
-                if (!filter_var($emailAccount, FILTER_VALIDATE_EMAIL)) {
-                    $_SESSION['error_messageC'] = "L'adresse e-mail n'est pas valide.";
-                    header("Location: viewLogin");
-                    exit();
-                }
-
-
-                // if (strlen($password) < 8) {
-                //     $_SESSION['error_message'] = "Le mot de passe doit contenir au moins 8 caractères.";
-                //     header("Location: viewLogin");
-                //     exit();
-                // }
-
-                // vous ne devez pas convertir les caractères spéciaux en entités HTML pour le mot de passe, car cela pourrait modifier le mot de passe original et empêcher l'utilisateur de se connecter correctement.
-                // $password = trim($_POST['password']);
-
-                $account->setNickname_account($nicknameAccount);
-                $account->setEmail_account($emailAccount);
-                $account->setPassword_account($password);
-
-                $confirmPassword = $_POST['confirmPassword'];
-                // si les deux mdp sont identiques, instancier la class accountmodel et appeler la méthode getaccountbyemail pour vérifier si l'email est déjà dans la BDD
-                if ($password == $confirmPassword) {
-                    $accountModel = new AccountModel();
-                    $existingAccount = $accountModel->getAccountByEmail($emailAccount);
-                    // si mail existe déjà, afficher message d'erreur
-                    if ($existingAccount) {
-                        $_SESSION['error_messageC'] = "Cet email existe déjà, merci d'en sélectionner un autre.";
-                        header("Location: viewLogin");
-                    }
-                    // sinon on appelle la méthode de création de compte du model et on met le nickname en session, puis on redirige vers la maison
-                    else {
-                        $accountInfos = $accountModel->createAccount($account, $password);
-                        $_SESSION['nicknameLogin'] = $accountInfos['nickname_account'];
-                        header('Location: home');
-                        exit();
-                    }
-                } else {
-                    $_SESSION['error_messageC'] = "Les mots de passe ne correspondent pas.";
-                    header("Location: viewLogin");
-                }
-                unset($_SESSION['token']);
+            if (!filter_var($emailAccount, FILTER_VALIDATE_EMAIL)) {
+                $_SESSION['error_messageC'] = "L'adresse e-mail n'est pas valide.";
+                header("Location: viewLogin");
+                exit();
             }
-            // la méthode header attend une URL relative, ce qui est le cas puisque index.php?controller=login&action=login est bien une url, même si elle renvoie vers une méthode
-            // redirige le navigateur vers une nouvelle URL, ce qui entraîne une nouvelle requête HTTP.
-        } else {
-            $_SESSION['error_messageC'] = "L'inscription a échouée, veuillez recommencer";
-            header("Location: viewLogin");
-        }
-    }
-
-
-    // ############################################################
-    // ######################### LOGIN ############################
-    // ############################################################
-
-    public function loginAccount()
-    {
-
-        if (isset($_POST['connectionAccount'])) {
-            // Vérification du jeton CSRF
-            if (!Token::tokenValidator($_POST['token'])) {
-                $_SESSION['error_message'] = "Erreur de jeton CSRF.";
+            if ($password !== $confirmPassword) {
+                http_response_code(400);
+                $_SESSION['error_messageC'] = "Les mots de passe ne correspondent pas.";
                 header("Location: viewLogin");
                 exit();
             }
 
-            $nickname = $_POST['nicknameLogin'];
+            // récupérer les données du model
+            $account = new Account();
+            $account->setNickname_account($nicknameAccount);
+            $account->setEmail_account($emailAccount);
+            $account->setPassword_account($password);
+
+
+            $accountModel = new AccountModel();
+            $existingAccount = $accountModel->getAccountByEmail($emailAccount);
+            // si mail existe déjà, afficher message d'erreur
+            if ($existingAccount) {
+                http_response_code(409);
+                $_SESSION['error_messageC'] = "Cet email existe déjà, merci d'en sélectionner un autre.";
+                header("Location: viewLogin");
+                exit();
+            }
+            // Insérer un nouvel utilisateur dans la base de données
+            $accountId = $accountModel->createAccount($account, $password);
+
+            // Récupérer les informations de l'utilisateur nouvellement inséré
+            $accountInfos = $accountModel->getAccountById($accountId);
+
+            // Stocker les informations de l'utilisateur en session
+            $_SESSION['id_account'] = $accountInfos['id_account'];
+            $_SESSION['nickname_account'] = $accountInfos['nickname_account'];
+            $_SESSION['email_account'] = $accountInfos['email_account'];
+
+            // Redirection vers la page d'accueil
+            header('Location: home');
+            exit();
+        }
+        $this->render('account/viewLogin');
+    }
+    public function loginAccount()
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // Vérification du jeton CSRF
+            if (!Token::tokenValidator($_POST['csrf_token'], 'login_account')) {
+                http_response_code(400);
+                $_SESSION['error_messageC'] = "Erreur de jeton CSRF.";
+                header("Location: viewLogin");
+                exit();
+            }
+
+            $nickname = $_POST['nickname_account'];
             $password = $_POST['loginPassword'];
 
             // Vérification si les valeurs sont vides
             if (!$nickname || !$password) {
+                http_response_code(400);
                 $_SESSION['error_message'] = "Merci de saisir un pseudo et un mot de passe";
+                header("Location: viewLogin");
+                exit();
+            }
+            // Récupération des données
+            $account = new Account();
+            $account->setNickname_account($nickname);
+            $account->setPassword_account($password);
+
+            $loginAccount = new AccountModel();
+
+            $accountInfos = $loginAccount->loginAccount($account);
+
+            if ($accountInfos !== NULL && password_verify($password, $accountInfos['password_account'])) {
+                $_SESSION['id_account'] = $accountInfos['id_account'];
+                $_SESSION['nickname_account'] = $accountInfos['nickname_account'];
+                $_SESSION['email_account'] = $accountInfos['email_account'];
+                // var_dump($_SESSION['id_account']);
+                // die;
+                header("Location: home");
+                exit();
             } else {
-                // Récupération des données
-                $account = new Account();
-                $account->setNickname_account($nickname);
-                $account->setPassword_account($password);
-
-                $loginAccount = new AccountModel();
-
-                $accountInfos = $loginAccount->loginAccount($account);
-
-                // Si les données ne sont pas nulles, cela veut dire que la requête a renvoyé une ligne de la table account et que le nickname saisi par l'utilisateur correspond à celui de la BDD
-                if ($accountInfos !== NULL) {
-                    // Si le mdp inscrit est le même que dans la BDD
-                    if (password_verify($password, $accountInfos['password_account'])) {
-                        $_SESSION['nicknameLogin'] = $accountInfos['nickname_account'];
-                        header("Location: home");
-                    } else {
-                        $_SESSION['error_message'] = "Le pseudo ou le mot de passe sont invalides";
-                        header("Location: viewLogin");
-                    }
-                } else {
-                    $_SESSION['error_message'] = "Le pseudo ou le mot de passe sont invalides";
-                    header("Location: viewLogin");
-                }
+                $_SESSION['error_message'] = "Le pseudo ou le mot de passe sont invalides";
+                header("Location: viewLogin");
+                exit();
             }
         } else {
-            echo 'La connexion a échouée';
+            header("Location: viewLogin");
+            exit();
+            // $this->render("account/viewLogin");
+            $_SESSION['error_message'] = 'La connexion a échouée';
         }
+        $this->render("account/viewLogin");
     }
 
 

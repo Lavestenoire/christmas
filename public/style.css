@@ -1,3 +1,53 @@
+.navbar {
+    background-color: #5F8670 !important;
+    padding: 1%;
+}
+
+.nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-link i {
+    font-size: 1.5em;
+    margin-bottom: 0.25em;
+}
+
+.nav-link span {
+    font-size: 0.875em;
+    text-align: center;
+}
+
+.menuIcon {
+    color: #FF9800;
+}
+
+/* #banner {
+    height: 50px;
+    width: 100%;
+    background-color: #FF9800;
+} */
+#banner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border-bottom: solid 2px black;
+    margin-bottom: 60px;
+
+}
+
+#banner i {
+    margin: 0.25em;
+    font-size: 1.5em;
+}
+
+
+.fa-socks {
+    color: #B80000;
+}
+
 #connexionInscription {
     display: flex;
     flex-direction: row;
@@ -11,4 +61,69 @@
 
 .text-danger {
     color: red;
+}
+
+/* EYE BUTTON ON INPUT PASSWORD*/
+
+/* mdp = div contenant les 3 éléments (label input et div eye)< */
+.mdp {
+    position: relative;
+}
+
+/* eye = div contenant l'icone */
+.eye {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    height: 150%;
+    top: 0;
+    right: 0;
+    padding-right: 1em;
+}
+
+.profile {
+    width: 150px;
+    height: 200px;
+    background-color: lightblue;
+    margin: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+}
+
+.profile-image {
+    width: 100%;
+    height: 70%;
+    background-color: #ccc;
+    /* Ici vous pouvez ajouter l'image de profil avec background-image */
+}
+
+.profile-name {
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+    color: #333;
+    text-decoration: none;
+    display: block;
+}
+
+.profile-name:hover {
+    color: #007bff;
+    /* Couleur du lien au survol */
+    text-decoration: underline;
+    /* Souligner le lien au survol */
+}
+
+/* bouton de déconnexion user */
+#logoutUserBtn {
+    float: right;
+}
+
+/* titre famille dans le menu */
+nav h3 {
+    width: 20em;
+    text-align: center;
+    padding: 20px;
+    color: #FF9800;
 }
