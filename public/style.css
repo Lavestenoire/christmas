@@ -1,3 +1,53 @@
+.navbar {
+    background-color: #5F8670 !important;
+    padding: 1%;
+}
+
+.nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-link i {
+    font-size: 1.5em;
+    margin-bottom: 0.25em;
+}
+
+.nav-link span {
+    font-size: 0.875em;
+    text-align: center;
+}
+
+.menuIcon {
+    color: #FF9800;
+}
+
+/* #banner {
+    height: 50px;
+    width: 100%;
+    background-color: #FF9800;
+} */
+#banner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border-bottom: solid 2px black;
+    margin-bottom: 60px;
+
+}
+
+#banner i {
+    margin: 0.25em;
+    font-size: 1.5em;
+}
+
+
+.fa-socks {
+    color: #B80000;
+}
+
 #connexionInscription {
     display: flex;
     flex-direction: row;
@@ -63,4 +113,17 @@
     /* Couleur du lien au survol */
     text-decoration: underline;
     /* Souligner le lien au survol */
+}
+
+/* bouton de déconnexion user */
+#logoutUserBtn {
+    float: right;
+}
+
+/* titre famille dans le menu */
+nav h3 {
+    width: 20em;
+    text-align: center;
+    padding: 20px;
+    color: #FF9800;
 }

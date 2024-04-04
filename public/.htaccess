@@ -8,6 +8,9 @@ RewriteRule ^createAccount$ index.php?controller=Account&action=createAccount [Q
 RewriteRule ^logoutAccount$ index.php?controller=Account&action=logoutAccount [QSA,L]
 RewriteRule ^viewLogin$ index.php?controller=Account&action=viewLogin [QSA,L]
 
-RewriteRule ^addUser$ index.php?controller=User&action=addUser [QSA,L]
-RewriteRule ^addUserPage$ index.php?controller=User&action=addUserPage [QSA,L]
+RewriteRule ^createUser$ index.php?controller=User&action=createUser [QSA,L]
+RewriteRule ^pageCreateUser$ index.php?controller=User&action=pageCreateUser [QSA,L]
+RewriteRule ^pageLoginUser$ index.php?controller=User&action=pageLoginUser [QSA,L]
+RewriteRule ^loginUser$ index.php?controller=User&action=loginUser [QSA,L]
+RewriteRule ^logoutUser$ index.php?controller=User&action=logoutUser [QSA,L]
 

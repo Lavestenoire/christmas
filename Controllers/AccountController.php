@@ -86,7 +86,7 @@ class AccountController extends Controller
             $accountInfos = $accountModel->getAccountById($accountId);
 
             // Stocker les informations de l'utilisateur en session
-            $_SESSION['id_Account'] = $accountInfos['id_account'];
+            $_SESSION['id_account'] = $accountInfos['id_account'];
             $_SESSION['nickname_account'] = $accountInfos['nickname_account'];
             $_SESSION['email_account'] = $accountInfos['email_account'];
 
@@ -127,10 +127,10 @@ class AccountController extends Controller
             $accountInfos = $loginAccount->loginAccount($account);
 
             if ($accountInfos !== NULL && password_verify($password, $accountInfos['password_account'])) {
-                $_SESSION['id_Account'] = $accountInfos['id_account'];
+                $_SESSION['id_account'] = $accountInfos['id_account'];
                 $_SESSION['nickname_account'] = $accountInfos['nickname_account'];
                 $_SESSION['email_account'] = $accountInfos['email_account'];
-                // var_dump($_SESSION['id_Account']);
+                // var_dump($_SESSION['id_account']);
                 // die;
                 header("Location: home");
                 exit();
