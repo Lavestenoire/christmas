@@ -14,3 +14,7 @@ RewriteRule ^pageLoginUser$ index.php?controller=User&action=pageLoginUser [QSA,
 RewriteRule ^loginUser$ index.php?controller=User&action=loginUser [QSA,L]
 RewriteRule ^logoutUser$ index.php?controller=User&action=logoutUser [QSA,L]
 
+RewriteRule ^pageCreateGift$ index.php?controller=Gift&action=pageCreateGift [QSA,L]
+RewriteRule ^createGift$ index.php?controller=Gift&action=createGift [QSA,L]
+RewriteRule ^pageGiftList$ index.php?controller=Gift&action=pageGiftList [QSA,L]
+

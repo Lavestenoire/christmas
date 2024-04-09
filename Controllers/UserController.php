@@ -88,6 +88,8 @@ class UserController extends Controller
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $account = new Account();
             $account->setId_account($_SESSION['id_account']);
+            // var_dump($_SESSION['id_account']);
+            // die;
 
             // $id_user = $_GET['id_user'];
             // stocker les $_POST dans des variables
@@ -112,7 +114,7 @@ class UserController extends Controller
             $userModel = new UserModel();
             // appeler la méthode du model qui gère la requete
             $userData = $userModel->loginUser($user);
-            if ($userData && $userData['nickname_user'] === $nickname_user && $userData['question_user'] === $question && $userData['response_user'] === $response) {
+            if ($userData['nickname_user'] === $nickname_user && $userData['question_user'] === $question && $userData['response_user'] === $response) {
                 $_SESSION['id_user'] = $userData['id_user'];
                 $_SESSION['nickname_user'] = $userData['nickname_user'];
                 $_SESSION['role_user'] = $userData['role_user'];
@@ -122,46 +124,52 @@ class UserController extends Controller
                 $user->setId_user($userData['id_user']);
                 $user->setStatus_user(1);
                 $userModel->updateUserStatus($account, $user);
+                // var_dump($_SESSION['status_user']);
+                // die;
                 header('Location: home');
+                exit();
             } else {
                 $_SESSION['error_message'] = "Les informations de connexion sont incorrectes.";
             }
-
-
-
             // REQUETE: SELECT id_user WHERE id_account en session?
             // update le status_user à 1
         }
         $this->render("user/loginUser");
     }
+
+
     public function logoutUser()
     {
-        // Récupérer l'ID de l'utilisateur depuis la session
-        $id_user = $_SESSION['id_user'];
+        if (isset($_SESSION['id_user']) && isset($_SESSION['id_account'])) {
+            // Récupérer l'ID de l'utilisateur depuis la session
+            $id_user = $_SESSION['id_user'];
 
-        // Instancier la classe User
-        $user = new User();
-        $user->setId_user($id_user);
-        $user->setStatus_user(0);
+            // Instancier la classe User
+            $user = new User();
+            $user->setId_user($id_user);
+            $user->setStatus_user(0);
 
-        // Instancier la classe Account
-        $account = new Account();
-        $account->setId_account($_SESSION['id_account']);
+            // Instancier la classe Account
+            $account = new Account();
+            $account->setId_account($_SESSION['id_account']);
 
-        // Instancier la classe UserModel
-        $userModel = new UserModel();
+            // Instancier la classe UserModel
+            $userModel = new UserModel();
 
-        // Mettre à jour le status_user à 0
-        $userModel->updateUserStatus($account, $user);
+            // Mettre à jour le status_user à 0
+            $userModel->updateUserStatus($account, $user);
 
-        // Supprimer les variables de session spécifiques à l'utilisateur
-        unset($_SESSION['id_user']);
-        unset($_SESSION['nickname_user']);
-        unset($_SESSION['role_user']);
-        unset($_SESSION['status_user']);
+            // Supprimer les variables de session spécifiques à l'utilisateur
+            unset($_SESSION['id_user']);
+            unset($_SESSION['nickname_user']);
+            unset($_SESSION['role_user']);
+            unset($_SESSION['status_user']);
 
-        // Rediriger vers la page de connexion
-        header('Location: home');
-        exit();
+            // Rediriger vers la page de connexion
+            header('Location: home');
+            exit();
+        } else {
+            echo "Erreur lors de la déconnexion de l'utilisateur.";
+        }
     }
 }

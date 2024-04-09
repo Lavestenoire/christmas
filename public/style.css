@@ -24,11 +24,6 @@
     color: #FF9800;
 }
 
-/* #banner {
-    height: 50px;
-    width: 100%;
-    background-color: #FF9800;
-} */
 #banner {
     display: flex;
     flex-wrap: wrap;
@@ -46,6 +41,11 @@
 
 .fa-socks {
     color: #B80000;
+}
+
+/* COUNTDOWN */
+#countDown {
+    color: black;
 }
 
 #connexionInscription {
@@ -126,4 +126,13 @@ nav h3 {
     text-align: center;
     padding: 20px;
     color: #FF9800;
+}
+
+/* FORMULAIRE CREATION GIFT */
+#giftPage {
+    display: flex;
+}
+
+.sectionGift {
+    width: 50%;
 }

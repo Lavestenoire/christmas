@@ -96,6 +96,10 @@ class AccountController extends Controller
         }
         $this->render('account/viewLogin');
     }
+
+    // ############################################################
+    // ###################### CONNEXION ###########################
+    // ############################################################
     public function loginAccount()
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -127,6 +131,11 @@ class AccountController extends Controller
             $accountInfos = $loginAccount->loginAccount($account);
 
             if ($accountInfos !== NULL && password_verify($password, $accountInfos['password_account'])) {
+                // Supprimer les informations de l'utilisateur "user" de la session
+                unset($_SESSION['id_user']);
+                unset($_SESSION['nickname_user']);
+                unset($_SESSION['email_user']);
+
                 $_SESSION['id_account'] = $accountInfos['id_account'];
                 $_SESSION['nickname_account'] = $accountInfos['nickname_account'];
                 $_SESSION['email_account'] = $accountInfos['email_account'];
@@ -149,7 +158,9 @@ class AccountController extends Controller
     }
 
 
-
+    // ############################################################
+    // ###################### DECONNEXION #########################
+    // ############################################################
 
     public function logoutAccount()
     {
@@ -159,24 +170,22 @@ class AccountController extends Controller
         header("Location: home");
     }
 
+    // ############################################################
+    // ###################### xxxxxxxxxxxxx #######################
+    // ############################################################
+    // public function isLoggedIn()
+    // {
+    //     return isset($_SESSION['username_user']);
+    // }
 
-
-
-
-
-    public function isLoggedIn()
-    {
-        return isset($_SESSION['username_user']);
-    }
-
-    public function protectRoute()
-    {
-        if (!$this->isLoggedIn()) {
-            // Redirigez l'utilisateur vers la page de connexion s'il n'est pas connecté
-            // header("Location: /quizz/app_web/public/user/login");
-            exit();
-        }
-    }
+    // public function protectRoute()
+    // {
+    //     if (!$this->isLoggedIn()) {
+    //         // Redirigez l'utilisateur vers la page de connexion s'il n'est pas connecté
+    //         // header("Location: /quizz/app_web/public/user/login");
+    //         exit();
+    //     }
+    // }
 }
 
 
