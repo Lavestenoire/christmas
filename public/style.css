@@ -136,3 +136,7 @@ nav h3 {
 .sectionGift {
     width: 50%;
 }
+
+#giftList {
+    border: solid black;
+}

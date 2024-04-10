@@ -41,13 +41,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="pageGiftList">
+                            <a class="nav-link" href="giftList">
                                 <i class="menuIcon fa-solid fa-list-ul"></i>
                                 <span class="menuEntry">Ma liste</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="secretPage">
                                 <i class="menuIcon fa-solid fa-user-secret"></i>
                                 <span class="menuText">Page Secrète</span>
                             </a>

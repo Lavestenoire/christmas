@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Entities\Gift;
 use App\Entities\Category;
+use App\Entities\CategoryGift;
 use App\Entities\User;
 use App\Entities\GiftList;
 use App\Models\GiftModel;
@@ -27,8 +28,6 @@ class giftController extends Controller
         $description_gift = $_POST['description_gift'];
         $reserved_gift = $_POST['reserved_gift'];
         $category_gift = $_POST['category_gift'];
-        // var_dump($_POST);
-        // die;
 
         $gift = new Gift();
         $gift->setName_gift($name_gift);
@@ -38,10 +37,25 @@ class giftController extends Controller
         $category = new Category();
         $category->setName_category($category_gift);
 
-
         $giftModel = new GiftModel();
         $id_gift = $giftModel->createGift($gift);
-        $giftModel->createCategory($category);
+
+        // Vérifiez si la catégorie existe déjà
+        $existing_category_id = $giftModel->getCategoryByName($category);
+        if ($existing_category_id) {
+            // La catégorie existe déjà, utilisez son ID pour lier le cadeau à cette catégorie
+            $categoryGift = new CategoryGift();
+            $categoryGift->setId_category($existing_category_id);
+            $categoryGift->setId_gift($id_gift);
+            $giftModel->addIdsToCategoryList($categoryGift);
+        } else {
+            // La catégorie n'existe pas, créez-la et liez-la au cadeau
+            $id_category = $giftModel->createCategory($category);
+            $categoryGift = new CategoryGift();
+            $categoryGift->setId_category($id_category);
+            $categoryGift->setId_gift($id_gift);
+            $giftModel->addIdsToCategoryList($categoryGift);
+        }
 
         $id_user = $_SESSION['id_user'];
 
@@ -52,16 +66,32 @@ class giftController extends Controller
         $giftList->setId_gift($id_gift);
 
         $giftModel->addIdsToGiftList($giftList, $user);
+
         header('Location: pageCreateGift?message=gift_added');
         exit();
     }
 
-    // ############################################################
-    // ###################### PAGE LISTE CADEAUX #######################
-    // ############################################################
 
-    public function pageGiftList()
+    // ############################################################
+    // ###################### LISTE CADEAUX #######################
+    // ############################################################
+    public function giftList()
     {
-        $this->render("gift/giftList");
+        $id_user = $_SESSION['id_user'];
+
+        $giftList = new GiftList();
+        $bla = $giftList->setId_user($id_user);
+
+        $giftModel = new GiftModel();
+        $list = $giftModel->giftList($giftList);
+
+
+
+        $this->render('gift/giftList', ['list' => $list]);
+    }
+
+    public function secretPage()
+    {
+        $this->render('gift/secretPage');
     }
 }

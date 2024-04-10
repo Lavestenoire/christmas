@@ -1,6 +1,7 @@
 <?php
 $title = "Christmas - Accueil";
 // var_dump($_SESSION['id_account']);
+// var_dump($_SESSION['id_user']);
 // var_dump($_SESSION['nickname_account']);
 // var_dump($_SESSION['nickname_user']);
 // var_dump($_SESSION['role_user']);

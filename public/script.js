@@ -1,3 +1,5 @@
+
+// OEIL SUR CHAMPS INPUT
 const passwordField = document.getElementById("loginPassword");
 const togglePassword = document.querySelector(".fa-eye");
 
@@ -44,3 +46,6 @@ var x = setInterval(function () {
         document.getElementById("countDown").innerHTML = "EXPIRED";
     }
 }, 1000);
+
+// AUTO COMPLETION INPUT CATEGORY
+

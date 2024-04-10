@@ -77,7 +77,6 @@ class AccountModel extends DbConnect
             $this->request->execute();
 
             $result = $this->request->fetch(PDO::FETCH_ASSOC);
-
             if ($result) {
                 if (password_verify($account->getPassword_account(), $result['password_account'])) {
                     return $result;

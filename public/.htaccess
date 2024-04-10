@@ -16,5 +16,6 @@ RewriteRule ^logoutUser$ index.php?controller=User&action=logoutUser [QSA,L]
 
 RewriteRule ^pageCreateGift$ index.php?controller=Gift&action=pageCreateGift [QSA,L]
 RewriteRule ^createGift$ index.php?controller=Gift&action=createGift [QSA,L]
-RewriteRule ^pageGiftList$ index.php?controller=Gift&action=pageGiftList [QSA,L]
+RewriteRule ^giftList$ index.php?controller=Gift&action=giftList [QSA,L]
+RewriteRule ^secretPage$ index.php?controller=Gift&action=secretPage [QSA,L]
 

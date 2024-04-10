@@ -9,7 +9,7 @@ if (isset($_GET['message']) && $_GET['message'] == 'gift_added') {
     echo '<p>Le cadeau a été ajouté avec succès !</p>';
 }
 ?>
-<?php if ($_SESSION['id_account'] && $_SESSION['id_user']) { ?>
+<?php if (isset($_SESSION['id_account']) && isset($_SESSION['id_user'])) { ?>
     <h1>Page de <?= $_SESSION['nickname_user']; ?></h1>
     <div id="giftPage">
         <section class="sectionGift">
@@ -38,6 +38,6 @@ if (isset($_GET['message']) && $_GET['message'] == 'gift_added') {
         </section>
     </div>
 <?php } else {
-    header('Location: home');
+    header('Location: loginAccount');
     exit();
 } ?>
