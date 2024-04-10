@@ -23,7 +23,7 @@ class AccountModel extends DbConnect
             $this->request->bindValue(":password", $hashpassword);
             $this->request->execute();
 
-            // Renvoyer l'ID du compte nouvellement créé
+            // Renvoyer l'ID du compte nouvellement créé. Cela permet de le mettre en session afin que l'utilisateurt soit connecté dès qu'il est inscrit. Sinon il serait inscrit, mais devrait se connecter ensuite
             return $this->connection->lastInsertId();
         } catch (Exception $e) {
             // Gérer l'exception de manière appropriée
@@ -77,7 +77,6 @@ class AccountModel extends DbConnect
             $this->request->execute();
 
             $result = $this->request->fetch(PDO::FETCH_ASSOC);
-
             if ($result) {
                 if (password_verify($account->getPassword_account(), $result['password_account'])) {
                     return $result;

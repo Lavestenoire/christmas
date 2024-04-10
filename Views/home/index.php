@@ -1,18 +1,17 @@
 <?php
 $title = "Christmas - Accueil";
 // var_dump($_SESSION['id_account']);
+// var_dump($_SESSION['id_user']);
 // var_dump($_SESSION['nickname_account']);
 // var_dump($_SESSION['nickname_user']);
 // var_dump($_SESSION['role_user']);
 // var_dump($_SESSION['status_user']);
-
-
-
 /* Le $title est situé au niveau du title de la base */
 ?>
 
 <?php
 if (isset($_SESSION['id_account'])) {
+    // s'il n'y a pas de profil créé
     if (isset($showForm) && $showForm) {
 ?>
         <!-- ##########################################################################
@@ -39,27 +38,29 @@ if (isset($_SESSION['id_account'])) {
             <input type="hidden" name="status_user" value="0">
             <button type="submit" name="addAUser" class="btn btn-primary">Ajouter ce profil</button>
         </form>
-    <?php }
-
-    // ######################################################
-    // si au moins 1 user existe, affichage de son nickname
-    // ######################################################
-    else if ($showProfiles) { ?>
-        <div id="logoutUserBtn"><a href="logoutUser"><button>Déco User</button></a></div>
-        <?php if (isset($_SESSION['nickname_user'])) { ?>
-            <h3>Bienvenue à toi young padawan <?= $_SESSION['nickname_user']; ?></h3>
-        <?php } ?>
-
-        <?php foreach ($users as $user) { ?>
-            <div class="profile">
-                <a href="/christmas/public/pageLoginUser?id_user=<?= $user->getId_user() ?>">
-                    <div class="profile-image"></div>
-                    <div class="profile-name"><?= $user->getNickname_user() ?></div>
-                </a>
-            </div>
-        <?php  } ?>
-        <a href="pageCreateUser"><button>Ajouter un profil</button></a>
+        <?php }
+    // si au moins un profil créé
+    else if (isset($showProfiles) && $showProfiles) {
+        // si un profil est connecté
+        if (isset($_SESSION['id_user'])) { ?>
+            <h1>Bienvenue à toi, petit lutin <?= $_SESSION['nickname_user'] ?></h1>
+            <div id="logoutUserBtn"><a href="logoutUser"><button>Déco User</button></a></div>
+            <?php }
+        //sinon affichage des profils existant 
+        else {
+            foreach ($users as $user) { ?>
+                <div class="profile">
+                    <a href="/christmas/public/pageLoginUser?id_user=<?= $user->getId_user() ?>">
+                        <div class="profile-image"></div>
+                        <div class="profile-name"><?= $user->getNickname_user() ?></div>
+                    </a>
+                </div>
+            <?php } ?>
+            <a href="pageCreateUser"><button>Ajouter un profil</button></a>
+        <?php }
+    } else { ?>
+        <h1>Accueil pas de connexion user</h1>
     <?php }
 } else { ?>
-    <h1>Accueil</h1>
+    <h1>Accueil - pas de connexion account, pas de connexion user</h1>
 <?php } ?>

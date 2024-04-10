@@ -13,10 +13,12 @@
 
 <body>
     <header>
+        <p id="countDown"></p>
         <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary">
             <a class="navbar-brand" href="/christmas/public/home"> <!-- le lien href de home: home = réecriture d'URL = controller et action donc render -->
                 <img src="pictures/logoChristmas1.png" alt="Logo" width="100"> <!-- Remplacez "logo.png" par le chemin de votre logo -->
             </a>
+
             <?php if (isset($_SESSION['nickname_account'])) { ?>
                 <h3>Famille <?= $_SESSION['nickname_account']; ?></h3>
             <?php } ?>
@@ -33,19 +35,19 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="pageCreateGift">
                                 <i class="menuIcon fa-solid fa-gift menuEntry"></i>
                                 <span class="menuText">Créer un cadeau</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="giftList">
                                 <i class="menuIcon fa-solid fa-list-ul"></i>
                                 <span class="menuEntry">Ma liste</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="secretPage">
                                 <i class="menuIcon fa-solid fa-user-secret"></i>
                                 <span class="menuText">Page Secrète</span>
                             </a>
@@ -78,10 +80,8 @@
                 </div>
             </div>
         </nav>
-        <!-- GERER LA LONGUEUR DE LA BANDEROLE EN JS -->
-        <div id="banner">
-            <i class="fa-solid fa-socks"></i>
-        </div>
+
+
     </header>
     <div class="container">
         <main><?= $content ?></main>
