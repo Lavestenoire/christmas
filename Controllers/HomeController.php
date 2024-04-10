@@ -13,7 +13,7 @@ class HomeController extends Controller
     public function index()
     {
         if (isset($_SESSION['id_account'])) {
-            // var_dump($_SESSION['id_account']);
+
             $account = new Account();
 
             $account->setId_account($_SESSION['id_account']);

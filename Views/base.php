@@ -14,9 +14,9 @@
 <body>
     <header>
         <p id="countDown"></p>
-        <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary">
+        <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary container-fluid">
             <a class="navbar-brand" href="/christmas/public/home"> <!-- le lien href de home: home = réecriture d'URL = controller et action donc render -->
-                <img src="pictures/logoChristmas1.png" alt="Logo" width="100"> <!-- Remplacez "logo.png" par le chemin de votre logo -->
+                <img src="pictures/logoChristmas1.png" alt="Logo" width="100">
             </a>
 
             <?php if (isset($_SESSION['nickname_account'])) { ?>

@@ -1,3 +1,20 @@
+.container {
+    max-width: 1280px;
+}
+
+li {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* 
+############################################################
+                           NAVBAR
+############################################################ 
+*/
 .navbar {
     background-color: #5F8670 !important;
     padding: 1%;
@@ -24,26 +41,13 @@
     color: #FF9800;
 }
 
-#banner {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    border-bottom: solid 2px black;
-    margin-bottom: 60px;
-
-}
-
-#banner i {
-    margin: 0.25em;
-    font-size: 1.5em;
-}
 
 
-.fa-socks {
-    color: #B80000;
-}
-
-/* COUNTDOWN */
+/* 
+############################################################
+                           COUNTDOWN
+############################################################ 
+*/
 #countDown {
     color: black;
 }
@@ -63,7 +67,11 @@
     color: red;
 }
 
-/* EYE BUTTON ON INPUT PASSWORD*/
+/* 
+############################################################
+             EYE BUTTON ON INPUT PASSWORD
+############################################################ 
+*/
 
 /* mdp = div contenant les 3 éléments (label input et div eye)< */
 .mdp {
@@ -81,6 +89,11 @@
     padding-right: 1em;
 }
 
+/* 
+############################################################
+                      PROFIL ACCUEIL
+############################################################ 
+*/
 .profile {
     width: 150px;
     height: 200px;
@@ -95,7 +108,7 @@
 .profile-image {
     width: 100%;
     height: 70%;
-    background-color: #ccc;
+    background-color: #bc4f69;
     /* Ici vous pouvez ajouter l'image de profil avec background-image */
 }
 
@@ -137,6 +150,81 @@ nav h3 {
     width: 50%;
 }
 
-#giftList {
-    border: solid black;
+
+
+/* LISTE */
+#containerList {
+    display: flex;
+    flex-direction: row;
+    background-color: #b7d3c3;
+}
+
+.list {
+    width: 30%;
+    border: solid black 1px;
+    border-top-left-radius: 37px 140px;
+    border-top-right-radius: 23px 130px;
+    border-bottom-left-radius: 110px 19px;
+    border-bottom-right-radius: 120px 24px;
+    margin: 1em;
+    padding: 1em;
+
+}
+
+.listTitle {
+    text-align: center;
+}
+
+.liAndInputList {
+    display: flex;
+    flex-direction: row;
+}
+
+.fa-candy-cane {
+    color: red;
+}
+
+.candy {
+    text-align: center;
+}
+
+/* BOUTON */
+.button-paper {
+    align-self: center;
+    background-color: #fff;
+    background-image: none;
+    background-position: 0 90%;
+    background-repeat: repeat no-repeat;
+    background-size: 4px 3px;
+    border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+    border-style: solid;
+    border-width: 2px;
+    box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+    box-sizing: border-box;
+    color: #41403e;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Neucha, sans-serif;
+    font-size: 1rem;
+    line-height: 23px;
+    outline: none;
+    padding: .75rem;
+    text-decoration: none;
+    transition: all 235ms ease-in-out;
+    border-bottom-left-radius: 15px 255px;
+    border-bottom-right-radius: 225px 15px;
+    border-top-left-radius: 255px 15px;
+    border-top-right-radius: 15px 225px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.button-paper:hover {
+    box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
+    transform: translate3d(0, 2px, 0);
+}
+
+.button-paper:focus {
+    box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
 }

@@ -8,6 +8,7 @@ use App\Entities\CategoryGift;
 use App\Entities\User;
 use App\Entities\GiftList;
 use App\Models\GiftModel;
+use App\Models\UserModel;
 
 class giftController extends Controller
 {
@@ -80,18 +81,32 @@ class giftController extends Controller
         $id_user = $_SESSION['id_user'];
 
         $giftList = new GiftList();
-        $bla = $giftList->setId_user($id_user);
+        $giftList->setId_user($id_user);
 
         $giftModel = new GiftModel();
         $list = $giftModel->giftList($giftList);
-
-
 
         $this->render('gift/giftList', ['list' => $list]);
     }
 
     public function secretPage()
     {
-        $this->render('gift/secretPage');
+        $user = new User();
+        $user->setStatus_user(0);
+
+        $userModel = new UserModel();
+        $getUserByStatus = $userModel->getUserByStatus($user);
+        // var_dump($getUserByStatus);
+
+        $giftLists = [];
+        foreach ($getUserByStatus as $value) {
+            $giftModel = new GiftModel();
+            $user->setId_user($value['id_user']);
+            $giftList = $giftModel->listByStatusZero($user);
+            $giftLists[$value['nickname_user']] = $giftList;
+        }
+        // var_dump($giftLists);
+
+        $this->render('gift/secretPage', ['giftLists' => $giftLists]);
     }
 }

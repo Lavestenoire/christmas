@@ -143,6 +143,22 @@ class UserModel extends DbConnect
     }
 
     // ########################################
+    //       SELECT USERS PAR STATUS
+    // pour afficher la liste de chaque utilisateur non connecté
+    // ########################################
+    public function getUserByStatus(User $user)
+    {
+        $this->request = $this->connection->prepare("SELECT * FROM c_user WHERE c_user.status_user = :status_user");
+        $this->request->bindValue(':status_user', $user->getStatus_user());
+        $this->request->execute();
+        $userByStatus = $this->request->fetchAll(PDO::FETCH_ASSOC);
+        // echo '<pre>';
+        // var_dump($userByStatus);
+        // echo '</pre>';
+        return $userByStatus;
+    }
+
+    // ########################################
     //      UPDATE STATUS USER SI CONNECTÉ
     // ########################################
     public function updateUserStatus(Account $account, User $user)

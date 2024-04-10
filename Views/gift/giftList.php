@@ -5,15 +5,18 @@ $title = "Christmas - Ma liste";
 ?>
 
 <h1>Ma liste de cadeaux</h1>
-<?php if (isset($_SESSION['id_account']) && isset($_SESSION['id_user'])) {
-    foreach ($list as $gift) { ?>
-        <div id='giftList'>
-            <p><?= $gift['name_gift']; ?></p>
-            <p><?= $gift['description_gift']; ?></p>
-            <p><?= $gift['name_category']; ?></p>
-        </div>
-<?php }
-} else {
+<?php if (isset($_SESSION['id_account']) && isset($_SESSION['id_user'])) { ?>
+    <div class="list">
+        <?php foreach ($list as $gift) { ?>
+            <ul id='giftList'>
+                <li><?= $gift['name_gift']; ?></li>
+                <li><?= $gift['description_gift']; ?></li>
+                <li><?= $gift['name_category']; ?></li>
+            </ul>
+            <div class="candy"><i class="fa-solid fa-candy-cane"></i></div>
+        <?php } ?>
+    </div>
+<?php } else {
     header('Location: loginAccount');
     exit();
 } ?>

@@ -19,14 +19,15 @@ $title = "Christmas - LogIn";
 
             <?php
 
-            var_dump($_SESSION['csrf_token']['create_account']);
+            // var_dump($_SESSION['csrf_token']['create_account']);
 
             if (isset($_SESSION['error_message'])) : ?>
                 <span class="text-danger"><?= ($_SESSION['error_message']) ?></span>
             <?php endif;
             unset($_SESSION['error_message']);
             ?>
-            <button type="submit" name="connectionAccount" class="btn btn-primary">Connexion</button>
+            <button type="submit" name="connectionAccount" class="button-paper" role="button">Connexion</button>
+
         </form>
     </div>
 
@@ -67,9 +68,10 @@ $title = "Christmas - LogIn";
                 <div class="text-danger"><?= ($_SESSION['error_messageC']) ?></div>
             <?php endif;
             unset($_SESSION['error_messageC']);
-            var_dump($_SESSION['csrf_token']['login_account']);
+            // var_dump($_SESSION['csrf_token']['login_account']);
             ?>
-            <button type="submit" name="createAccount" class="btn btn-primary">Valider</button>
+            <button type="submit" name="createAccount" class="button-paper" role="button">Valider</button>
+
         </form>
     </div>
 </section>

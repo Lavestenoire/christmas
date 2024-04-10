@@ -36,7 +36,8 @@ if (isset($_SESSION['id_account'])) {
             <!-- champs caché pour insérer le rôle admin (1) par défaut -->
             <input type="hidden" name="role_user" value="1">
             <input type="hidden" name="status_user" value="0">
-            <button type="submit" name="addAUser" class="btn btn-primary">Ajouter ce profil</button>
+            <button type="submit" name="addAUser" class="button-paper" role="button">Ajouter ce profil</button>
+
         </form>
         <?php }
     // si au moins un profil créé
@@ -44,7 +45,9 @@ if (isset($_SESSION['id_account'])) {
         // si un profil est connecté
         if (isset($_SESSION['id_user'])) { ?>
             <h1>Bienvenue à toi, petit lutin <?= $_SESSION['nickname_user'] ?></h1>
-            <div id="logoutUserBtn"><a href="logoutUser"><button>Déco User</button></a></div>
+            <div id="logoutUserBtn"><a href="logoutUser"><button type="submit" name="addAUser" class="button-paper" role="button">Déco User</button></a></div>
+
+
             <?php }
         //sinon affichage des profils existant 
         else {
@@ -56,7 +59,8 @@ if (isset($_SESSION['id_account'])) {
                     </a>
                 </div>
             <?php } ?>
-            <a href="pageCreateUser"><button>Ajouter un profil</button></a>
+            <a href="pageCreateUser"><button class="button-paper" role="button">Ajouter un profil</button>
+            </a>
         <?php }
     } else { ?>
         <h1>Accueil pas de connexion user</h1>
