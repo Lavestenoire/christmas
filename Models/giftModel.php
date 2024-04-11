@@ -130,7 +130,7 @@ class GiftModel extends DbConnect
     }
 
     // ############################################################
-    //                   LISTE CADEAUX STATUS 0
+    // LISTE CADEAUX STATUS 0
     // ############################################################
     public function listByStatusZero(User $user)
     {

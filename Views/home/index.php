@@ -46,12 +46,11 @@ if (isset($_SESSION['id_account'])) {
         if (isset($_SESSION['id_user'])) { ?>
             <h1>Bienvenue à toi, petit lutin <?= $_SESSION['nickname_user'] ?></h1>
             <div id="logoutUserBtn"><a href="logoutUser"><button type="submit" name="addAUser" class="button-paper" role="button">Déco User</button></a></div>
-
-
-            <?php }
+        <?php }
         //sinon affichage des profils existant 
-        else {
-            foreach ($users as $user) { ?>
+        else { ?>
+            <h3>Connecte toi afin de gérer tes listes</h3>
+            <?php foreach ($users as $user) { ?>
                 <div class="profile">
                     <a href="/christmas/public/pageLoginUser?id_user=<?= $user->getId_user() ?>">
                         <div class="profile-image"></div>
@@ -61,10 +60,8 @@ if (isset($_SESSION['id_account'])) {
             <?php } ?>
             <a href="pageCreateUser"><button class="button-paper" role="button">Ajouter un profil</button>
             </a>
-        <?php }
-    } else { ?>
-        <h1>Accueil pas de connexion user</h1>
     <?php }
+    }
 } else { ?>
     <h1>Accueil - pas de connexion account, pas de connexion user</h1>
 <?php } ?>

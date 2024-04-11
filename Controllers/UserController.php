@@ -132,7 +132,9 @@ class UserController extends Controller
         $this->render("user/loginUser");
     }
 
-
+    // ########################################
+    //             DECONNEXION USER
+    // ########################################
     public function logoutUser()
     {
         if (isset($_SESSION['id_user']) && isset($_SESSION['id_account'])) {
@@ -166,5 +168,13 @@ class UserController extends Controller
         } else {
             echo "Erreur lors de la déconnexion de l'utilisateur.";
         }
+    }
+
+    // ########################################
+    //             PROFILE USER
+    // ########################################
+    public function profileUser()
+    {
+        $this->render('user/profileUser');
     }
 }

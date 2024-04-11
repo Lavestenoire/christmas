@@ -31,7 +31,6 @@ if (isset($_GET['message']) && $_GET['message'] == 'gift_added') {
                 <input type="hidden" name="reserved_gift" value="0">
 
                 <button type="submit" name="addGift" class="button-paper" role="button">Ajouter ce cadeau à ma liste</button>
-
             </form>
         </section>
         <section class="sectionGift">
@@ -39,7 +38,7 @@ if (isset($_GET['message']) && $_GET['message'] == 'gift_added') {
         </section>
     </div>
 <?php } else if (!isset($_SESSION['id_user'])) {
-    header('Location: pageLoginUser');
+    header('Location: home');
 } else {
     header('Location: loginAccount');
     exit();

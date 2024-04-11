@@ -1,3 +1,7 @@
+body {
+    background-color: #dae3ef;
+}
+
 .container {
     max-width: 1280px;
 }
@@ -8,6 +12,7 @@ li {
 
 a {
     text-decoration: none;
+    color: black;
 }
 
 /* 
@@ -16,7 +21,7 @@ a {
 ############################################################ 
 */
 .navbar {
-    background-color: #5F8670 !important;
+    background-color: #dae3ef !important;
     padding: 1%;
 }
 
@@ -38,9 +43,22 @@ a {
 }
 
 .menuIcon {
-    color: #FF9800;
+    color: #113640;
 }
 
+/* titre famille dans le menu */
+nav h3 {
+    width: 20em;
+    text-align: center;
+    padding: 20px;
+    color: #113640;
+}
+
+/* 
+############################################################
+                         BANNER
+############################################################ 
+*/
 
 
 /* 
@@ -63,6 +81,11 @@ a {
     width: 50%;
 }
 
+/* 
+############################################################
+             MESSAGE D'ERREUR
+############################################################ 
+*/
 .text-danger {
     color: red;
 }
@@ -122,23 +145,12 @@ a {
 }
 
 .profile-name:hover {
-    color: #007bff;
-    /* Couleur du lien au survol */
-    text-decoration: underline;
-    /* Souligner le lien au survol */
+    color: pink;
 }
 
 /* bouton de déconnexion user */
 #logoutUserBtn {
     float: right;
-}
-
-/* titre famille dans le menu */
-nav h3 {
-    width: 20em;
-    text-align: center;
-    padding: 20px;
-    color: #FF9800;
 }
 
 /* FORMULAIRE CREATION GIFT */
@@ -151,28 +163,44 @@ nav h3 {
 }
 
 
-
-/* LISTE */
+/* 
+############################################################
+                        LISTES
+############################################################ 
+*/
 #containerList {
     display: flex;
     flex-direction: row;
-    background-color: #b7d3c3;
+    justify-content: center;
 }
 
 .list {
     width: 30%;
-    border: solid black 1px;
-    border-top-left-radius: 37px 140px;
-    border-top-right-radius: 23px 130px;
-    border-bottom-left-radius: 110px 19px;
-    border-bottom-right-radius: 120px 24px;
-    margin: 1em;
-    padding: 1em;
+    margin: 25px;
+    padding: 25px;
+    width: 300px;
+    height: 350px;
+    background: #fff;
+    border: solid black;
+    border-color: black;
+    float: left;
+    border-width: 3px 4px 3px 5px;
+    border-radius: 95% 4% 92% 5%/4% 95% 6% 95%;
+    transform: rotate(2deg);
+    overflow-y: scroll;
 
 }
 
-.listTitle {
-    text-align: center;
+
+.boxName {
+    width: fit-content;
+    transform: rotate(-4deg);
+    margin: 15px;
+    padding: 0 5px;
+    /* float: left; */
+    background: #ddd;
+    border: 1px solid #222;
+    box-shadow: 3px 3px 0 #222;
 }
 
 .liAndInputList {
@@ -191,7 +219,8 @@ nav h3 {
 /* BOUTON */
 .button-paper {
     align-self: center;
-    background-color: #fff;
+    /* background-color: #fff; */
+    background-color: #f28f3d;
     background-image: none;
     background-position: 0 90%;
     background-repeat: repeat no-repeat;
@@ -201,7 +230,8 @@ nav h3 {
     border-width: 2px;
     box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
     box-sizing: border-box;
-    color: #41403e;
+    /* color: #41403e; */
+    color: #dae3ef;
     cursor: pointer;
     display: inline-block;
     font-family: Neucha, sans-serif;
