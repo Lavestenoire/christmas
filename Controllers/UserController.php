@@ -72,8 +72,6 @@ class UserController extends Controller
 
             $userModel = new UserModel();
             $user = $userModel->getUserByIdUser($getIdUser);
-            // var_dump($user);
-            // die;
         }
         // on passe les informations à la vue
         $this->render('user/loginUser', ['user' => $user]);
@@ -88,8 +86,6 @@ class UserController extends Controller
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $account = new Account();
             $account->setId_account($_SESSION['id_account']);
-            // var_dump($_SESSION['id_account']);
-            // die;
 
             // $id_user = $_GET['id_user'];
             // stocker les $_POST dans des variables
@@ -124,8 +120,7 @@ class UserController extends Controller
                 $user->setId_user($userData['id_user']);
                 $user->setStatus_user(1);
                 $userModel->updateUserStatus($account, $user);
-                // var_dump($_SESSION['status_user']);
-                // die;
+
                 header('Location: home');
                 exit();
             } else {
@@ -137,7 +132,9 @@ class UserController extends Controller
         $this->render("user/loginUser");
     }
 
-
+    // ########################################
+    //             DECONNEXION USER
+    // ########################################
     public function logoutUser()
     {
         if (isset($_SESSION['id_user']) && isset($_SESSION['id_account'])) {
@@ -171,5 +168,13 @@ class UserController extends Controller
         } else {
             echo "Erreur lors de la déconnexion de l'utilisateur.";
         }
+    }
+
+    // ########################################
+    //             PROFILE USER
+    // ########################################
+    public function profileUser()
+    {
+        $this->render('user/profileUser');
     }
 }

@@ -128,4 +128,24 @@ class GiftModel extends DbConnect
             return [];
         }
     }
+
+    // ############################################################
+    // LISTE CADEAUX STATUS 0
+    // ############################################################
+    public function listByStatusZero(User $user)
+    {
+        $this->request = $this->connection->prepare("SELECT c_gift.name_gift, c_gift.description_gift, c_gift.reserved_gift, c_category.name_category
+        FROM c_gift
+        JOIN c_giftlist ON c_gift.id_gift = c_giftlist.id_gift
+        JOIN c_user ON c_giftlist.id_user = c_user.id_user
+        JOIN c_categorygift ON c_gift.id_gift = c_categorygift.id_gift
+        JOIN c_category ON c_categorygift.id_category = c_category.id_category
+        WHERE c_user.status_user = :status_user AND c_user.id_user = :id_user");
+        $this->request->bindValue(':status_user', $user->getStatus_user());
+        $this->request->bindValue(':id_user', $user->getId_user());
+        $this->request->execute();
+
+        $listByStatus = $this->request->fetchAll(PDO::FETCH_ASSOC);
+        return $listByStatus;
+    }
 }

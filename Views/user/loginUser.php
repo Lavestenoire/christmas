@@ -30,5 +30,5 @@ $title = "Christmas - Se connecter";
     <?php endif;
     unset($_SESSION['error_message']);
     ?>
-    <button type="submit" name="connexion" class="btn btn-primary">Ajouter ce profil</button>
+    <button type="submit" name="connexion" class="button-paper" role="button">Me connecter</button>
 </form>

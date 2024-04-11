@@ -14,9 +14,9 @@
 <body>
     <header>
         <p id="countDown"></p>
-        <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary">
+        <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary container-fluid">
             <a class="navbar-brand" href="/christmas/public/home"> <!-- le lien href de home: home = réecriture d'URL = controller et action donc render -->
-                <img src="pictures/logoChristmas1.png" alt="Logo" width="100"> <!-- Remplacez "logo.png" par le chemin de votre logo -->
+                <img src="pictures/logoChristmas1.png" alt="Logo" width="100">
             </a>
 
             <?php if (isset($_SESSION['nickname_account'])) { ?>
@@ -53,7 +53,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/christmas/public/viewLogin">
+                            <a class="nav-link" href="profileUser">
                                 <i class="menuIcon fa-solid fa-user"></i>
                                 <span class="menuText">Profile</span>
                             </a>
@@ -64,23 +64,25 @@
                                 <span class="menuText">Contact</span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/christmas/public/viewLogin">
-                                <i class="menuIcon fa-solid fa-right-to-bracket"></i>
-                                <span class="menuText">Connexion/inscription</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/christmas/public/logoutAccount">
-                                <i class="menuIcon fa-solid fa-right-from-bracket"></i>
-                                <span class="menuText">Se déconnecter</span>
-                            </a>
-                        </li>
+                        <?php if (!isset($_SESSION['id_account'])) { ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/christmas/public/viewLogin">
+                                    <i class="menuIcon fa-solid fa-right-to-bracket"></i>
+                                    <span class="menuText">Connexion/inscription</span>
+                                </a>
+                            </li>
+                        <?php } else { ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/christmas/public/logoutAccount">
+                                    <i class="menuIcon fa-solid fa-right-from-bracket"></i>
+                                    <span class="menuText">Se déconnecter</span>
+                                </a>
+                            </li>
+                        <?php } ?>
                     </ul>
                 </div>
             </div>
         </nav>
-
 
     </header>
     <div class="container">

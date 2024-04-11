@@ -1,5 +1,27 @@
+body {
+    background-color: #dae3ef;
+}
+
+.container {
+    max-width: 1280px;
+}
+
+li {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+/* 
+############################################################
+                           NAVBAR
+############################################################ 
+*/
 .navbar {
-    background-color: #5F8670 !important;
+    background-color: #dae3ef !important;
     padding: 1%;
 }
 
@@ -21,29 +43,29 @@
 }
 
 .menuIcon {
-    color: #FF9800;
+    color: #113640;
 }
 
-#banner {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    border-bottom: solid 2px black;
-    margin-bottom: 60px;
-
+/* titre famille dans le menu */
+nav h3 {
+    width: 20em;
+    text-align: center;
+    padding: 20px;
+    color: #113640;
 }
 
-#banner i {
-    margin: 0.25em;
-    font-size: 1.5em;
-}
+/* 
+############################################################
+                         BANNER
+############################################################ 
+*/
 
 
-.fa-socks {
-    color: #B80000;
-}
-
-/* COUNTDOWN */
+/* 
+############################################################
+                           COUNTDOWN
+############################################################ 
+*/
 #countDown {
     color: black;
 }
@@ -59,11 +81,20 @@
     width: 50%;
 }
 
+/* 
+############################################################
+             MESSAGE D'ERREUR
+############################################################ 
+*/
 .text-danger {
     color: red;
 }
 
-/* EYE BUTTON ON INPUT PASSWORD*/
+/* 
+############################################################
+             EYE BUTTON ON INPUT PASSWORD
+############################################################ 
+*/
 
 /* mdp = div contenant les 3 éléments (label input et div eye)< */
 .mdp {
@@ -81,6 +112,11 @@
     padding-right: 1em;
 }
 
+/* 
+############################################################
+                      PROFIL ACCUEIL
+############################################################ 
+*/
 .profile {
     width: 150px;
     height: 200px;
@@ -95,7 +131,7 @@
 .profile-image {
     width: 100%;
     height: 70%;
-    background-color: #ccc;
+    background-color: #bc4f69;
     /* Ici vous pouvez ajouter l'image de profil avec background-image */
 }
 
@@ -109,23 +145,12 @@
 }
 
 .profile-name:hover {
-    color: #007bff;
-    /* Couleur du lien au survol */
-    text-decoration: underline;
-    /* Souligner le lien au survol */
+    color: pink;
 }
 
 /* bouton de déconnexion user */
 #logoutUserBtn {
     float: right;
-}
-
-/* titre famille dans le menu */
-nav h3 {
-    width: 20em;
-    text-align: center;
-    padding: 20px;
-    color: #FF9800;
 }
 
 /* FORMULAIRE CREATION GIFT */
@@ -137,6 +162,99 @@ nav h3 {
     width: 50%;
 }
 
-#giftList {
+
+/* 
+############################################################
+                        LISTES
+############################################################ 
+*/
+#containerList {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.list {
+    width: 30%;
+    margin: 25px;
+    padding: 25px;
+    width: 300px;
+    height: 350px;
+    background: #fff;
     border: solid black;
+    border-color: black;
+    float: left;
+    border-width: 3px 4px 3px 5px;
+    border-radius: 95% 4% 92% 5%/4% 95% 6% 95%;
+    transform: rotate(2deg);
+    overflow-y: scroll;
+
+}
+
+
+.boxName {
+    width: fit-content;
+    transform: rotate(-4deg);
+    margin: 15px;
+    padding: 0 5px;
+    /* float: left; */
+    background: #ddd;
+    border: 1px solid #222;
+    box-shadow: 3px 3px 0 #222;
+}
+
+.liAndInputList {
+    display: flex;
+    flex-direction: row;
+}
+
+.fa-candy-cane {
+    color: red;
+}
+
+.candy {
+    text-align: center;
+}
+
+/* BOUTON */
+.button-paper {
+    align-self: center;
+    /* background-color: #fff; */
+    background-color: #f28f3d;
+    background-image: none;
+    background-position: 0 90%;
+    background-repeat: repeat no-repeat;
+    background-size: 4px 3px;
+    border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+    border-style: solid;
+    border-width: 2px;
+    box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+    box-sizing: border-box;
+    /* color: #41403e; */
+    color: #dae3ef;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Neucha, sans-serif;
+    font-size: 1rem;
+    line-height: 23px;
+    outline: none;
+    padding: .75rem;
+    text-decoration: none;
+    transition: all 235ms ease-in-out;
+    border-bottom-left-radius: 15px 255px;
+    border-bottom-right-radius: 225px 15px;
+    border-top-left-radius: 255px 15px;
+    border-top-right-radius: 15px 225px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.button-paper:hover {
+    box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
+    transform: translate3d(0, 2px, 0);
+}
+
+.button-paper:focus {
+    box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
 }

@@ -28,8 +28,6 @@ class AccountController extends Controller
     // ############################################################
     public function createAccount()
     {
-        // var_dump($_SESSION['csrf_token']);
-        // die;
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // vérification TOKEN
             if (!Token::tokenValidator($_POST['csrf_token'], 'create_account')) {

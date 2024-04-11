@@ -2,12 +2,14 @@
 
 namespace App\Controllers;
 
+use App\Entities\Account;
 use App\Entities\Gift;
 use App\Entities\Category;
 use App\Entities\CategoryGift;
 use App\Entities\User;
 use App\Entities\GiftList;
 use App\Models\GiftModel;
+use App\Models\UserModel;
 
 class giftController extends Controller
 {
@@ -80,18 +82,41 @@ class giftController extends Controller
         $id_user = $_SESSION['id_user'];
 
         $giftList = new GiftList();
-        $bla = $giftList->setId_user($id_user);
+        $giftList->setId_user($id_user);
 
         $giftModel = new GiftModel();
         $list = $giftModel->giftList($giftList);
-
-
 
         $this->render('gift/giftList', ['list' => $list]);
     }
 
     public function secretPage()
     {
-        $this->render('gift/secretPage');
+        $id_account = $_SESSION['id_account'];
+        $account = new Account();
+        $account->setId_account($id_account);
+
+        $user = new User();
+        $user->setStatus_user(0);
+
+        $userModel = new UserModel();
+        $getUserByStatus = $userModel->getUserByStatus($account, $user);
+        // var_dump($getUserByStatus);
+
+        $giftLists = [];
+
+        foreach ($getUserByStatus as $value) {
+            $giftModel = new GiftModel();
+            $user->setId_user($value['id_user']);
+            $giftList = $giftModel->listByStatusZero($user);
+            $giftLists[$value['nickname_user']] = $giftList;
+        }
+
+        // echo '<pre>';
+        // var_dump($giftLists);
+        // echo '</pre>';
+        // die;
+
+        $this->render('gift/secretPage', ['giftLists' => $giftLists]);
     }
 }
