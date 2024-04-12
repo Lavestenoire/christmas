@@ -43,7 +43,7 @@ class UserModel extends DbConnect
 
             if (empty($user->getPicture_user())) {
 
-                $this->request->bindValue(":picture", DEFAULT_PICTURE);
+                $this->request->bindValue(":picture", DEFAULT_AVATAR);
             } else {
                 $this->request->bindValue(":picture", $user->getPicture_user());
             }
@@ -105,7 +105,7 @@ class UserModel extends DbConnect
     }
 
     // ########################################
-    //       SELECT USERS PAR ID_ACCOUNT
+    //                LOGIN USER
     // ########################################
     public function loginUser(User $user)
     {
@@ -134,7 +134,7 @@ class UserModel extends DbConnect
             $this->request->execute();
 
             $user = $this->request->fetch(PDO::FETCH_ASSOC);
-            // var_dump($data);
+            // var_dump($user);
             // die;
             return $user;
         } catch (Exception $e) {
@@ -173,5 +173,15 @@ class UserModel extends DbConnect
         } catch (Exception $e) {
             echo "Erreur lors de la mise à jour du statut de l'utilisateur : " . $e->getMessage();
         }
+    }
+
+    // ########################################
+    //           DELETE PROFILE USER
+    // ########################################
+    public function deleteUser(User $user)
+    {
+        $this->request = $this->connection->prepare("DELETE FROM c_user WHERE id_user = :id_user");
+        $this->request->bindValue('id_user', $user->getId_user());
+        $this->request->execute();
     }
 }

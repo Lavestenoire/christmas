@@ -2,7 +2,7 @@
 $title = "Christmas - Créer un profil";
 ?>
 
-<h1>Créer un profil pour la famille <?= $_SESSION['nickname_account']; ?></h1>
+<h1>Bonjour petit lutin de la famille <?= $_SESSION['nickname_account']; ?>, créé un profil pour gérer tes listes et ton profil</h1>
 <form class="mx-auto w-80" action="createUser" method="POST">
     <img src="pictures/avatar.png" alt=" avatar">
     <div class="mb-3 col-4">

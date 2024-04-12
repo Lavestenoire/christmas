@@ -63,5 +63,7 @@ if (isset($_SESSION['id_account'])) {
     <?php }
     }
 } else { ?>
-    <h1>Accueil - pas de connexion account, pas de connexion user</h1>
+    <h1>Accueil - Il fait la connexion d'un parent pour accéder ou créer ton profil</h1>
+    <button type="button" name="addGift" class="button-paper" role="button"><a href="/christmas/public/loginAccount">Connexion</a></button>
+
 <?php } ?>
