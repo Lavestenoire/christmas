@@ -79,7 +79,7 @@ class GiftModel extends DbConnect
 
 
     // ############################################################
-    // ###################### LISTE CADEAUX #######################
+    // ####### POUR VERIFIER SI LA CATEGORIE EXISTE DEJA ##########
     // ############################################################
     public function getCategoryByName(Category $category)
     {
@@ -147,5 +147,20 @@ class GiftModel extends DbConnect
 
         $listByStatus = $this->request->fetchAll(PDO::FETCH_ASSOC);
         return $listByStatus;
+    }
+    // ############################################################
+    //        POUR L'AUTOCOMPLETION DES CATEGORIES
+    // ############################################################
+    public function getNameCategory($search)
+    {
+        if (!empty($search)) {
+            $this->request = $this->connection->prepare("SELECT name_category FROM c_category WHERE name_category LIKE :search");
+            $this->request->bindValue(':search', "%$search%");
+        } else {
+            $this->request = $this->connection->prepare("SELECT name_category FROM c_category");
+        }
+        $this->request->execute();
+        $catList = $this->request->fetchAll(PDO::FETCH_ASSOC);
+        return $catList;
     }
 }

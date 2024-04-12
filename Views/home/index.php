@@ -10,10 +10,13 @@ $title = "Christmas - Accueil";
 ?>
 
 <?php
-if (isset($_SESSION['id_account'])) {
-    // s'il n'y a pas de profil créé
-    if (isset($showForm) && $showForm) {
-?>
+if (isset($_SESSION['id_account'])) { ?>
+    <div>
+        <p id="countDown"></p>
+    </div>
+    <!-- // s'il n'y a pas de profil créé -->
+    <?php if (isset($showForm) && $showForm) {
+    ?>
         <!-- ##########################################################################
         Si 0 users existent pour cet id_account > affichage formulaire pour en créer un
         ############################################################################### -->

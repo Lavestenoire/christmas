@@ -12,7 +12,7 @@ if (isset($_SESSION['id_account']) && isset($_SESSION['id_user'])) { ?>
         <button type="submit" name="deleteUser" class="button-paper" role="button">Clique ici pour supprimer ton profil</button>
     </form>
 <?php } else if (!isset($_SESSION['id_user'])) {
-    header('Location: loginUser');
+    header('Location: home');
 } else {
     header('Location: loginAccount');
     exit();

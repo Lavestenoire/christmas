@@ -1,9 +1,19 @@
 body {
-    background-color: #dae3ef;
+    background-color: #faf8f8;
 }
 
 .container {
     max-width: 1280px;
+    border: solid #23856D 20px;
+    overflow: auto;
+    /* Ajouter un débordement automatique pour que la bordure reste contenue */
+    padding-bottom: 20px;
+    /* Ajouter un remplissage en bas pour éviter le chevauchement */
+}
+
+
+img {
+    max-width: 100%;
 }
 
 li {
@@ -21,7 +31,7 @@ a {
 ############################################################ 
 */
 .navbar {
-    background-color: #dae3ef !important;
+    background-color: #bb010b !important;
     padding: 1%;
 }
 
@@ -43,7 +53,11 @@ a {
 }
 
 .menuIcon {
-    color: #113640;
+    color: #23856d;
+}
+
+.menuText {
+    color: #faf8f8;
 }
 
 /* titre famille dans le menu */
@@ -51,7 +65,7 @@ nav h3 {
     width: 20em;
     text-align: center;
     padding: 20px;
-    color: #113640;
+    color: #faf8f8;
 }
 
 /* 
@@ -216,11 +230,15 @@ nav h3 {
     text-align: center;
 }
 
-/* BOUTON */
+/* 
+############################################################
+                        BOUTONS
+############################################################ 
+*/
 .button-paper {
     align-self: center;
     /* background-color: #fff; */
-    background-color: #f28f3d;
+    background-color: rgba(0, 111, 87, .3);
     background-image: none;
     background-position: 0 90%;
     background-repeat: repeat no-repeat;
@@ -231,7 +249,7 @@ nav h3 {
     box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
     box-sizing: border-box;
     /* color: #41403e; */
-    color: #dae3ef;
+    color: #faf8f8;
     cursor: pointer;
     display: inline-block;
     font-family: Neucha, sans-serif;
@@ -257,4 +275,15 @@ nav h3 {
 
 .button-paper:focus {
     box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
+}
+
+/* 
+############################################################
+                        CATEGORY AUTO COMPLETION
+            Evite trop de catégories écrites différemment
+############################################################ 
+*/
+#suggestions ul {
+    background-color: #fff;
+    border-radius: 5%;
 }

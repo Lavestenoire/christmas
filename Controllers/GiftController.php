@@ -119,4 +119,15 @@ class giftController extends Controller
 
         $this->render('gift/secretPage', ['giftLists' => $giftLists]);
     }
+
+    public function getCategoryHint()
+    {
+        $search = isset($_GET['q']) ? $_GET['q'] : '';
+        $giftModel = new giftModel();
+        $categories = $giftModel->getNameCategory($search);
+        echo json_encode($categories);
+        // foreach ($categories as $category) {
+        //     echo $category['name_category'] . "<br>";
+        // }
+    }
 }

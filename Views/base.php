@@ -13,10 +13,9 @@
 
 <body>
     <header>
-        <p id="countDown"></p>
         <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary container-fluid">
             <a class="navbar-brand" href="/christmas/public/home"> <!-- le lien href de home: home = réecriture d'URL = controller et action donc render -->
-                <img src="pictures/logoChristmas1.png" alt="Logo" width="100">
+                <img src="pictures/calisto.png" alt="Logo" width="100">
             </a>
 
             <?php if (isset($_SESSION['nickname_account'])) { ?>
@@ -31,7 +30,7 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/christmas/public/home">
                                 <i class="menuIcon fa-solid fa-house-chimney-window"></i>
-                                <span class="menuEntry">Home</span>
+                                <span class="menuText">Home</span>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -43,7 +42,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="giftList">
                                 <i class="menuIcon fa-solid fa-list-ul"></i>
-                                <span class="menuEntry">Ma liste</span>
+                                <span class="menuText">Ma liste</span>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -83,11 +82,11 @@
                 </div>
             </div>
         </nav>
-
     </header>
     <div class="container">
         <main><?= $content ?></main>
     </div>
+    <footer></footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="/christmas/public/script.js"></script>
 </body>
