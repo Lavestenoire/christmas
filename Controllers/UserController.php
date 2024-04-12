@@ -44,7 +44,7 @@ class UserController extends Controller
             $user->setResponse_user($response);
             $user->setRole_user($role);
             $user->setStatus_user($status);
-            $user->setPicture_user(DEFAULT_PICTURE);
+            $user->setPicture_user(DEFAULT_AVATAR);
 
             $userModel = new UserModel();
             $existingAccount = $userModel->getUserByNicknameAndAccountId($nicknameUser, $account->getId_account());
@@ -175,6 +175,32 @@ class UserController extends Controller
     // ########################################
     public function profileUser()
     {
-        $this->render('user/profileUser');
+        $user = new User();
+        $user->setId_user($_SESSION['id_user']);
+        // var_dump($_SESSION['id_user']);
+        // var_dump($_SESSION['id_account']);
+
+
+        $userModel = new UserModel();
+        $userProfile = $userModel->getUserByIdUser($user);
+        // var_dump($userProfile);
+        // die;
+
+        $this->render('user/profileUser', ['userProfile' => $userProfile]);
+    }
+
+    // ########################################
+    //           DELETE PROFILE USER
+    // ########################################
+    public function deleteUser()
+    {
+        $user = new User();
+        $user->setId_user($_SESSION['id_user']);
+
+        $userModel = new UserModel();
+        $userModel->deleteUser($user);
+        unset($_SESSION['id_user']);
+
+        header("Location: home");
     }
 }

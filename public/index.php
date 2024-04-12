@@ -5,7 +5,7 @@ use App\Core\Routeur;
 
 session_start();
 
-define('DEFAULT_PICTURE', 'picture/avatar.png');
+define('DEFAULT_AVATAR', 'pictures/avatar.png');
 
 include '../Autoloader.php';
 Autoloader::register();

@@ -2,7 +2,7 @@
 $title = "Christmas - Créer un profil";
 ?>
 
-<h1>Créer un profil pour la famille <?= $_SESSION['nickname_account']; ?></h1>
+<h1>Bonjour petit lutin de la famille <?= $_SESSION['nickname_account']; ?>, créé un profil pour gérer tes listes et ton profil</h1>
 <form class="mx-auto w-80" action="createUser" method="POST">
     <img src="pictures/avatar.png" alt=" avatar">
     <div class="mb-3 col-4">
@@ -26,5 +26,5 @@ $title = "Christmas - Créer un profil";
     <?php endif;
     unset($_SESSION['error_message']);
     ?>
-    <button type="submit" name="addAUser" class="btn btn-primary">Ajouter ce profil</button>
+    <button type="submit" name="addAUser" class='button-paper'>Ajouter ce profil</button>
 </form>

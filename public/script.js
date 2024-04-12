@@ -1,4 +1,3 @@
-
 // OEIL SUR CHAMPS INPUT
 const passwordField = document.getElementById("loginPassword");
 const togglePassword = document.querySelector(".fa-eye");
@@ -16,6 +15,56 @@ togglePassword.addEventListener("click", function () {
 });
 
 
+
+
+// AUTO COMPLETION INPUT CATEGORY
+function showHint(str) {
+    if (str.length == 0) {
+        document.getElementById("suggestions").innerHTML = "";
+        return;
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var categories = JSON.parse(this.responseText);
+                var suggestionsHTML = "<ul>";
+                categories.forEach(function (category) {
+                    suggestionsHTML += "<li onclick='selectCategory(\"" + category.name_category + "\")'>" + category.name_category + "</li>";
+                });
+                suggestionsHTML += "</ul>";
+                document.getElementById("suggestions").innerHTML = suggestionsHTML;
+            }
+        };
+        xmlhttp.open("GET", "getCategoryHint?q=" + str, true);
+        xmlhttp.send();
+    }
+}
+// mettre à jour le champ de saisie lorsque l'utilisateur sélectionne une option dans le menu déroulant
+function selectCategory(category) {
+    document.getElementById("category_gift").value = category;
+    document.getElementById("suggestions").innerHTML = ""; // Effacer les suggestions après la sélection
+}
+
+
+// DELETE CONFIRMATION
+function deleteConfirm() {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var message = "<p>Tu es sur de vouloir supprimer?</p>"
+            message += "<form action='deleteUser'>"
+            message += "<button type='submit' name='deleteUser' class='button-paper' role='button'>Oui</button>"
+            message += "<button class='button-paper' onclick='cancelDelete()'>Non</button>"
+            message += "</form>"
+            document.getElementById("deleteConfirm").innerHTML = message;
+        }
+    };
+    xmlhttp.open("GET", "profileUser", true);
+    xmlhttp.send();
+}
+function cancelDelete() {
+    document.getElementById("deleteConfirm").innerHTML = ""; // Efface le message de confirmation
+}
 
 // COUNTDOWN
 // Set the date we're counting down to
@@ -46,6 +95,3 @@ var x = setInterval(function () {
         document.getElementById("countDown").innerHTML = "EXPIRED";
     }
 }, 1000);
-
-// AUTO COMPLETION INPUT CATEGORY
-
