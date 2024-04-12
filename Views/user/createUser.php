@@ -26,5 +26,5 @@ $title = "Christmas - Créer un profil";
     <?php endif;
     unset($_SESSION['error_message']);
     ?>
-    <button type="submit" name="addAUser" class="btn btn-primary">Ajouter ce profil</button>
+    <button type="submit" name="addAUser" class='button-paper'>Ajouter ce profil</button>
 </form>

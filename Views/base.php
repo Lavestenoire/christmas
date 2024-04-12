@@ -15,7 +15,7 @@
     <header>
         <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary container-fluid">
             <a class="navbar-brand" href="/christmas/public/home"> <!-- le lien href de home: home = réecriture d'URL = controller et action donc render -->
-                <img src="pictures/calisto.png" alt="Logo" width="100">
+                <img src="pictures/logoCalisto.png" alt="Logo" width="100">
             </a>
 
             <?php if (isset($_SESSION['nickname_account'])) { ?>
@@ -54,7 +54,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="profileUser">
                                 <i class="menuIcon fa-solid fa-user"></i>
-                                <span class="menuText">Profile</span>
+                                <span class="menuText">Profil</span>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -84,9 +84,27 @@
         </nav>
     </header>
     <div class="container">
+        <?php if (isset($_SESSION['id_user'])) { ?>
+            <div id="helloFamilyContainer">
+                <div id="helloFamily">Famille <?= $_SESSION['nickname_account'] ?></div>
+            </div>
+        <?php } ?>
         <main><?= $content ?></main>
     </div>
-    <footer></footer>
+    <footer>
+        <nav class="footerItem">
+            <ul>
+                <li><a href="home">Accueil</a></li>
+                <li><a href="pageCreateGift">Créer un cadeau</a></li>
+                <li><a href="giftList">Ma liste</a></li>
+                <li><a href="secretPage">Page Secrète</a></li>
+                <li><a href="profileUser">Profil</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="footerItem">Calisto © 2024 | Tous droits réservés</div>
+        <div class="footerItem"><img src="pictures/titreCalisto.png" alt="Logo" width="150"></div>
+    </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="/christmas/public/script.js"></script>
 </body>

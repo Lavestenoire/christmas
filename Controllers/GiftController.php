@@ -126,8 +126,5 @@ class giftController extends Controller
         $giftModel = new giftModel();
         $categories = $giftModel->getNameCategory($search);
         echo json_encode($categories);
-        // foreach ($categories as $category) {
-        //     echo $category['name_category'] . "<br>";
-        // }
     }
 }
