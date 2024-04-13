@@ -14,17 +14,18 @@
 <body>
     <header>
         <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary container-fluid">
+
             <a class="navbar-brand" href="/christmas/public/home"> <!-- le lien href de home: home = réecriture d'URL = controller et action donc render -->
                 <img src="pictures/logoCalisto.png" alt="Logo" width="100">
             </a>
-
             <?php if (isset($_SESSION['nickname_account'])) { ?>
                 <h3>Famille <?= $_SESSION['nickname_account']; ?></h3>
             <?php } ?>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
             <div class="container-fluid justify-content-end">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
@@ -102,7 +103,7 @@
                 <li><a href="#">Contact</a></li>
             </ul>
         </nav>
-        <div class="footerItem">Calisto © 2024 | Tous droits réservés</div>
+        <div class="footerItem copyright">Calisto © 2024 | Tous droits réservés</div>
         <div class="footerItem"><img src="pictures/titreCalisto.png" alt="Logo" width="150"></div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>

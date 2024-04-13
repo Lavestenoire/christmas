@@ -27,7 +27,6 @@ $title = "Christmas - LogIn";
             unset($_SESSION['error_message']);
             ?>
             <button type="submit" name="connectionAccount" class="button-paper" role="button">Connexion</button>
-
         </form>
     </div>
 

@@ -95,3 +95,16 @@ var x = setInterval(function () {
         document.getElementById("countDown").innerHTML = "EXPIRED";
     }
 }, 1000);
+
+// ########################################
+//           EDIT PROFILE USER
+// ########################################
+function editProfileUser() {
+    var editForm = document.querySelector(".editUser");
+    editForm.style.display = "block";
+}
+
+function confirmEditProfileUser() {
+    var editForm = document.querySelector(".editUser");
+    editForm.style.display = "none";
+}
