@@ -13,11 +13,11 @@ $title = "Christmas - Se connecter";
     <form class="mx-auto w-80" action="loginUser" method="POST">
         <img src="pictures/avatar.png" alt=" avatar">
         <div class="mb-3 col-4">
-            <label for="question_user" class="form-label">Merci d'indiquer une question personnelle.</label>
+            <label for="question_user" class="form-label">Indique une question personnelle.</label>
             <input type="text" name="question_user" value="<?= $user['question_user']; ?>" class="form-control" id="question_user" aria-describedby="usernameHelp" required>
         </div>
         <div class="mb-3 col-4">
-            <label for="response_user" class="form-label">Merci d'indiquer la réponse à ta question</label>
+            <label for="response_user" class="form-label">Indique la réponse qui te permettra de te connecter</label>
             <input type="password" name="response_user" class="form-control" id="response_user" required>
         </div>
         <!-- champs caché pour insérer le role admin par défaut/ici non admnin puisqu'il en existe déjà un via l'ajout profil de home/index-->

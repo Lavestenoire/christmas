@@ -96,6 +96,7 @@ class UserModel extends DbConnect
                 $user = new User();
                 $user->setId_user($userData['id_user']);
                 $user->setNickname_user($userData['nickname_user']);
+                $user->setPicture_user($userData['picture_user']);
                 $listUsers[] = $user;
             }
             return $listUsers;
@@ -183,5 +184,24 @@ class UserModel extends DbConnect
         $this->request = $this->connection->prepare("DELETE FROM c_user WHERE id_user = :id_user");
         $this->request->bindValue('id_user', $user->getId_user());
         $this->request->execute();
+    }
+
+    // ########################################
+    //           EDIT PROFILE USER
+    // ########################################
+    public function editUser(User $user, Account $account, $avatar)
+    {
+        try {
+            $this->request = $this->connection->prepare("UPDATE c_user SET nickname_user = :nickname_user, picture_user = :picture_user, question_user = :question_user, response_user = :response_user WHERE id_user = :id_user AND id_account = :id_account");
+            $this->request->bindValue(':id_account', $account->getId_account());
+            $this->request->bindValue(':id_user', $user->getId_user());
+            $this->request->bindValue(':nickname_user', $user->getNickname_user());
+            $this->request->bindValue(':picture_user', $avatar);
+            $this->request->bindValue(':question_user', $user->getQuestion_user());
+            $this->request->bindValue(':response_user', $user->getResponse_user());
+            $this->request->execute();
+        } catch (Exception $e) {
+            echo "Erreur lors de la mise à jour du statut de l'utilisateur : " . $e->getMessage();
+        }
     }
 }

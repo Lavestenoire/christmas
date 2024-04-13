@@ -1,12 +1,5 @@
 <?php
 $title = "Christmas - Accueil";
-// var_dump($_SESSION['id_account']);
-// var_dump($_SESSION['id_user']);
-// var_dump($_SESSION['nickname_account']);
-// var_dump($_SESSION['nickname_user']);
-// var_dump($_SESSION['role_user']);
-// var_dump($_SESSION['status_user']);
-/* Le $title est situé au niveau du title de la base */
 ?>
 
 <?php
@@ -53,14 +46,16 @@ if (isset($_SESSION['id_account'])) { ?>
         //sinon affichage des profils existant 
         else { ?>
             <h3>Connecte toi afin de gérer tes listes</h3>
-            <?php foreach ($users as $user) { ?>
-                <div class="profile">
-                    <a href="/christmas/public/pageLoginUser?id_user=<?= $user->getId_user() ?>">
-                        <div class="profile-image"></div>
-                        <div class="profile-name"><?= $user->getNickname_user() ?></div>
-                    </a>
-                </div>
-            <?php } ?>
+            <div id="profileCards">
+                <?php foreach ($users as $user) { ?>
+                    <div class="profile">
+                        <a href="/christmas/public/pageLoginUser?id_user=<?= $user->getId_user() ?>">
+                            <div class="profile-image"><img src="<?= $user->getPicture_user() ?>" alt="avatar"></div>
+                            <div class="profile-name"><?= $user->getNickname_user() ?></div>
+                        </a>
+                    </div>
+                <?php } ?>
+            </div>
             <a href="pageCreateUser"><button class="button-paper" role="button">Ajouter un profil</button>
             </a>
     <?php }
