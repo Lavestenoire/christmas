@@ -1,14 +1,14 @@
 body {
-    background-color: rgb(0, 111, 87, 0.2);
+    max-width: 1280px;
+    margin: 0 auto;
+    background-color: #F8F3E8;
 }
 
 .container {
-    max-width: 1280px;
-    overflow: auto;
-    padding-bottom: 20px;
-    /* background-color: rgb(0, 111, 87, 0.3); */
+    width: 90%;
+    margin: 0 auto;
+    padding: 0;
 }
-
 
 img {
     max-width: 100%;
@@ -23,13 +23,24 @@ a {
     color: black;
 }
 
+button {
+    background-color: none;
+}
+
+#footerImage {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+
 /* 
 ############################################################
                            NAVBAR
 ############################################################ 
 */
 .navbar {
-    background-color: #bb010b !important;
+    background-color: #F8F3E8 !important;
     padding: 1%;
 }
 
@@ -55,15 +66,14 @@ a {
 }
 
 .menuText {
-    color: #faf8f8;
+    color: #D9372A;
 }
 
 /* titre famille dans le menu */
 nav h3 {
-    width: 20rem;
+    width: 30rem;
     text-align: center;
-    /* padding: 20px; */
-    color: #faf8f8;
+    color: #D9372A;
 }
 
 @media screen and (max-width: 480px) {
@@ -72,13 +82,19 @@ nav h3 {
     }
 }
 
+nav {
+    width: 100% !important;
+    display: flex;
+    flex-wrap: nowrap !important;
+}
+
 /* 
 ############################################################
                            FOOTER
 ############################################################ 
 */
 footer {
-    background-color: #bb010b;
+    background-color: #D9372A;
 }
 
 .footerItem {
@@ -87,9 +103,6 @@ footer {
     margin: 0;
 }
 
-.footerItem ul {
-    padding-left: 30%;
-}
 
 @media screen and (max-width: 480px) {
     footer {
@@ -149,6 +162,7 @@ footer {
     position: absolute;
     color: #00205B;
 }
+
 
 /* 
 ############################################################
@@ -259,10 +273,6 @@ footer {
     color: pink;
 }
 
-/* bouton de déconnexion user */
-#logoutUserBtn {
-    float: right;
-}
 
 /* FORMULAIRE CREATION GIFT */
 #giftPage {
@@ -287,30 +297,43 @@ footer {
 
 /* 
 ############################################################
-                        LISTES
+                    LISTES PAGE SECRÈTE
 ############################################################ 
 */
 #containerList {
+    width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 .list {
-    width: fit-content;
+    width: 30%;
     margin: 25px;
     padding: 25px;
     height: 350px;
-    background: #fff;
-    border: solid black;
-    border-color: black;
+    border: solid #546E5A 5px;
+    border-color: #546E5A;
     float: left;
-    border-width: 3px 4px 3px 5px;
-    border-radius: 95% 4% 92% 5%/4% 95% 6% 95%;
-    transform: rotate(2deg);
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
+.listSecretPage {
+    width: 100%;
+    margin: 25px;
+    padding: 25px;
+    height: 350px;
+    border: solid #546E5A 5px;
+    border-color: #546E5A;
+    float: left;
+    overflow-y: auto;
+    scrollbar-color: #546E5A;
+}
+
+#containerList {
+    width: 100%;
+}
 
 .boxName {
     width: fit-content;
@@ -403,6 +426,25 @@ footer {
 
 /* 
 ############################################################
+                    BOUTON DECONNEXION USER
+############################################################ 
+*/
+#logoutUserBtn {
+    float: right;
+}
+
+#logoutUserBtn button {
+    background-color: transparent;
+    border: none;
+}
+
+#logoutUserBtn a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 
+############################################################
                         CATEGORY AUTO COMPLETION
             Evite trop de catégories écrites différemment
 ############################################################ 
@@ -422,13 +464,26 @@ footer {
     flex-direction: row;
 }
 
+
 .editUser {
     display: none;
+}
+
+#btnProfil {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#btnProfil button {
+    margin-top: 1em;
+    width: 200px;
 }
 
 @media screen and (max-width: 480px) {
     #profilePage {
         flex-direction: column;
+
     }
 }
 

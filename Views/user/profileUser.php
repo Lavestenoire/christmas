@@ -5,14 +5,18 @@ $title = "Christmas - Profil";
 
 <?php
 if (isset($_SESSION['id_account']) && isset($_SESSION['id_user'])) { ?>
+    <div id="logoutUserBtn"><button type="submit" name="addAUser" role="button"><a href="logoutUser"></a><img src="pictures/BoutonDecoUser.svg" alt="bouton" width=150></button></div>
+
     <h1>page profil de <?= $_SESSION['nickname_user'] ?></h1>
     <section id="profilePage">
         <div id="profile">
             <img src="<?= $userProfile['picture_user'] ?>" alt="avatar" width="100">
             <div><?= $userProfile['nickname_user'] ?></div>
-            <button name='modifyUser' class='button-paper' id="editBtn" role='button' onclick="editProfileUser()">Modifie ton profil</button>
-            <button name="deleteUser" class="button-paper" role="button" onclick="deleteConfirm()">Clique ici pour supprimer ton profil</button>
-            <div id="deleteConfirm"></div>
+            <div id="btnProfil">
+                <button name='modifyUser' class='button-paper' id="editBtn" role='button' onclick="editProfileUser()">Modifie ton profil</button>
+                <button name="deleteUser" class="button-paper" role="button" onclick="deleteConfirm()">Clique ici pour supprimer ton profil</button>
+                <div id="deleteConfirm"></div>
+            </div>
         </div>
 
         <form class="mx-auto w-80 editUser" id="editForm" action="editUser" method="POST" enctype="multipart/form-data">

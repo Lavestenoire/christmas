@@ -6,6 +6,8 @@ $title = "Christmas - Page secrète";
 ?>
 
 <?php if (isset($_SESSION['id_account']) && isset($_SESSION['id_user'])) { ?>
+    <div id="logoutUserBtn"><button type="submit" name="addAUser" role="button"><a href="logoutUser"></a><img src="pictures/BoutonDecoUser.svg" alt="bouton" width=150></button></div>
+
     <h1>
         <?= $_SESSION['nickname_user'] ?>, bienvenue sur ta page secrète
     </h1>
@@ -13,25 +15,28 @@ $title = "Christmas - Page secrète";
     <!-- listes des users avec un status == 0 (non connecté) -->
     <div id="containerList">
         <?php foreach ($giftLists as $nickname => $giftList) { ?>
-            <div class="list">
-                <div class="boxName"><?= $nickname ?></div>
-                <?php if (empty($giftList)) { ?>
-                    <p><?= $nickname ?> n'a pas encore ajouté de cadeau à sa liste</p>
-                    <?php } else {
-                    foreach ($giftList as $gift) { ?>
-                        <div class="liAndInputList">
-                            <ul class="giftList">
-                                <li><?= $gift['name_gift'] ?></li>
-                                <li><?= $gift['description_gift'] ?></li>
-                                <li><?= $gift['name_category'] ?></li>
-                            </ul>
-                            <div><input type='checkbox' name='gift[]' value='<?= $gift['id_gift'] ?>'></div>
-                        </div>
-                        <hr>
-                <?php }
-                } ?>
-                <button class="button-paper" role="button">Ajouter</button>
-            </div>
+            <form action="reservedGift" method="POST">
+                <input type="hidden" name="id_user" value="<?= $_SESSION['id_user'] ?>">
+                <div class="listSecretPage">
+                    <div class="boxName"><?= $nickname ?></div>
+                    <?php if (empty($giftList)) { ?>
+                        <p><?= $nickname ?> n'a pas encore ajouté de cadeau à sa liste</p>
+                        <?php } else {
+                        foreach ($giftList as $gift) { ?>
+                            <div class="liAndInputList">
+                                <ul class="giftList">
+                                    <li><?= $gift['name_gift'] ?></li>
+                                    <li><?= $gift['description_gift'] ?></li>
+                                    <li><?= $gift['name_category'] ?></li>
+                                </ul>
+                                <div><input type='checkbox' name='gift[]' value='<?= $gift['id_gift'] ?>'></div>
+                            </div>
+                            <hr>
+                    <?php }
+                    } ?>
+                    <button type="submit" class="button-paper" role="button">Ajouter</button>
+                </div>
+            </form>
         <?php } ?>
     </div>
     <!-- liste des cadeaux réservés à 1 par id_user -->

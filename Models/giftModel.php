@@ -134,7 +134,7 @@ class GiftModel extends DbConnect
     // ############################################################
     public function listByStatus(User $user)
     {
-        $this->request = $this->connection->prepare("SELECT c_gift.name_gift, c_gift.description_gift, c_gift.reserved_gift, c_category.name_category
+        $this->request = $this->connection->prepare("SELECT c_gift.id_gift, c_gift.name_gift, c_gift.description_gift, c_gift.reserved_gift, c_category.name_category
         FROM c_gift
         JOIN c_giftlist ON c_gift.id_gift = c_giftlist.id_gift
         JOIN c_user ON c_giftlist.id_user = c_user.id_user
@@ -168,7 +168,15 @@ class GiftModel extends DbConnect
     //                      LISTE À OFFRIR
     // ############################################################
 
-    public function giftReserved(User $user, Gift $gift)
+    public function reservedGift(Gift $gift)
     {
+        try {
+            $this->request = $this->connection->prepare("UPDATE c_gift SET reserved_gift = :reserved_gift WHERE id_gift = :id_gift");
+            $this->request->bindValue(':reserved_gift', $gift->getReserved_gift());
+            $this->request->bindValue('id_gift', $gift->getId_gift());
+            $this->request->execute();
+        } catch (Exception $e) {
+            echo "Erreur lors de la mise à jour du statut de l'utilisateur : " . $e->getMessage();
+        }
     }
 }

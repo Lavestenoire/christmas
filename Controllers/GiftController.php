@@ -129,7 +129,27 @@ class giftController extends Controller
         echo json_encode($categories);
     }
 
-    public function listToOffer()
+    public function reservedGift()
     {
+        // Vérifier si le formulaire a été soumis
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Vérifier si des cases à cocher ont été cochées
+            if (isset($_POST['gift']) && is_array($_POST['gift'])) {
+                // Récupérer les valeurs des cases à cocher cochées
+                $gifts = $_POST['gift'];
+                // Faire quelque chose avec les valeurs des cases à cocher cochées
+                foreach ($gifts as $giftId) {
+                    // var_dump($giftId);
+                    // die;
+                    // Traiter chaque valeur de case à cocher cochée = update status gift à 1 pour réservé
+                    $gift = new Gift();
+                    $gift->setReserved_gift(1);
+                    $gift->setId_gift($gifts);
+
+                    $giftModel = new GiftModel();
+                    $giftModel->reservedGift($giftId);
+                }
+            }
+        }
     }
 }

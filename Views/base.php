@@ -16,7 +16,7 @@
         <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary container-fluid">
 
             <a class="navbar-brand" href="/christmas/public/home"> <!-- le lien href de home: home = réecriture d'URL = controller et action donc render -->
-                <img src="pictures/logoCalisto.png" alt="Logo" width="100">
+                <img src="pictures/logo.svg" alt="Logo" width="200">
             </a>
             <?php if (isset($_SESSION['nickname_account'])) { ?>
                 <h3>Famille <?= $_SESSION['nickname_account']; ?></h3>
@@ -30,51 +30,51 @@
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/christmas/public/home">
-                                <i class="menuIcon fa-solid fa-house-chimney-window"></i>
+                                <img src="pictures/icones/home.svg" alt="icone home" width=50>
                                 <span class="menuText">Home</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="pageCreateGift">
-                                <i class="menuIcon fa-solid fa-gift menuEntry"></i>
+                                <img src="pictures/icones/cadeau.svg" alt="icone cadeau" width=50>
                                 <span class="menuText">Ajouter un cadeau</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="giftList">
-                                <i class="menuIcon fa-solid fa-list-ul"></i>
+                                <img src="pictures/icones/liste.svg" alt="icone liste" width=50>
                                 <span class="menuText">Ma liste</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="secretPage">
-                                <i class="menuIcon fa-solid fa-user-secret"></i>
+                                <img src="pictures/icones/pageSecrete.svg" alt="icone page secrète" width=50>
                                 <span class="menuText">Page Secrète</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="profileUser">
-                                <i class="menuIcon fa-solid fa-user"></i>
+                                <img src="pictures/icones/profil.svg" alt="icone profil" width=50>
                                 <span class="menuText">Profil</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">
-                                <i class="menuIcon fa-solid fa-address-card"></i>
+                                <img src="pictures/icones/contact.svg" alt="icone contact" width=50>
                                 <span class="menuText">Contact</span>
                             </a>
                         </li>
                         <?php if (!isset($_SESSION['id_account'])) { ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="/christmas/public/viewLogin">
-                                    <i class="menuIcon fa-solid fa-right-to-bracket"></i>
+                                    <img src="pictures/icones/connexion.svg" alt="icone connexion" width=50>
                                     <span class="menuText">Connexion/inscription</span>
                                 </a>
                             </li>
                         <?php } else { ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="/christmas/public/logoutAccount">
-                                    <i class="menuIcon fa-solid fa-right-from-bracket"></i>
+                                    <img src="pictures/icones/deconnexion.svg" alt="icone deconnexion" width=50>
                                     <span class="menuText">Se déconnecter</span>
                                 </a>
                             </li>
@@ -85,26 +85,13 @@
         </nav>
     </header>
     <div class="container">
-        <?php if (isset($_SESSION['id_user'])) { ?>
-            <div id="helloFamilyContainer">
-                <div id="helloFamily">Famille <?= $_SESSION['nickname_account'] ?></div>
-            </div>
-        <?php } ?>
         <main><?= $content ?></main>
+        <img src="pictures/imgFooter.svg" alt="" id="footerImage">
     </div>
+
+
     <footer>
-        <nav class="footerItem">
-            <ul>
-                <li><a href="home">Accueil</a></li>
-                <li><a href="pageCreateGift">Ajouter un cadeau</a></li>
-                <li><a href="giftList">Ma liste</a></li>
-                <li><a href="secretPage">Page Secrète</a></li>
-                <li><a href="profileUser">Profil</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
-        <div class="footerItem copyright">Calisto © 2024 | Tous droits réservés</div>
-        <div class="footerItem"><img src="pictures/titreCalisto.png" alt="Logo" width="150"></div>
+        <div class="footerItem copyright">Fami'list © 2024 | Tous droits réservés</div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="/christmas/public/script.js"></script>
