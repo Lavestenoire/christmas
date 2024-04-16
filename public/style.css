@@ -297,6 +297,7 @@ footer {
 }
 
 .list {
+    width: fit-content;
     margin: 25px;
     padding: 25px;
     height: 350px;
@@ -308,7 +309,6 @@ footer {
     border-radius: 95% 4% 92% 5%/4% 95% 6% 95%;
     transform: rotate(2deg);
     overflow-y: scroll;
-
 }
 
 
@@ -336,13 +336,13 @@ footer {
     text-align: center;
 }
 
-#giftList {
+.giftList {
     display: flex;
     padding: 0;
 }
 
-#giftList li {
-    padding: 1rem;
+.giftList li {
+    padding: 0.5rem;
 }
 
 /* 

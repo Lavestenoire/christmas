@@ -64,17 +64,20 @@ class UserController extends Controller
     // ########################################
     //          PAGE CONNEXION USER
     // ########################################
-    public function pageLoginuser()
+    public function pageLoginUser()
     {
+        if (isset($_SESSION['id_user'])) {
+            header("Location: home");
+            exit();
+        }
         if (isset($_GET['id_user'])) {
             $user = new User();
             $getIdUser = $user->setId_user($_GET['id_user']);
 
             $userModel = new UserModel();
             $user = $userModel->getUserByIdUser($getIdUser);
+            $this->render('user/loginUser', ['user' => $user]);
         }
-        // on passe les informations à la vue
-        $this->render('user/loginUser', ['user' => $user]);
     }
 
     // ########################################
@@ -87,7 +90,7 @@ class UserController extends Controller
             $account = new Account();
             $account->setId_account($_SESSION['id_account']);
 
-            // $id_user = $_GET['id_user'];
+            $id_user = $_POST['id_user'];
             // stocker les $_POST dans des variables
             $nickname_user = $_POST['nickname_user'];
             $question = $_POST['question_user'];
@@ -110,7 +113,7 @@ class UserController extends Controller
             $userModel = new UserModel();
             // appeler la méthode du model qui gère la requete
             $userData = $userModel->loginUser($user);
-            if ($userData['nickname_user'] === $nickname_user && $userData['question_user'] === $question && $userData['response_user'] === $response) {
+            if ($userData !== false && $userData['nickname_user'] === $nickname_user && $userData['question_user'] === $question && $userData['response_user'] === $response) {
                 $_SESSION['id_user'] = $userData['id_user'];
                 $_SESSION['nickname_user'] = $userData['nickname_user'];
                 $_SESSION['role_user'] = $userData['role_user'];
@@ -125,11 +128,9 @@ class UserController extends Controller
                 exit();
             } else {
                 $_SESSION['error_message'] = "Les informations de connexion sont incorrectes.";
+                header("Location: pageLoginUser?id_user=" . $id_user);
             }
-            // REQUETE: SELECT id_user WHERE id_account en session?
-            // update le status_user à 1
         }
-        $this->render("user/loginUser");
     }
 
     // ########################################

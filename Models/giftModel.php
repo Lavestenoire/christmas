@@ -132,7 +132,7 @@ class GiftModel extends DbConnect
     // ############################################################
     // LISTE CADEAUX STATUS 0
     // ############################################################
-    public function listByStatusZero(User $user)
+    public function listByStatus(User $user)
     {
         $this->request = $this->connection->prepare("SELECT c_gift.name_gift, c_gift.description_gift, c_gift.reserved_gift, c_category.name_category
         FROM c_gift
@@ -162,5 +162,13 @@ class GiftModel extends DbConnect
         $this->request->execute();
         $catList = $this->request->fetchAll(PDO::FETCH_ASSOC);
         return $catList;
+    }
+
+    // ############################################################
+    //                      LISTE À OFFRIR
+    // ############################################################
+
+    public function giftReserved(User $user, Gift $gift)
+    {
     }
 }

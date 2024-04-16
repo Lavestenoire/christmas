@@ -37,7 +37,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="pageCreateGift">
                                 <i class="menuIcon fa-solid fa-gift menuEntry"></i>
-                                <span class="menuText">Créer un cadeau</span>
+                                <span class="menuText">Ajouter un cadeau</span>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -96,7 +96,7 @@
         <nav class="footerItem">
             <ul>
                 <li><a href="home">Accueil</a></li>
-                <li><a href="pageCreateGift">Créer un cadeau</a></li>
+                <li><a href="pageCreateGift">Ajouter un cadeau</a></li>
                 <li><a href="giftList">Ma liste</a></li>
                 <li><a href="secretPage">Page Secrète</a></li>
                 <li><a href="profileUser">Profil</a></li>

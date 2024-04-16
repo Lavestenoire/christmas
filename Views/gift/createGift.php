@@ -13,7 +13,7 @@ if (isset($_GET['message']) && $_GET['message'] == 'gift_added') {
     <h1>Page de <?= $_SESSION['nickname_user']; ?></h1>
     <div id="giftPage">
         <section class="sectionGift">
-            <h2>Créer un cadeau</h2>
+            <h2>Ajouter un cadeau</h2>
             <form class="mx-auto w-80" action="createGift" method="POST">
                 <div class="mb-3 col-4">
                     <label for="name_gift" class="form-label">Nom</label>

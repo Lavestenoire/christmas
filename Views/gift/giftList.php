@@ -12,14 +12,15 @@ $title = "Christmas - Ma liste";
             <button type="submit" name="addGift" class="button-paper" role="button"><a href="/christmas/public/pageCreateGift">Ajouter un cadeau</a></button>
             <?php } else {
             foreach ($list as $gift) { ?>
-                <ul id='giftList'>
-                    <li><?= $gift['name_gift']; ?></li>
-                    <li><?= $gift['description_gift']; ?></li>
-                    <li><?= $gift['name_category']; ?></li>
-                    <li><i class="fa-regular fa-pen-to-square"><a href="#"></a></i></li>
-                    <li><i class="fa-regular fa-trash-can"></i><a href="#"></a></i></li>
+                <ul class='giftList'>
+                    <ul class='giftList'>
+                        <li><span title="<?= $gift['description_gift'] . ' - ' . $gift['name_category']; ?>"><?= $gift['name_gift']; ?></span></li>
+
+                        <li><i class="fa-regular fa-pen-to-square"><a href="#"></a></i></li>
+                        <li><i class="fa-regular fa-trash-can"></i><a href="#"></a></i></li>
+                    </ul>
                 </ul>
-                <div class="candy"><i class="fa-solid fa-candy-cane"></i></div>
+                <hr>
         <?php }
         } ?>
     </div>

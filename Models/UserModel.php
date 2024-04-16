@@ -118,6 +118,7 @@ class UserModel extends DbConnect
             $this->request->execute();
 
             $data = $this->request->fetch(PDO::FETCH_ASSOC);
+
             return $data;
         } catch (Exception $e) {
             echo "Erreur lors de la connexion à la base de données : " . $e->getMessage();

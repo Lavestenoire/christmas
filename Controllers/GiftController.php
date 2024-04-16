@@ -100,6 +100,7 @@ class giftController extends Controller
         $user->setStatus_user(0);
 
         $userModel = new UserModel();
+        // récupération des users dont le statut est setté à 0
         $getUserByStatus = $userModel->getUserByStatus($account, $user);
         // var_dump($getUserByStatus);
 
@@ -108,7 +109,7 @@ class giftController extends Controller
         foreach ($getUserByStatus as $value) {
             $giftModel = new GiftModel();
             $user->setId_user($value['id_user']);
-            $giftList = $giftModel->listByStatusZero($user);
+            $giftList = $giftModel->listByStatus($user);
             $giftLists[$value['nickname_user']] = $giftList;
         }
 
@@ -126,5 +127,9 @@ class giftController extends Controller
         $giftModel = new giftModel();
         $categories = $giftModel->getNameCategory($search);
         echo json_encode($categories);
+    }
+
+    public function listToOffer()
+    {
     }
 }

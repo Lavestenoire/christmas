@@ -20,18 +20,34 @@ $title = "Christmas - Page secrète";
                     <?php } else {
                     foreach ($giftList as $gift) { ?>
                         <div class="liAndInputList">
-                            <ul class="giftEntry">
-                                <li>nom <?= $gift['name_gift'] ?></li>
-                                <li>description <?= $gift['description_gift'] ?></li>
-                                <li>category <?= $gift['name_category'] ?></li>
+                            <ul class="giftList">
+                                <li><?= $gift['name_gift'] ?></li>
+                                <li><?= $gift['description_gift'] ?></li>
+                                <li><?= $gift['name_category'] ?></li>
                             </ul>
                             <div><input type='checkbox' name='gift[]' value='<?= $gift['id_gift'] ?>'></div>
                         </div>
+                        <hr>
                 <?php }
                 } ?>
                 <button class="button-paper" role="button">Ajouter</button>
             </div>
         <?php } ?>
+    </div>
+    <!-- liste des cadeaux réservés à 1 par id_user -->
+    <div id="containerList">
+        <div class="list">
+            <div class="boxName">Pour offrir</div>
+            <p>Pas de cadeau ajouté à la liste</p>
+            <div class="liAndInputList">
+                <ul class="giftList">
+                    <li>nom</li>
+                    <li>description</li>
+                    <li>category</li>
+                </ul>
+                <div><i class="fa-solid fa-minus"></i></div>
+            </div>
+        </div>
     </div>
 <?php } else if (!isset($_SESSION['id_user'])) {
     header('Location: home');

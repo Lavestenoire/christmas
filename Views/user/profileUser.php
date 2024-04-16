@@ -18,15 +18,15 @@ if (isset($_SESSION['id_account']) && isset($_SESSION['id_user'])) { ?>
         <form class="mx-auto w-80 editUser" id="editForm" action="editUser" method="POST" enctype="multipart/form-data">
             <div class="mb-3 col-6">
                 <label for="nickname_user" class="form-label">Modifie ton pseudo</label>
-                <input type="text" name="nickname_user" value="<?= $userProfile['nickname_user'] ?>" class="form-control" id="nickname_user" aria-describedby="usernameHelp">
+                <input type="text" name="nickname_user" value="<?= $userProfile['nickname_user'] ?>" class="form-control" id="nickname_user" aria-describedby="usernameHelp" required>
             </div>
             <div class="mb-3 col-6">
                 <label for="question_user" class="form-label">Modifie ta question personnelle.</label>
-                <input type="text" name="question_user" value="<?= $userProfile['question_user'] ?>" class="form-control" id="question_user" aria-describedby="usernameHelp">
+                <input type="text" name="question_user" value="<?= $userProfile['question_user'] ?>" class="form-control" id="question_user" aria-describedby="usernameHelp" required>
             </div>
             <div class="mb-3 col-6">
-                <label for="response_user" class="form-label">Meodifie la réponse à ta question</label>
-                <input type="password" name="response_user" class="form-control" id="response_user">
+                <label for="response_user" class="form-label">Modifie la réponse à ta question</label>
+                <input type="password" name="response_user" value="<?= $userProfile['response_user'] ?>" class="form-control" id="response_user" required>
             </div>
             <div class="mb-3 col-12">
                 <label for="formFile" class="form-label">Modifie l'image de profil</label>
