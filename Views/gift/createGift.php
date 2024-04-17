@@ -10,7 +10,7 @@ if (isset($_GET['message']) && $_GET['message'] == 'gift_added') {
 }
 ?>
 <?php if (isset($_SESSION['id_account']) && isset($_SESSION['id_user'])) { ?>
-    <div id="logoutUserBtn"><button type="submit" name="addAUser" role="button"><a href="logoutUser"></a><img src="pictures/BoutonDecoUser.svg" alt="bouton" width=150></button></div>
+    <div id="logoutUserBtn"><button type="submit" name="logOutUser" role="button"><a href="logoutUser"><img src="pictures/BoutonDecoUser.svg" alt="bouton" width=150></a></button></div>
 
     <h1>Page de <?= $_SESSION['nickname_user']; ?></h1>
     <div id="giftPage">

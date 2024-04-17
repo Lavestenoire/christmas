@@ -11,6 +11,7 @@ use App\Entities\Gift;
 use App\Entities\Category;
 use App\Entities\GiftList;
 use App\Entities\User;
+use App\Entities\Account;
 use App\Entities\CategoryGift;
 
 class GiftModel extends DbConnect
@@ -175,6 +176,31 @@ class GiftModel extends DbConnect
             $this->request->bindValue(':reserved_gift', $gift->getReserved_gift());
             $this->request->bindValue('id_gift', $gift->getId_gift());
             $this->request->execute();
+        } catch (Exception $e) {
+            echo "Erreur lors de la mise à jour du statut de l'utilisateur : " . $e->getMessage();
+        }
+    }
+
+    public function giftToOffer(Gift $gift, User $user, Account $account)
+    {
+        try {
+            $this->request = $this->connection->prepare("SELECT c_gift.name_gift, c_gift.description_gift, c_gift.reserved_gift, c_category.name_category
+        FROM c_gift
+        JOIN c_giftlist ON c_gift.id_gift = c_giftlist.id_gift
+        JOIN c_user ON c_giftlist.id_user = c_user.id_user
+        JOIN c_account ON c_user.id_account = c_account.id_account
+        JOIN c_categorygift ON c_gift.id_gift = c_categorygift.id_gift
+        JOIN c_category ON c_categorygift.id_category = c_category.id_category
+        WHERE c_account.id_account = :id_account AND c_user.status_user = :status_user AND c_gift.reserved_gift = :reserved_gift");
+
+            $this->request->bindValue('id_account', $account->getId_account());
+            $this->request->bindValue('status_user', $user->getStatus_user());
+            $this->request->bindValue('reserved_gift', $gift->getReserved_gift());
+
+            $this->request->execute();
+
+            $listToOffer = $this->request->fetchAll(PDO::FETCH_ASSOC);
+            return $listToOffer;
         } catch (Exception $e) {
             echo "Erreur lors de la mise à jour du statut de l'utilisateur : " . $e->getMessage();
         }

@@ -102,24 +102,26 @@ class giftController extends Controller
         $userModel = new UserModel();
         // récupération des users dont le statut est setté à 0
         $getUserByStatus = $userModel->getUserByStatus($account, $user);
-        // var_dump($getUserByStatus);
+
 
         $giftLists = [];
 
         foreach ($getUserByStatus as $value) {
             $giftModel = new GiftModel();
             $user->setId_user($value['id_user']);
+
+            $gift = new Gift();
+            $gift->setReserved_gift(0);
+
+            // Récupérer les données pour la liste des cadeaux
             $giftList = $giftModel->listByStatus($user);
             $giftLists[$value['nickname_user']] = $giftList;
         }
 
-        // echo '<pre>';
-        // var_dump($giftLists);
-        // echo '</pre>';
-        // die;
-
+        // Transmettre les données à la vue
         $this->render('gift/secretPage', ['giftLists' => $giftLists]);
     }
+
 
     public function getCategoryHint()
     {
@@ -128,28 +130,58 @@ class giftController extends Controller
         $categories = $giftModel->getNameCategory($search);
         echo json_encode($categories);
     }
-
     public function reservedGift()
     {
         // Vérifier si le formulaire a été soumis
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Vérifier si des cases à cocher ont été cochées
-            if (isset($_POST['gift']) && is_array($_POST['gift'])) {
-                // Récupérer les valeurs des cases à cocher cochées
-                $gifts = $_POST['gift'];
+            if (is_array($_POST['gift']) || is_string($_POST['gift'])) {
+                // Convertir la chaîne de caractères en tableau si nécessaire
+                $gifts = is_string($_POST['gift']) ? array($_POST['gift']) : $_POST['gift'];
+
                 // Faire quelque chose avec les valeurs des cases à cocher cochées
                 foreach ($gifts as $giftId) {
-                    // var_dump($giftId);
-                    // die;
                     // Traiter chaque valeur de case à cocher cochée = update status gift à 1 pour réservé
                     $gift = new Gift();
                     $gift->setReserved_gift(1);
-                    $gift->setId_gift($gifts);
+                    $gift->setId_gift($giftId);
 
                     $giftModel = new GiftModel();
-                    $giftModel->reservedGift($giftId);
+                    $giftModel->reservedGift($gift);
                 }
             }
+            header("Location: secretPage");
         }
+    }
+
+    public function listToOffer()
+    {
+
+        // $id_account = $_SESSION['id_account'];
+        // $account = new Account();
+        // $account->setId_account($id_account);
+
+        // $user = new User();
+        // $user->setStatus_user(0);
+
+        // $userModel = new UserModel();
+        // // récupération des users dont le statut est setté à 0
+        // $getUserByStatus = $userModel->getUserByStatus($account, $user);
+        // // var_dump($getUserByStatus);
+
+        // $gift = new Gift();
+        // $gift->setReserved_gift(1);
+        // $giftToOffer = [];
+
+        // foreach ($getUserByStatus as $value) {
+        //     $giftModel = new GiftModel();
+        //     $user->setId_user($value['id_user']);
+        //     $giftToOffer = $giftModel->listByStatus($user, $gift);
+        //     $giftsToOffer[$value['nickname_user']] = $giftToOffer;
+        // }
+
+
+
+        // $this->render('gift/secretPage', ['giftsToOffer' => $giftsToOffer]);
     }
 }

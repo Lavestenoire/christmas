@@ -300,7 +300,8 @@ footer {
                     LISTES PAGE SECRÈTE
 ############################################################ 
 */
-#containerList {
+#containerList,
+#containerListToOffer {
     width: 100%;
     display: flex;
     flex-direction: row;
