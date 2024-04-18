@@ -22,4 +22,6 @@ RewriteRule ^createGift$ index.php?controller=Gift&action=createGift [QSA,L]
 RewriteRule ^getCategoryHint$ index.php?controller=Gift&action=getCategoryHint [QSA,L]
 RewriteRule ^giftList$ index.php?controller=Gift&action=giftList [QSA,L]
 RewriteRule ^secretPage$ index.php?controller=Gift&action=secretPage [QSA,L]
+RewriteRule ^reservedGift$ index.php?controller=Gift&action=reservedGift [QSA,L]
+RewriteRule ^deleteGiftToOffer$ index.php?controller=Gift&action=deleteGiftToOffer [QSA,L]
 

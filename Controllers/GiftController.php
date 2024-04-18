@@ -90,8 +90,19 @@ class giftController extends Controller
         $this->render('gift/giftList', ['list' => $list]);
     }
 
+
+    // ############################################################
+    // ###################### PAGE SECRÈTE #######################
+    // ############################################################
+
     public function secretPage()
     {
+        if (!isset($_SESSION['id_account']) || !isset($_SESSION['id_user'])) {
+            header('Location: home');
+            exit();
+        }
+
+        // Récupérer la giftList
         $id_account = $_SESSION['id_account'];
         $account = new Account();
         $account->setId_account($id_account);
@@ -100,25 +111,60 @@ class giftController extends Controller
         $user->setStatus_user(0);
 
         $userModel = new UserModel();
+        // récupération des users dont le statut est setté à 0
         $getUserByStatus = $userModel->getUserByStatus($account, $user);
-        // var_dump($getUserByStatus);
 
         $giftLists = [];
 
         foreach ($getUserByStatus as $value) {
             $giftModel = new GiftModel();
             $user->setId_user($value['id_user']);
-            $giftList = $giftModel->listByStatusZero($user);
+
+            $gift = new Gift();
+            $gift->setReserved_gift(0);
+
+            // Récupérer les données pour la liste des cadeaux de chaque utilisateur
+            $giftList = $giftModel->listByStatus($user);
             $giftLists[$value['nickname_user']] = $giftList;
         }
 
+        // Récupérer la listToOffer
+        $gift = new Gift();
+        $gift->setReserved_gift(1);
+
+        $account = new Account();
+        $account->setId_account($_SESSION['id_account']);
+
+
+        $giftModel = new GiftModel();
+        $listToOffer = $giftModel->giftToOffer($gift, $user, $account);
         // echo '<pre>';
-        // var_dump($giftLists);
+        // var_dump($account);
+        // var_dump($user);
+        // var_dump($gift);
         // echo '</pre>';
         // die;
 
-        $this->render('gift/secretPage', ['giftLists' => $giftLists]);
+
+        $this->render('gift/secretPage', ['giftList' => $giftLists, 'listToOffer' => $listToOffer]);
     }
+
+    // ############################################################
+    //           PAGE SECRÈTE UPDATE RESERVED_GIFT 
+    //      à la suppression d'un cadeau de la liste à offrir
+    // ############################################################
+    public function deleteGiftToOffer()
+    {
+        $id_gift = $_POST['id_gift'];
+        $gift = new Gift();
+        $gift->setId_gift($id_gift);
+        $gift->setReserved_gift(0);
+
+        $giftModel = new GiftModel($gift);
+        $giftModel->updateReservedGift($gift);
+        header('Location: secretPage');
+    }
+
 
     public function getCategoryHint()
     {
@@ -126,5 +172,32 @@ class giftController extends Controller
         $giftModel = new giftModel();
         $categories = $giftModel->getNameCategory($search);
         echo json_encode($categories);
+    }
+
+    // ############################################################
+    //  GERE LES DONNEES DU FORMULAIRE D'AFFICHAGE DES LISTE USERS
+    // ############################################################
+    public function reservedGift()
+    {
+        // Vérifier si le formulaire a été soumis
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Vérifier si des cases à cocher ont été cochées
+            if (is_array($_POST['gift']) || is_string($_POST['gift'])) {
+                // Convertir la chaîne de caractères en tableau si nécessaire
+                $gifts = is_string($_POST['gift']) ? array($_POST['gift']) : $_POST['gift'];
+
+                // Faire quelque chose avec les valeurs des cases à cocher cochées
+                foreach ($gifts as $giftId) {
+                    // Traiter chaque valeur de case à cocher cochée = update status gift à 1 pour réservé
+                    $gift = new Gift();
+                    $gift->setReserved_gift(1);
+                    $gift->setId_gift($giftId);
+
+                    $giftModel = new GiftModel();
+                    $giftModel->updateReservedGift($gift);
+                }
+            }
+            header("Location: secretPage");
+        }
     }
 }

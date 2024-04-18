@@ -108,3 +108,4 @@ function confirmEditProfileUser() {
     var editForm = document.querySelector(".editUser");
     editForm.style.display = "none";
 }
+

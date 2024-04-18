@@ -40,8 +40,19 @@ if (isset($_SESSION['id_account'])) { ?>
     else if (isset($showProfiles) && $showProfiles) {
         // si un profil est connecté
         if (isset($_SESSION['id_user'])) { ?>
+            <div id="logoutUserBtn"><button type="submit" name="logOutAUser" role="button"><a href="logoutUser"><img src="pictures/BoutonDecoUser.svg" alt="bouton" width=150></a></button></div>
             <h1>Bienvenue à toi, petit lutin <?= $_SESSION['nickname_user'] ?></h1>
-            <div id="logoutUserBtn"><a href="logoutUser"><button type="submit" name="addAUser" class="button-paper" role="button">Déco User</button></a></div>
+            <p>Bienvenue dans le quartier général du Père Noël pour les listes et les cadeaux parfaits ! 🎅🎁
+
+                Êtes-vous prêt à transformer le pôle Nord en une zone de planification festive ? 🎄 Imaginez un endroit où les lutins développeurs se joignent à nous pour créer la magie de Noël en ligne !
+
+                Que vous soyez un parent en quête de l'ultime cadeau-surprise ou un enfant déterminé à garantir que votre lettre au Père Noël ne se perde pas dans la neige, vous êtes au bon endroit.
+
+                Ici, vous pouvez créer, partager et collaborer sur vos listes de souhaits les plus extravagantes. Pensez-y comme un tableau de bord de rêve pour Noël, où chaque clic rapproche votre moment de joie sous l'arbre.
+
+                Préparez-vous à être plus efficace que jamais dans votre quête du cadeau parfait. Avec notre aide, vous aurez les cadeaux les plus épiques depuis les rennes volants du Père Noël.
+
+                Alors, qu'attendez-vous ? Plongez dans le joyeux chaos de la saison des fêtes avec nous ! 🎉</p>
         <?php }
         //sinon affichage des profils existant 
         else { ?>
