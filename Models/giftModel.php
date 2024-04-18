@@ -135,74 +135,89 @@ class GiftModel extends DbConnect
     // ############################################################
     public function listByStatus(User $user)
     {
-        $this->request = $this->connection->prepare("SELECT c_gift.id_gift, c_gift.name_gift, c_gift.description_gift, c_gift.reserved_gift, c_category.name_category
+        try {
+            $this->request = $this->connection->prepare("SELECT c_gift.id_gift, c_gift.name_gift, c_gift.description_gift, c_gift.reserved_gift, c_category.name_category
         FROM c_gift
         JOIN c_giftlist ON c_gift.id_gift = c_giftlist.id_gift
         JOIN c_user ON c_giftlist.id_user = c_user.id_user
         JOIN c_categorygift ON c_gift.id_gift = c_categorygift.id_gift
         JOIN c_category ON c_categorygift.id_category = c_category.id_category
         WHERE c_user.status_user = :status_user AND c_user.id_user = :id_user");
-        $this->request->bindValue(':status_user', $user->getStatus_user());
-        $this->request->bindValue(':id_user', $user->getId_user());
-        $this->request->execute();
+            $this->request->bindValue(':status_user', $user->getStatus_user());
+            $this->request->bindValue(':id_user', $user->getId_user());
+            $this->request->execute();
 
-        $listByStatus = $this->request->fetchAll(PDO::FETCH_ASSOC);
-        return $listByStatus;
+            $listByStatus = $this->request->fetchAll(PDO::FETCH_ASSOC);
+            return $listByStatus;
+        } catch (Exception $e) {
+            echo "Erreur lors de la récupération de cadeaux par statut user : " . $e->getMessage();
+        }
     }
     // ############################################################
     //        POUR L'AUTOCOMPLETION DES CATEGORIES
     // ############################################################
     public function getNameCategory($search)
     {
-        if (!empty($search)) {
-            $this->request = $this->connection->prepare("SELECT name_category FROM c_category WHERE name_category LIKE :search");
-            $this->request->bindValue(':search', "%$search%");
-        } else {
-            $this->request = $this->connection->prepare("SELECT name_category FROM c_category");
+        try {
+            if (!empty($search)) {
+                $this->request = $this->connection->prepare("SELECT name_category FROM c_category WHERE name_category LIKE :search");
+                $this->request->bindValue(':search', "%$search%");
+            } else {
+                $this->request = $this->connection->prepare("SELECT name_category FROM c_category");
+            }
+            $this->request->execute();
+            $catList = $this->request->fetchAll(PDO::FETCH_ASSOC);
+            return $catList;
+        } catch (Exception $e) {
+            echo "Erreur lors de la récupération de catégories de cadeaux : " . $e->getMessage();
         }
-        $this->request->execute();
-        $catList = $this->request->fetchAll(PDO::FETCH_ASSOC);
-        return $catList;
+    }
+
+    // ############################################################
+    //                      MISE A JOUR STATUTS CADEAUX
+    // ############################################################
+
+    public function updateReservedGift(Gift $gift)
+    {
+        try {
+            $this->request = $this->connection->prepare("UPDATE c_gift SET reserved_gift = :reserved_gift WHERE id_gift = :id_gift");
+            $this->request->bindValue(':reserved_gift', $gift->getReserved_gift());
+            $this->request->bindValue(':id_gift', $gift->getId_gift());
+            $this->request->execute();
+        } catch (Exception $e) {
+            echo "Erreur lors de la mise à jour du status de réservation de cadeaux : " . $e->getMessage();
+        }
     }
 
     // ############################################################
     //                      LISTE À OFFRIR
     // ############################################################
-
-    public function reservedGift(Gift $gift)
-    {
-        try {
-            $this->request = $this->connection->prepare("UPDATE c_gift SET reserved_gift = :reserved_gift WHERE id_gift = :id_gift");
-            $this->request->bindValue(':reserved_gift', $gift->getReserved_gift());
-            $this->request->bindValue('id_gift', $gift->getId_gift());
-            $this->request->execute();
-        } catch (Exception $e) {
-            echo "Erreur lors de la mise à jour du statut de l'utilisateur : " . $e->getMessage();
-        }
-    }
-
     public function giftToOffer(Gift $gift, User $user, Account $account)
     {
         try {
-            $this->request = $this->connection->prepare("SELECT c_gift.name_gift, c_gift.description_gift, c_gift.reserved_gift, c_category.name_category
+            $this->request = $this->connection->prepare("SELECT c_gift.id_gift, c_gift.name_gift, c_gift.description_gift, c_gift.reserved_gift, c_category.name_category
         FROM c_gift
         JOIN c_giftlist ON c_gift.id_gift = c_giftlist.id_gift
         JOIN c_user ON c_giftlist.id_user = c_user.id_user
         JOIN c_account ON c_user.id_account = c_account.id_account
         JOIN c_categorygift ON c_gift.id_gift = c_categorygift.id_gift
         JOIN c_category ON c_categorygift.id_category = c_category.id_category
-        WHERE c_account.id_account = :id_account AND c_user.status_user = :status_user AND c_gift.reserved_gift = :reserved_gift");
+        WHERE c_gift.reserved_gift = :reserved_gift AND c_user.status_user = :status_user AND c_account.id_account = :id_account");
 
-            $this->request->bindValue('id_account', $account->getId_account());
-            $this->request->bindValue('status_user', $user->getStatus_user());
             $this->request->bindValue('reserved_gift', $gift->getReserved_gift());
+            $this->request->bindValue('status_user', $user->getStatus_user());
+            $this->request->bindValue('id_account', $account->getId_account());
 
             $this->request->execute();
 
             $listToOffer = $this->request->fetchAll(PDO::FETCH_ASSOC);
+            // echo '<pre>';
+            // var_dump($listToOffer);
+            // echo '</pre>';
+            // die;
             return $listToOffer;
         } catch (Exception $e) {
-            echo "Erreur lors de la mise à jour du statut de l'utilisateur : " . $e->getMessage();
+            echo "Erreur lors de la récupération des données : " . $e->getMessage();
         }
     }
 }

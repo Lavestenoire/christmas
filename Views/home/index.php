@@ -40,17 +40,19 @@ if (isset($_SESSION['id_account'])) { ?>
     else if (isset($showProfiles) && $showProfiles) {
         // si un profil est connecté
         if (isset($_SESSION['id_user'])) { ?>
-            <div id="logoutUserBtn"><button type="submit" name="addAUser" role="button"><a href="logoutUser"></a><img src="pictures/BoutonDecoUser.svg" alt="bouton" width=150></button></div>
+            <div id="logoutUserBtn"><button type="submit" name="logOutAUser" role="button"><a href="logoutUser"><img src="pictures/BoutonDecoUser.svg" alt="bouton" width=150></a></button></div>
             <h1>Bienvenue à toi, petit lutin <?= $_SESSION['nickname_user'] ?></h1>
-            <p>Et quoniam inedia gravi adflictabantur, locum petivere Paleas nomine, vergentem in mare, valido muro firmatum, ubi conduntur nunc usque commeatus distribui militibus omne latus Isauriae defendentibus adsueti. circumstetere igitur hoc munimentum per triduum et trinoctium et cum neque adclivitas ipsa sine discrimine adiri letali, nec cuniculis quicquam geri posset, nec procederet ullum obsidionale commentum, maesti excedunt postrema vi subigente maiora viribus adgressuri.
+            <p>Bienvenue dans le quartier général du Père Noël pour les listes et les cadeaux parfaits ! 🎅🎁
 
-                Quam ob rem circumspecta cautela observatum est deinceps et cum edita montium petere coeperint grassatores, loci iniquitati milites cedunt. ubi autem in planitie potuerint reperiri, quod contingit adsidue, nec exsertare lacertos nec crispare permissi tela, quae vehunt bina vel terna, pecudum ritu inertium trucidantur.
+                Êtes-vous prêt à transformer le pôle Nord en une zone de planification festive ? 🎄 Imaginez un endroit où les lutins développeurs se joignent à nous pour créer la magie de Noël en ligne !
 
-                Et quia Montius inter dilancinantium manus spiritum efflaturus Epigonum et Eusebium nec professionem nec dignitatem ostendens aliquotiens increpabat, qui sint hi magna quaerebatur industria, et nequid intepesceret, Epigonus e Lycia philosophus ducitur et Eusebius ab Emissa Pittacas cognomento, concitatus orator, cum quaestor non hos sed tribunos fabricarum insimulasset promittentes armorum si novas res agitari conperissent.Et quoniam inedia gravi adflictabantur, locum petivere Paleas nomine, vergentem in mare, valido muro firmatum, ubi conduntur nunc usque commeatus distribui militibus omne latus Isauriae defendentibus adsueti. circumstetere igitur hoc munimentum per triduum et trinoctium et cum neque adclivitas ipsa sine discrimine adiri letali, nec cuniculis quicquam geri posset, nec procederet ullum obsidionale commentum, maesti excedunt postrema vi subigente maiora viribus adgressuri.
+                Que vous soyez un parent en quête de l'ultime cadeau-surprise ou un enfant déterminé à garantir que votre lettre au Père Noël ne se perde pas dans la neige, vous êtes au bon endroit.
 
-                Quam ob rem circumspecta cautela observatum est deinceps et cum edita montium petere coeperint grassatores, loci iniquitati milites cedunt. ubi autem in planitie potuerint reperiri, quod contingit adsidue, nec exsertare lacertos nec crispare permissi tela, quae vehunt bina vel terna, pecudum ritu inertium trucidantur.
+                Ici, vous pouvez créer, partager et collaborer sur vos listes de souhaits les plus extravagantes. Pensez-y comme un tableau de bord de rêve pour Noël, où chaque clic rapproche votre moment de joie sous l'arbre.
 
-                Et quia Montius inter dilancinantium manus spiritum efflaturus Epigonum et Eusebium nec professionem nec dignitatem ostendens aliquotiens increpabat, qui sint hi magna quaerebatur industria, et nequid intepesceret, Epigonus e Lycia philosophus ducitur et Eusebius ab Emissa Pittacas cognomento, concitatus orator, cum quaestor non hos sed tribunos fabricarum insimulasset promittentes armorum si novas res agitari conperissent.</p>
+                Préparez-vous à être plus efficace que jamais dans votre quête du cadeau parfait. Avec notre aide, vous aurez les cadeaux les plus épiques depuis les rennes volants du Père Noël.
+
+                Alors, qu'attendez-vous ? Plongez dans le joyeux chaos de la saison des fêtes avec nous ! 🎉</p>
         <?php }
         //sinon affichage des profils existant 
         else { ?>

@@ -15,7 +15,7 @@
     <header>
         <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary container-fluid">
 
-            <a class="navbar-brand" href="/christmas/public/home"> <!-- le lien href de home: home = réecriture d'URL = controller et action donc render -->
+            <a class="navbar-brand" href="home"> <!-- le lien href de home: home = réecriture d'URL = controller et action donc render -->
                 <img src="pictures/logo.svg" alt="Logo" width="200">
             </a>
             <?php if (isset($_SESSION['nickname_account'])) { ?>
@@ -29,7 +29,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/christmas/public/home">
+                            <a class="nav-link active" aria-current="page" href="home">
                                 <img src="pictures/icones/home.svg" alt="icone home" width=50>
                                 <span class="menuText">Home</span>
                             </a>
