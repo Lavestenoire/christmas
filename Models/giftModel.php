@@ -107,7 +107,7 @@ class GiftModel extends DbConnect
     {
         try {
             $this->request = $this->connection->prepare(
-                "SELECT c_gift.name_gift, c_gift.description_gift, c_category.name_category
+                "SELECT c_gift.id_gift, c_gift.name_gift, c_gift.description_gift, c_category.name_category
                 FROM c_gift
                 JOIN c_categorygift
                 ON c_gift.id_gift = c_categorygift.id_gift
@@ -220,4 +220,9 @@ class GiftModel extends DbConnect
             echo "Erreur lors de la récupération des données : " . $e->getMessage();
         }
     }
+
+    // ############################################################
+    //                      EDIT GIFT
+    // ############################################################
+
 }

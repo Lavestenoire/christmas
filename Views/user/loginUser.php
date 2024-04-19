@@ -14,9 +14,10 @@ $title = "Christmas - Se connecter";
             <label for="question_user" class="form-label">Indique une question personnelle.</label>
             <input type="text" name="question_user" value="<?= $user['question_user']; ?>" class="form-control" id="question_user" aria-describedby="usernameHelp" required>
         </div>
-        <div class="mb-3 col-4">
+        <div class="mb-3 col-4 mdp">
+            <div class="eye"><i class="fa-regular fa-eye"></i></div>
             <label for="response_user" class="form-label">Indique la réponse qui te permettra de te connecter</label>
-            <input type="password" name="response_user" class="form-control" id="response_user" required>
+            <input type="password" name="response_user" class="form-control loginPassword" id="response_user" required>
         </div>
         <input type="hidden" name="id_user" value="<?= $user['id_user']; ?>">
         <!-- champs caché pour insérer le role admin par défaut/ici non admnin puisqu'il en existe déjà un via l'ajout profil de home/index-->
