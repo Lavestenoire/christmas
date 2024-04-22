@@ -89,6 +89,58 @@ class giftController extends Controller
 
         $this->render('gift/giftList', ['list' => $list]);
     }
+    // ############################################################
+    //                      DELETE GIFT
+    // ############################################################
+    public function deleteGift()
+    {
+        $id_user = $_SESSION['id_user'];
+        $id_gift = $_POST['id_gift'];
+
+
+        $giftList = new GiftList();
+        $giftList->setId_user($id_user);
+
+        $gift = new Gift();
+        $gift->setId_gift($id_gift);
+
+        $giftModel = new GiftModel();
+        $giftModel->deleteGift($giftList);
+
+        header("Location: giftList");
+    }
+    // ############################################################
+    //                   EDIT GIFT DANS MA LISTE
+    // ############################################################
+    public function editGift()
+    {
+        // Récupérer les valeurs envoyées par le client
+        $id_gift = $_POST['id_gift'];
+        $name_gift = $_POST['name_gift'];
+        $description_gift = $_POST['description_gift'];
+        $name_category = $_POST['name_category'];
+        $id_category = $_POST['id_category'];
+
+        // Créer un objet Gift avec les valeurs récupérées
+        $gift = new Gift();
+        $gift->setId_gift($id_gift);
+        $gift->setName_gift($name_gift);
+        $gift->setDescription_gift($description_gift);
+
+        // Créer un objet Category avec les valeurs récupérées
+        $category = new Category();
+        $category->setId_category($id_category);
+        $category->setName_category($name_category);
+
+        // Appeler la méthode editGift de votre modèle pour mettre à jour le cadeau dans la base de données
+        $model = new GiftModel();
+        $model->editGift($gift);
+        $model->editCategory($category); // Call the editCategory() method
+
+        // Retourner une réponse au client
+        echo 'Le cadeau a été mis à jour avec succès.';
+    }
+
 
 
     // ############################################################

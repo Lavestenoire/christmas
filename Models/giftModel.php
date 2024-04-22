@@ -107,7 +107,7 @@ class GiftModel extends DbConnect
     {
         try {
             $this->request = $this->connection->prepare(
-                "SELECT c_gift.name_gift, c_gift.description_gift, c_category.name_category
+                "SELECT c_gift.id_gift, c_gift.name_gift, c_gift.description_gift, c_category.name_category, c_category.id_category
                 FROM c_gift
                 JOIN c_categorygift
                 ON c_gift.id_gift = c_categorygift.id_gift
@@ -129,9 +129,62 @@ class GiftModel extends DbConnect
             return [];
         }
     }
+    // ############################################################
+    //                      EDIT GIFT
+    // ############################################################
+    public function editGift(Gift $gift)
+    {
+        try {
+            $this->request = $this->connection->prepare("UPDATE c_gift
+            SET c_gift.name_gift = :name_gift,
+                c_gift.description_gift = :description_gift
+            WHERE c_gift.id_gift = :id_gift");
+
+            $this->request->bindValue(':name_gift', $gift->getName_gift());
+            $this->request->bindValue(':description_gift', $gift->getDescription_gift());
+            $this->request->bindValue(':id_gift', $gift->getId_gift());
+            $this->request->execute();
+        } catch (Exception $e) {
+            echo "Erreur lors de la récupération des données : " . $e->getMessage();
+        }
+    }
+
+    public function editCategory(Category $category)
+    {
+        $this->request = $this->connection->prepare("UPDATE c_category
+        SET c_category.name_category = :name_category
+        WHERE c_category.id_category = :id_category");
+
+        $this->request->bindValue(':name_category', $category->getName_category());
+        $this->request->bindValue(':id_category', $category->getId_category());
+        $this->request->execute();
+    }
 
     // ############################################################
-    // LISTE CADEAUX STATUS 0
+    //                      DELETE GIFT
+    // ############################################################
+    public function deleteGift(GiftList $giftList)
+    {
+        try {
+            $this->request = $this->connection->prepare(
+                "DELETE c_gift.*
+                FROM c_gift
+                JOIN c_categorygift ON c_gift.id_gift = c_categorygift.id_gift
+                JOIN c_category ON c_categorygift.id_category = c_category.id_category
+                JOIN c_giftlist ON c_gift.id_gift = c_giftlist.id_gift
+                WHERE c_giftlist.id_user = :id_user AND c_gift.id_gift = :id_gift"
+            );
+            $this->request->bindValue(':id_user', $giftList->getId_user());
+            $this->request->bindValue(':id_gift', $giftList->getId_gift());
+            $this->request->execute();
+        } catch (Exception $e) {
+            echo "Erreur lors de la connexion à la base de données : " . $e->getMessage();
+            return [];
+        }
+    }
+
+    // ############################################################
+    //                  LISTE CADEAUX STATUS 0
     // ############################################################
     public function listByStatus(User $user)
     {

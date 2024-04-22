@@ -126,6 +126,18 @@ class UserModel extends DbConnect
     }
 
     // ########################################
+    //      LES QUESTIONS DE TOUS LES USERS
+    // ########################################
+    public function questionsUsers(Account $account)
+    {
+        $this->request = $this->connection->prepare("SELECT question_user FROM c_user JOIN c_account on c_user.id_account = c_account.id_account WHERE c_account.id_account = :id_account");
+        $this->request->bindValue(':id_account', $account->getId_account());
+        $this->request->execute();
+        $questions = $this->request->fetchAll(PDO::FETCH_ASSOC);
+        return $questions;
+    }
+
+    // ########################################
     //       SELECT USERS PAR ID_ACCOUNT
     // ########################################
     public function getUserByIdUser(User $user)

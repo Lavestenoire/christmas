@@ -1,23 +1,32 @@
-// OEIL SUR CHAMPS INPUT
-const passwordField = document.getElementById("loginPassword");
-const togglePassword = document.querySelector(".fa-eye");
 
-togglePassword.addEventListener("click", function () {
-    if (passwordField.type === "password") {
-        passwordField.type = "text";
-        togglePassword.classList.remove("fa-eye");
-        togglePassword.classList.add("fa-eye-slash");
-    } else {
-        passwordField.type = "password";
-        togglePassword.classList.remove("fa-eye-slash");
-        togglePassword.classList.add("fa-eye");
-    }
+// ############################################################
+//                OEIL SUR CHAMPS INPUT
+// ############################################################
+const togglePasswords = document.querySelectorAll(".fa-eye");
+
+togglePasswords.forEach(function (togglePassword) {
+    togglePassword.addEventListener("click", function () {
+        const passwordField = togglePassword.closest('.mdp').querySelector('.loginPassword');
+
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            togglePassword.classList.remove("fa-eye");
+            togglePassword.classList.add("fa-eye-slash");
+        } else {
+            passwordField.type = "password";
+            togglePassword.classList.remove("fa-eye-slash");
+            togglePassword.classList.add("fa-eye");
+        }
+    });
 });
 
 
 
 
-// AUTO COMPLETION INPUT CATEGORY
+
+// ############################################################
+//                AUTO COMPLETION INPUT CATEGORY
+// ############################################################
 function showHint(str) {
     if (str.length == 0) {
         document.getElementById("suggestions").innerHTML = "";
@@ -46,7 +55,9 @@ function selectCategory(category) {
 }
 
 
-// DELETE CONFIRMATION
+// ############################################################
+//                CONFIRMATION SUPPRESION PROFIL
+// ############################################################
 function deleteConfirm() {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
@@ -66,35 +77,7 @@ function cancelDelete() {
     document.getElementById("deleteConfirm").innerHTML = ""; // Efface le message de confirmation
 }
 
-// COUNTDOWN
-// Set the date we're counting down to
-var countDownDate = new Date("Dec 24, 2024 22:00:00").getTime();
 
-// Update the count down every 1 second
-var x = setInterval(function () {
-
-    // Get today's date and time
-    var now = new Date().getTime();
-
-    // Find the distance between now and the count down date
-    var distance = countDownDate - now;
-
-    // Time calculations for days, hours, minutes and seconds
-    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    // Output the result in an element with id="demo"
-    document.getElementById("countDown").innerHTML = days + "jours " + hours + "h "
-        + minutes + "m " + seconds + "s avant Noël";
-
-    // If the count down is over, write some text 
-    if (distance < 0) {
-        clearInterval(x);
-        document.getElementById("countDown").innerHTML = "EXPIRED";
-    }
-}, 1000);
 
 // ########################################
 //           EDIT PROFILE USER
@@ -108,4 +91,128 @@ function confirmEditProfileUser() {
     var editForm = document.querySelector(".editUser");
     editForm.style.display = "none";
 }
+
+// ########################################
+//           EDIT GIFT
+// ########################################
+// Sélectionner tous les boutons "edit"
+const editButtons = document.querySelectorAll('.edit-button');
+
+// Ajouter un écouteur d'événement de clic à chaque bouton "edit"
+editButtons.forEach(button => {
+    button.addEventListener('click', event => {
+        // Récupérer l'ID du cadeau à modifier à partir de l'attribut data-id du bouton "edit"
+        const giftId = event.target.dataset.id;
+
+        // Sélectionner la ligne correspondante dans le tableau
+        const giftRow = event.target.closest('.idGift');
+
+        // Sélectionner tous les champs input cachés dans la ligne
+        const inputFields = giftRow.querySelectorAll('.edit-input');
+
+        // Afficher les champs input en remplaçant les divs correspondants
+        inputFields.forEach(input => {
+            // Sélectionner le div correspondant à remplacer
+            const divToReplace = input.previousElementSibling;
+
+            // Remplacer le div par le champ input
+            divToReplace.style.display = 'none';
+            input.style.display = 'block';
+        });
+
+        // Remplacer l'icône "edit" par l'icône "save"
+        const editIcon = giftRow.querySelector('.edit-button');
+        const saveIcon = document.createElement('i');
+        saveIcon.className = 'fa-regular fa-floppy-disk save-button';
+        // Remplacer l'icône "edit" par l'icône "save"
+        editIcon.replaceWith(saveIcon);
+
+        saveIcon.addEventListener('click', () => {
+            console.log('L\'icône "save" a été cliquée !');
+            // Récupérer les valeurs des champs input
+            const inputValues = {};
+            inputFields.forEach(input => {
+                inputValues[input.name] = input.value;
+            });
+
+            const formData = new FormData();
+            formData.append('id_gift', inputValues['id_gift']);
+            formData.append('name_gift', inputValues['name_gift']);
+            formData.append('description_gift', inputValues['description_gift']);
+            formData.append('name_category', inputValues['name_category']);
+            formData.append('id_category', inputValues['id_category']);
+
+            const xhr = new XMLHttpRequest(); // create a new XMLHttpRequest object
+            xhr.open("UPDATE", "index.php?controller=Gift&action=editGift/" + giftId);
+            xhr.send(formData);
+
+            xhr.onload = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log("La requête AJAX a réussi !");
+                    // Masquer les champs input et afficher les divs d'origine
+                    inputFields.forEach(input => {
+                        input.style.display = 'none';
+                        input.previousElementSibling.style.display = 'block';
+                    });
+                    // Remplacer l'icône "save" par l'icône "edit"
+                    giftRow.querySelector('.save-button').replaceWith(editIcon);
+                    // Appeler la fonction traitement() avec les valeurs mises à jour
+                    traitement(inputValues['id_gift'], inputValues['description_gift'], inputValues['name_category'], inputValues['id_category']);
+                } else {
+                    console.error("La requête AJAX a échoué avec le statut " + xhr.status);
+                }
+            };
+            function traitement(id_gift, name_gift, description_gift, name_category, id_category) {
+                // effectuer toute action nécessaire après la mise à jour réussie du cadeau
+                console.log('Le cadeau a été mis à jour avec succès : ', id_gift, name_gift, description_gift, name_category, id_category);
+            }
+
+            xhr.onerror = function () {
+                console.error("La requête AJAX a échoué");
+            };
+
+        });
+    });
+});
+
+// ############################################################
+//                      DELETE GIFT
+// ############################################################
+
+const deleteButtons = document.querySelectorAll('.deleteGiftBtn');
+deleteButtons.forEach(button => {
+    button.addEventListener('click', event => {
+        // Lire le corps de la requête
+        $input = file_get_contents('php://input');
+
+        // Parse les données en utilisant parse_str
+        parse_str($input, $data);
+
+        // Accéder aux données
+        $name_gift = $data['name_gift'];
+        $description_gift = $data['description_gift'];
+        $name_category = $data['name_category'];
+        $id_category = $data['id_category'];
+
+        const giftId = event.target.dataset.id;
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("DELETE", "index.php?controller=Gift&action=deleteGift/" + giftId);
+        xhr.send();
+
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                // Supprimer la ligne correspondante dans le tableau HTML
+                const row = event.target.closest('tr');
+                row.parentNode.removeChild(row);
+            } else {
+                console.error('La suppression du cadeau a échoué.');
+            }
+        };
+    });
+});
+
+
+
+
 

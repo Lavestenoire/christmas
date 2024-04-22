@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Entities\User;
 use App\Entities\Account;
+use App\Models\AccountModel;
 use App\Models\UserModel;
 
 class UserController extends Controller
@@ -76,7 +77,12 @@ class UserController extends Controller
 
             $userModel = new UserModel();
             $user = $userModel->getUserByIdUser($getIdUser);
-            $this->render('user/loginUser', ['user' => $user]);
+
+            $account = new Account();
+            $account->setId_account($_SESSION['id_account']);
+            $questions = new AccountModel();
+            $questions = $userModel->questionsUsers($account);
+            $this->render('user/loginUser', ['user' => $user, 'questions' => $questions]);
         }
     }
 
@@ -91,23 +97,16 @@ class UserController extends Controller
             $account->setId_account($_SESSION['id_account']);
 
             $id_user = $_POST['id_user'];
-            // stocker les $_POST dans des variables
             $nickname_user = $_POST['nickname_user'];
             $question = $_POST['question_user'];
             $response = $_POST['response_user'];
-            // $role_user = $_POST['role_user'];
-            // $status_user = $_POST['status_user'];
 
-            // instancer la classe user
             $user = new User();
 
-            // setter les valeurs de la table avec les variable qui stockent les données passées en POST
-            // $user->setId_user($id_user);
             $user->setNickname_user($nickname_user);
             $user->setQuestion_user($question);
             $user->setResponse_user($response);
-            // $user->setRole_user($role_user);
-            // $user->setStatus_user($status_user);
+
 
             // instancer la classe userModel
             $userModel = new UserModel();
@@ -252,6 +251,7 @@ class UserController extends Controller
         $_SESSION['question_user'] = $question_user;
         $_SESSION['response_user'] = $response_user;
         $_SESSION['picture_user'] = $newAvatar;
+        // $_SESSION['role_user'] = $role_user;
         // Assurez-vous de ne pas stocker la réponse de l'utilisateur en session pour des raisons de sécurité
 
         header("Location: profileUser");

@@ -10,8 +10,13 @@ body {
     padding: 0;
 }
 
+main {
+    width: 100%;
+}
+
 img {
     max-width: 100%;
+    height: auto;
 }
 
 li {
@@ -88,19 +93,47 @@ nav {
     flex-wrap: nowrap !important;
 }
 
+
 /* 
 ############################################################
                            FOOTER
 ############################################################ 
 */
 footer {
-    background-color: #D9372A;
+    background-color: #bb010b;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 2%;
+    width: 100%;
+}
+
+footer ul {
+    text-align: center;
+    /* Aligner les éléments au milieu */
+}
+
+footer ul li {
+    text-align: justify;
+}
+
+
+footer ul li a {
+    color: #FAF8F8;
 }
 
 .footerItem {
+    width: 30%;
+    color: #FAF8F8;
     text-align: center;
-    width: 20%;
-    margin: 0;
+}
+
+.footerItem img {
+    text-align: start;
+}
+
+.footerItem {
+    padding: 0;
 }
 
 
@@ -140,53 +173,9 @@ footer {
     }
 }
 
-
 /* 
 ############################################################
-                         BANNER
-############################################################ 
-*/
-#helloFamilyContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: end;
-    position: relative;
-    z-index: 777;
-}
-
-#helloFamily {
-    width: fit-content;
-    padding: 1%;
-    background-color: #FFD8EF;
-    z-index: 999;
-    position: absolute;
-    color: #00205B;
-}
-
-
-/* 
-############################################################
-                           COUNTDOWN
-############################################################ 
-*/
-#countDown {
-    color: black;
-}
-
-#connexionInscription {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-}
-
-#createAccount,
-#loginAccount {
-    width: 50%;
-}
-
-/* 
-############################################################
-             MESSAGE D'ERREUR
+             MESSAGE D'ERREUR DONNEES FORMULAIRE
 ############################################################ 
 */
 .text-danger {
@@ -215,27 +204,109 @@ footer {
     padding-right: 1em;
 }
 
+
+/* 
+############################################################
+                        BOUTONS
+############################################################ 
+*/
+.button-paper {
+    align-self: left;
+    /* background-color: #fff; */
+    background-color: rgba(0, 111, 87, .3);
+    background-image: none;
+    background-position: 0 90%;
+    background-repeat: repeat no-repeat;
+    background-size: 4px 3px;
+    border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+    border-style: solid;
+    border-width: 2px;
+    box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+    box-sizing: border-box;
+    /* color: #41403e; */
+    color: #faf8f8;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Neucha, sans-serif;
+    font-size: 1rem;
+    line-height: 23px;
+    outline: none;
+    padding: .75rem;
+    text-decoration: none;
+    transition: all 235ms ease-in-out;
+    border-bottom-left-radius: 15px 255px;
+    border-bottom-right-radius: 225px 15px;
+    border-top-left-radius: 255px 15px;
+    border-top-right-radius: 15px 225px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.button-paper:hover {
+    box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
+    transform: translate3d(0, 2px, 0);
+}
+
+.button-paper:focus {
+    box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
+}
+
+@media screen and (max-width: 480px) {
+    .button-paper {
+        font-size: 12px;
+        /* Réduire la taille de la police */
+        padding: 6px 12px;
+        /* Réduire les marges intérieures */
+    }
+}
+
+/* 
+############################################################
+                    BOUTON DECONNEXION USER
+############################################################ 
+*/
+#logoutUserBtn {
+    float: right;
+}
+
+#logoutUserBtn button,
+.save-button {
+    background-color: transparent;
+    border: none;
+}
+
+#logoutUserBtn a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
 /* 
 ############################################################
                       CONNEXION/INSCRIPTION
 ############################################################ 
 */
+#connexionInscription {
+    display: flex;
+    flex-direction: row;
+}
 
 @media screen and (max-width: 480px) {
     #connexionInscription {
-        display: flex;
         flex-direction: column-reverse;
+        width: 100%;
     }
 
     #loginAccount,
     #createAccount {
-        width: 100%;
-
+        display: flex;
+        flex-direction: column;
     }
 
-    .col-4 {
-        width: 60%;
-        margin: 0 auto;
+    #createAccount h2,
+    #loginAccount h2 {
+        text-align: center;
     }
 }
 
@@ -273,14 +344,19 @@ footer {
     color: pink;
 }
 
+/* 
+############################################################
+                    PAGE CREATION GIFT 
+############################################################ 
+*/
 
-/* FORMULAIRE CREATION GIFT */
 #giftPage {
     display: flex;
 }
 
 .sectionGift {
-    width: 50%;
+    width: 60%;
+    margin: 0 auto;
 }
 
 @media screen and (max-width: 480px) {
@@ -294,6 +370,35 @@ footer {
         flex-wrap: wrap;
     }
 }
+
+/* 
+############################################################
+                    PAGE MA LISTE
+############################################################ 
+*/
+.edit-input {
+    display: none;
+    width: auto;
+}
+
+@media screen and (max-width: 480px) {
+
+    #listSection {
+        width: 100%;
+    }
+
+    .listFromListPage {
+        width: 100%;
+        margin: 0 auto;
+        table-layout: fixed;
+    }
+
+    .listFromListPage th,
+    .listFromListPage td {
+        width: auto;
+    }
+}
+
 
 /* 
 ############################################################
@@ -369,84 +474,45 @@ footer {
     padding: 0.5rem;
 }
 
-/* 
-############################################################
-                        BOUTONS
-############################################################ 
-*/
-.button-paper {
-    align-self: center;
-    /* background-color: #fff; */
-    background-color: rgba(0, 111, 87, .3);
-    background-image: none;
-    background-position: 0 90%;
-    background-repeat: repeat no-repeat;
-    background-size: 4px 3px;
-    border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
-    border-style: solid;
-    border-width: 2px;
-    box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
-    box-sizing: border-box;
-    /* color: #41403e; */
-    color: #faf8f8;
-    cursor: pointer;
-    display: inline-block;
-    font-family: Neucha, sans-serif;
-    font-size: 1rem;
-    line-height: 23px;
-    outline: none;
-    padding: .75rem;
-    text-decoration: none;
-    transition: all 235ms ease-in-out;
-    border-bottom-left-radius: 15px 255px;
-    border-bottom-right-radius: 225px 15px;
-    border-top-left-radius: 255px 15px;
-    border-top-right-radius: 15px 225px;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
+.list {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    margin-bottom: 1em;
+    margin-left: 0;
+    width: 80%;
 }
 
-.button-paper:hover {
-    box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
-    transform: translate3d(0, 2px, 0);
+.list td,
+.list th {
+    border: 1px solid #ddd;
+    padding: 8px;
 }
 
-.button-paper:focus {
-    box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
+.list tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
 
-@media screen and (max-width: 480px) {
-    .button-paper {
-        font-size: 12px;
-        /* Réduire la taille de la police */
-        padding: 6px 12px;
-        /* Réduire les marges intérieures */
-    }
+.list tr:hover {
+    background-color: #ddd;
+}
+
+.list th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: rgb(84, 110, 90, 0.3);
+}
+
+#listSection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
 }
 
 /* 
 ############################################################
-                    BOUTON DECONNEXION USER
-############################################################ 
-*/
-#logoutUserBtn {
-    float: right;
-}
-
-#logoutUserBtn button {
-    background-color: transparent;
-    border: none;
-}
-
-#logoutUserBtn a {
-    text-decoration: none;
-    color: inherit;
-}
-
-/* 
-############################################################
-                        CATEGORY AUTO COMPLETION
+                    CATEGORY AUTO COMPLETION
             Evite trop de catégories écrites différemment
 ############################################################ 
 */
@@ -486,45 +552,4 @@ footer {
         flex-direction: column;
 
     }
-}
-
-/* 
-############################################################
-                           FOOTER
-############################################################ 
-*/
-footer {
-    background-color: #bb010b;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    padding: 2%;
-}
-
-footer ul {
-    text-align: center;
-    /* Aligner les éléments au milieu */
-}
-
-footer ul li {
-    text-align: justify;
-}
-
-
-footer ul li a {
-    color: #FAF8F8;
-}
-
-.footerItem {
-    width: 30%;
-    color: #FAF8F8;
-    text-align: center;
-}
-
-.footerItem img {
-    text-align: start;
-}
-
-.footerItem {
-    padding: 0;
 }

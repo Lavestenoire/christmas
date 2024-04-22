@@ -38,9 +38,6 @@ if (isset($_GET['message']) && $_GET['message'] == 'gift_added') {
                 <button type="submit" name="addGift" class="button-paper" role="button">Ajouter ce cadeau à ma liste</button>
             </form>
         </section>
-        <section class="sectionGift">
-            <h2>Afficher la liste</h2>
-        </section>
     </div>
 <?php } else if (!isset($_SESSION['id_user'])) {
     header('Location: home');

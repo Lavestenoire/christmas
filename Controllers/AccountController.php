@@ -54,6 +54,13 @@ class AccountController extends Controller
                 header("Location: viewLogin");
                 exit();
             }
+            if (strlen($password) < 8 || !preg_match("/[A-Z]/", $password) || !preg_match("/[a-z]/", $password) || !preg_match("/[0-9]/", $password)) {
+                http_response_code(400);
+                $_SESSION['error_messageC'] = "Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre.";
+                header("Location: viewLogin");
+                exit();
+            }
+
             if ($password !== $confirmPassword) {
                 http_response_code(400);
                 $_SESSION['error_messageC'] = "Les mots de passe ne correspondent pas.";
