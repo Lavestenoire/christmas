@@ -19,6 +19,8 @@ RewriteRule ^deleteUser$ index.php?controller=User&action=deleteUser [QSA,L]
 
 RewriteRule ^pageCreateGift$ index.php?controller=Gift&action=pageCreateGift [QSA,L]
 RewriteRule ^createGift$ index.php?controller=Gift&action=createGift [QSA,L]
+RewriteRule ^editGift$ index.php?controller=Gift&action=editGift [QSA,L]
+RewriteRule ^deleteGift$ index.php?controller=Gift&action=deleteGift [QSA,L]
 RewriteRule ^getCategoryHint$ index.php?controller=Gift&action=getCategoryHint [QSA,L]
 RewriteRule ^giftList$ index.php?controller=Gift&action=giftList [QSA,L]
 RewriteRule ^secretPage$ index.php?controller=Gift&action=secretPage [QSA,L]

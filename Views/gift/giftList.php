@@ -1,7 +1,5 @@
 <?php
 $title = "Christmas - Ma liste";
-// echo $_SESSION['id_user'];
-// var_dump($list);
 ?>
 
 
@@ -30,21 +28,24 @@ $title = "Christmas - Ma liste";
                     <tr class="idGift" data-id="<?= $gift['id_gift'] ?>">
                         <td>
                             <div class="gift-name"><?= $gift['name_gift']; ?></div>
-                            <input type="text" class="edit-input" value="<?= $gift['name_gift']; ?>">
+                            <input type="text" class="edit-input" name="name_gift" value="<?= $gift['name_gift']; ?>">
                         </td>
                         <td>
                             <div class="gift-description"><?= $gift['description_gift']; ?></div>
-                            <input type="text" class="edit-input" value="<?= $gift['description_gift']; ?>">
+                            <input type="text" class="edit-input" name="description_gift" value="<?= $gift['description_gift']; ?>">
                         </td>
                         <td>
                             <div class="gift-category"><?= $gift['name_category']; ?></div>
-                            <input type="text" class="edit-input" value="<?= $gift['name_category']; ?>">
+                            <input type="text" class="edit-input" name="name_category" value="<?= $gift['name_category']; ?>">
                         </td>
                         <td>
                             <i class="fa-regular fa-pen-to-square edit-button"></i>
                         </td>
-                        <td><i class="fa-regular fa-trash-can"></i></td>
+                        <td><i class="fa-regular fa-trash-can deleteGiftBtn"><a href="deleteGift"></a></i></td>
                     </tr>
+                    <input type="hidden" class="edit-input" name="id_category" value="<?= $gift['id_category']; ?>">
+
+
             <?php }
             } ?>
         </table>

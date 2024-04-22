@@ -3,16 +3,20 @@ $title = "Christmas - Se connecter";
 // var_dump($_SESSION);
 // die;
 // echo '<pre>';
-// var_dump($user);
 // echo '</pre>';
 ?>
 <?php if (isset($user)) { ?>
+
     <h1>Bonjour <?= $user['nickname_user']; ?></h1>
     <form class="mx-auto w-80" action="loginUser" method="POST">
         <img src="pictures/avatar.png" alt=" avatar">
         <div class="mb-3 col-4">
-            <label for="question_user" class="form-label">Indique une question personnelle.</label>
-            <input type="text" name="question_user" value="<?= $user['question_user']; ?>" class="form-control" id="question_user" aria-describedby="usernameHelp" required>
+            <select name="question_user" id="question_user" class="form-select" aria-label="Default select example">
+                <option value="">Choisi ta question:</option>
+                <?php foreach ($questions as $question) { ?>
+                    <option value="<?= $question['question_user'] ?>"><?= $question['question_user'] ?></option>
+                <?php } ?>
+            </select>
         </div>
         <div class="mb-3 col-4 mdp">
             <div class="eye"><i class="fa-regular fa-eye"></i></div>

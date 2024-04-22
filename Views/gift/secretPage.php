@@ -12,7 +12,6 @@ $title = "Christmas - Page secrète";
     <p>Tu peux ici sélectionner des cadeaux dans les listes des membres de ta famille et les ajouter dans ta liste de cadeaux à offrir.</p>
     <!-- listes des users avec un status == 0 (non connecté) -->
     <div id="containerList">
-
         <?php foreach ($giftList as $nickname => $list) { ?>
             <form action="reservedGift" method="POST">
                 <input type="hidden" name="id_user" value="<?= $_SESSION['id_user'] ?>">

@@ -124,27 +124,95 @@ editButtons.forEach(button => {
         const editIcon = giftRow.querySelector('.edit-button');
         const saveIcon = document.createElement('i');
         saveIcon.className = 'fa-regular fa-floppy-disk save-button';
+        // Remplacer l'icône "edit" par l'icône "save"
+        editIcon.replaceWith(saveIcon);
+
         saveIcon.addEventListener('click', () => {
+            console.log('L\'icône "save" a été cliquée !');
             // Récupérer les valeurs des champs input
             const inputValues = {};
             inputFields.forEach(input => {
                 inputValues[input.name] = input.value;
             });
 
-            // Envoyer les valeurs au serveur pour mise à jour dans la base de données
-            // ...
+            const formData = new FormData();
+            formData.append('id_gift', inputValues['id_gift']);
+            formData.append('name_gift', inputValues['name_gift']);
+            formData.append('description_gift', inputValues['description_gift']);
+            formData.append('name_category', inputValues['name_category']);
+            formData.append('id_category', inputValues['id_category']);
 
-            // Masquer les champs input et afficher les divs d'origine
-            inputFields.forEach(input => {
-                input.style.display = 'none';
-                input.previousElementSibling.style.display = 'block';
-            });
+            const xhr = new XMLHttpRequest(); // create a new XMLHttpRequest object
+            xhr.open("UPDATE", "index.php?controller=Gift&action=editGift/" + giftId);
+            xhr.send(formData);
 
-            // Remplacer l'icône "save" par l'icône "edit"
-            giftRow.querySelector('.save-button').replaceWith(editIcon);
+            xhr.onload = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log("La requête AJAX a réussi !");
+                    // Masquer les champs input et afficher les divs d'origine
+                    inputFields.forEach(input => {
+                        input.style.display = 'none';
+                        input.previousElementSibling.style.display = 'block';
+                    });
+                    // Remplacer l'icône "save" par l'icône "edit"
+                    giftRow.querySelector('.save-button').replaceWith(editIcon);
+                    // Appeler la fonction traitement() avec les valeurs mises à jour
+                    traitement(inputValues['id_gift'], inputValues['description_gift'], inputValues['name_category'], inputValues['id_category']);
+                } else {
+                    console.error("La requête AJAX a échoué avec le statut " + xhr.status);
+                }
+            };
+            function traitement(id_gift, name_gift, description_gift, name_category, id_category) {
+                // effectuer toute action nécessaire après la mise à jour réussie du cadeau
+                console.log('Le cadeau a été mis à jour avec succès : ', id_gift, name_gift, description_gift, name_category, id_category);
+            }
+
+            xhr.onerror = function () {
+                console.error("La requête AJAX a échoué");
+            };
+
         });
-
-        // Remplacer l'icône "edit" par l'icône "save"
-        editIcon.replaceWith(saveIcon);
     });
 });
+
+// ############################################################
+//                      DELETE GIFT
+// ############################################################
+
+const deleteButtons = document.querySelectorAll('.deleteGiftBtn');
+deleteButtons.forEach(button => {
+    button.addEventListener('click', event => {
+        // Lire le corps de la requête
+        $input = file_get_contents('php://input');
+
+        // Parse les données en utilisant parse_str
+        parse_str($input, $data);
+
+        // Accéder aux données
+        $name_gift = $data['name_gift'];
+        $description_gift = $data['description_gift'];
+        $name_category = $data['name_category'];
+        $id_category = $data['id_category'];
+
+        const giftId = event.target.dataset.id;
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("DELETE", "index.php?controller=Gift&action=deleteGift/" + giftId);
+        xhr.send();
+
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                // Supprimer la ligne correspondante dans le tableau HTML
+                const row = event.target.closest('tr');
+                row.parentNode.removeChild(row);
+            } else {
+                console.error('La suppression du cadeau a échoué.');
+            }
+        };
+    });
+});
+
+
+
+
+

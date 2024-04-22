@@ -6,11 +6,11 @@ $title = "Christmas - LogIn";
     <div id="loginAccount">
         <h2>Connexion</h2>
         <form class="mx-auto w-80" action="loginAccount" method="POST">
-            <div class="mb-3 col-4">
+            <div class="mb-3 col-5">
                 <label for="nickname_account" class="form-label">Pseudo familial</label>
                 <input type="text" name="nickname_account" class="form-control" aria-describedby="usernameHelp" required>
             </div>
-            <div class="mb-3 col-4 mdp">
+            <div class="mb-3 col-5 mdp">
                 <div class="eye"><i class="fa-regular fa-eye"></i></div>
                 <label for="loginPassword" class="form-label">Mot de passe</label>
                 <input type="password" name="loginPassword" class="form-control loginPassword" required>
@@ -34,21 +34,21 @@ $title = "Christmas - LogIn";
     <div id="createAccount">
         <h2>Inscription</h2>
         <form class="mx-auto w-80" action="createAccount" method="POST">
-            <div class="mb-3 col-4">
+            <div class="mb-3 col-5">
                 <label for="nickname_account" class="form-label">Pseudo familial</label>
                 <input type="text" name="nickname_account" class="form-control" aria-describedby="usernameHelp" required>
                 <?php if (isset($error['nickname_account'])) : ?>
                     <div class="text-danger"><?= ($error['nickname_account']) ?></div>
                 <?php endif; ?>
             </div>
-            <div class="mb-3 col-4">
+            <div class="mb-3 col-5">
                 <label for="email_account" class="form-label">Email familial</label>
                 <input type="email" name="email_account" class="form-control" id="email_account" aria-describedby="usernameHelp" required>
                 <?php if (isset($error['email_account'])) : ?>
                     <div class="text-danger"><?= ($error['email_account']) ?></div>
                 <?php endif; ?>
             </div>
-            <div class="mb-3 col-4 mdp">
+            <div class="mb-3 col-5 mdp">
                 <div class="eye"><i class="fa-regular fa-eye"></i></div>
                 <label for="password_account" class="form-label">Mot de passe</label>
                 <input type="password" name="password" class="form-control loginPassword" id="password" required>
@@ -56,7 +56,7 @@ $title = "Christmas - LogIn";
                     <div class="text-danger"><?= ($error['password']) ?></div>
                 <?php endif; ?>
             </div>
-            <div class="mb-3 col-4 mdp">
+            <div class="mb-3 col-5 mdp">
                 <div class="eye"><i class="fa-regular fa-eye"></i></div>
                 <label for="password_account" class="form-label">Vérifier le mot de passe</label>
                 <input type="password" name="confirmPassword" class="form-control loginPassword" id="confirmPassword" required>
