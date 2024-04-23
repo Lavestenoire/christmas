@@ -97,6 +97,7 @@ class UserModel extends DbConnect
                 $user->setId_user($userData['id_user']);
                 $user->setNickname_user($userData['nickname_user']);
                 $user->setPicture_user($userData['picture_user']);
+                $user->setQuestion_user($userData['question_user']);
                 $listUsers[] = $user;
             }
             return $listUsers;

@@ -1,3 +1,22 @@
+/* 
+navbar
+footer
+MESSAGE D'ERREUR DONNEES FORMULAIRE
+EYE BUTTON ON INPUT PASSWORD
+BOUTONS
+BOUTON DECONNEXION USER
+CONNEXION/INSCRIPTION
+AVATARS PROFIL ACCUEIL
+PAGE LOGIN USER
+PAGE CREATION GIFT 
+PAGE MA LISTE
+LISTES PAGE SECRÈTE
+CATEGORY AUTO COMPLETION
+PAGE PROFIL
+ADMIN PAGE PROFIL
+ */
+
+
 body {
     max-width: 1280px;
     margin: 0 auto;
@@ -66,23 +85,19 @@ button {
     text-align: center;
 }
 
-.menuIcon {
-    color: #23856d;
-}
-
 .menuText {
     color: #D9372A;
 }
 
 /* titre famille dans le menu */
-nav h3 {
+.familyName {
     width: 30rem;
     text-align: center;
     color: #D9372A;
 }
 
 @media screen and (max-width: 480px) {
-    nav h3 {
+    .familyName {
         width: fit-content;
     }
 }
@@ -187,7 +202,6 @@ footer ul li a {
              EYE BUTTON ON INPUT PASSWORD
 ############################################################ 
 */
-
 /* mdp = div contenant les 3 éléments (label input et div eye)< */
 .mdp {
     position: relative;
@@ -204,13 +218,13 @@ footer ul li a {
     padding-right: 1em;
 }
 
-
 /* 
 ############################################################
                         BOUTONS
 ############################################################ 
 */
 .button-paper {
+    margin-bottom: 2em;
     align-self: left;
     /* background-color: #fff; */
     background-color: rgba(0, 111, 87, .3);
@@ -226,7 +240,7 @@ footer ul li a {
     /* color: #41403e; */
     color: #faf8f8;
     cursor: pointer;
-    display: inline-block;
+    /* display: inline-block; */
     font-family: Neucha, sans-serif;
     font-size: 1rem;
     line-height: 23px;
@@ -241,6 +255,11 @@ footer ul li a {
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
+    width: fit-content;
+}
+
+.button-paper a {
+    color: white;
 }
 
 .button-paper:hover {
@@ -268,6 +287,7 @@ footer ul li a {
 */
 #logoutUserBtn {
     float: right;
+    width: 150px;
 }
 
 #logoutUserBtn button,
@@ -281,6 +301,11 @@ footer ul li a {
     color: inherit;
 }
 
+@media screen and (max-width: 480px) {
+    #logoutUserBtn {
+        width: 120px;
+    }
+}
 
 /* 
 ############################################################
@@ -310,11 +335,9 @@ footer ul li a {
     }
 }
 
-
-
 /* 
 ############################################################
-                      PROFIL ACCUEIL
+                      AVATARS PROFIL ACCUEIL
 ############################################################ 
 */
 .profile {
@@ -346,10 +369,26 @@ footer ul li a {
 
 /* 
 ############################################################
-                    PAGE CREATION GIFT 
+                    PAGE LOGIN USER
 ############################################################ 
 */
 
+.loginUser img {
+    width: 15%;
+    margin-bottom: 2rem;
+}
+
+@media screen and (max-width: 480px) {
+    .loginUser img {
+        margin-bottom: 1rem;
+    }
+}
+
+/* 
+############################################################
+                    PAGE CREATION GIFT 
+############################################################ 
+*/
 #giftPage {
     display: flex;
 }
@@ -369,6 +408,7 @@ footer ul li a {
         display: flex;
         flex-wrap: wrap;
     }
+
 }
 
 /* 
@@ -381,13 +421,17 @@ footer ul li a {
     width: auto;
 }
 
+#addGift {
+    margin-bottom: 2em;
+}
+
 @media screen and (max-width: 480px) {
 
     #listSection {
         width: 100%;
     }
 
-    .listFromListPage {
+    .list {
         width: 100%;
         margin: 0 auto;
         table-layout: fixed;
@@ -398,7 +442,6 @@ footer ul li a {
         width: auto;
     }
 }
-
 
 /* 
 ############################################################
@@ -412,17 +455,6 @@ footer ul li a {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
-}
-
-.list {
-    width: 30%;
-    margin: 25px;
-    padding: 25px;
-    height: 350px;
-    border: solid #546E5A 5px;
-    border-color: #546E5A;
-    float: left;
-    overflow-y: auto;
 }
 
 .listSecretPage {
@@ -475,11 +507,14 @@ footer ul li a {
 }
 
 .list {
-    font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-    margin-bottom: 1em;
-    margin-left: 0;
-    width: 80%;
+    width: 100%;
+    padding: 25px;
+    height: 350px;
+    border: solid #546E5A 5px;
+    border-color: #546E5A;
+    float: left;
+    overflow: visible;
 }
 
 .list td,
@@ -521,6 +556,10 @@ footer ul li a {
     border-radius: 5%;
 }
 
+#suggestions ul li {
+    cursor: pointer;
+}
+
 /* 
 ############################################################
                            PAGE PROFIL
@@ -531,6 +570,9 @@ footer ul li a {
     flex-direction: row;
 }
 
+#profile img {
+    width: 15%;
+}
 
 .editUser {
     display: none;
@@ -542,9 +584,13 @@ footer ul li a {
     align-items: flex-start;
 }
 
-#btnProfil button {
+#btnProfil {
     margin-top: 1em;
     width: 200px;
+}
+
+.deleteOui {
+    margin-right: 2em;
 }
 
 @media screen and (max-width: 480px) {
@@ -552,4 +598,15 @@ footer ul li a {
         flex-direction: column;
 
     }
+}
+
+/* 
+############################################################
+                    ADMIN PAGE PROFIL
+############################################################ 
+*/
+#profileCard {
+    margin: 3em;
+    display: flex;
+    align-items: center;
 }

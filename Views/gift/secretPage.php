@@ -1,6 +1,6 @@
 <?php
 $title = "Christmas - Page secrète";
-// var_dump($_SESSION['id_user']);
+// var_dump($giftList);
 ?>
 
 <?php if (isset($_SESSION['id_account']) && isset($_SESSION['id_user'])) { ?>
@@ -56,6 +56,7 @@ $title = "Christmas - Page secrète";
                             <li><?= $giftToOffer['name_gift'] ?></li>
                             <li><?= $giftToOffer['description_gift'] ?></li>
                             <li><?= $giftToOffer['name_category'] ?></li>
+                            <li><?= $giftToOffer['nickname_user'] ?></li>
                             <li>
                                 <form action="deleteGiftToOffer" method="POST">
                                     <input type="hidden" name="id_gift" value="<?= $giftToOffer['id_gift'] ?>">

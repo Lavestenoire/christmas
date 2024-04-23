@@ -248,7 +248,7 @@ class GiftModel extends DbConnect
     public function giftToOffer(Gift $gift, User $user, Account $account)
     {
         try {
-            $this->request = $this->connection->prepare("SELECT c_gift.id_gift, c_gift.name_gift, c_gift.description_gift, c_gift.reserved_gift, c_category.name_category
+            $this->request = $this->connection->prepare("SELECT c_gift.id_gift, c_gift.name_gift, c_gift.description_gift, c_gift.reserved_gift, c_category.name_category, c_user.nickname_user
         FROM c_gift
         JOIN c_giftlist ON c_gift.id_gift = c_giftlist.id_gift
         JOIN c_user ON c_giftlist.id_user = c_user.id_user

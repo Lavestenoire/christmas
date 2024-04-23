@@ -8,9 +8,10 @@ $title = "Christmas - Se connecter";
 <?php if (isset($user)) { ?>
 
     <h1>Bonjour <?= $user['nickname_user']; ?></h1>
-    <form class="mx-auto w-80" action="loginUser" method="POST">
-        <img src="pictures/avatar.png" alt=" avatar">
-        <div class="mb-3 col-4">
+    <form class="mx-auto w-80 loginUser" action="loginUser" method="POST">
+        <img src="<?= $user['picture_user']; ?>" alt="avatar">
+        <div class="mb-3 col-lg-4 col-6">
+            <label for="question_user" class="form-label">Question</label>
             <select name="question_user" id="question_user" class="form-select" aria-label="Default select example">
                 <option value="">Choisi ta question:</option>
                 <?php foreach ($questions as $question) { ?>
@@ -18,14 +19,13 @@ $title = "Christmas - Se connecter";
                 <?php } ?>
             </select>
         </div>
-        <div class="mb-3 col-4 mdp">
+        <div class="mb-3 col-lg-4 col-6 mdp">
             <div class="eye"><i class="fa-regular fa-eye"></i></div>
-            <label for="response_user" class="form-label">Indique la réponse qui te permettra de te connecter</label>
+            <label for="response_user" class="form-label">Réponse</label>
             <input type="password" name="response_user" class="form-control loginPassword" id="response_user" required>
         </div>
-        <input type="hidden" name="id_user" value="<?= $user['id_user']; ?>">
         <!-- champs caché pour insérer le role admin par défaut/ici non admnin puisqu'il en existe déjà un via l'ajout profil de home/index-->
-
+        <input type="hidden" name="id_user" value="<?= $user['id_user']; ?>">
         <input type="hidden" name="role_user" value="<?= $user['role_user']; ?>">
         <input type="hidden" name="status_user" value="<?= $user['status_user']; ?>">
         <input type="hidden" name="nickname_user" value="<?= $user['nickname_user']; ?>">

@@ -56,7 +56,7 @@ function selectCategory(category) {
 
 
 // ############################################################
-//                CONFIRMATION SUPPRESION PROFIL
+//                CONFIRMATION SUPPRESSION PROFIL
 // ############################################################
 function deleteConfirm() {
     var xmlhttp = new XMLHttpRequest();
@@ -64,8 +64,8 @@ function deleteConfirm() {
         if (this.readyState == 4 && this.status == 200) {
             var message = "<p>Tu es sur de vouloir supprimer?</p>"
             message += "<form action='deleteUser'>"
-            message += "<button type='submit' name='deleteUser' class='button-paper' role='button'>Oui</button>"
-            message += "<button class='button-paper' onclick='cancelDelete()'>Non</button>"
+            message += "<button type='submit' name='deleteUser' class='button-paper deleteOui' role='button'>Oui</button>"
+            message += "<button class='button-paper deleteNon' onclick='cancelDelete()'>Non</button>"
             message += "</form>"
             document.getElementById("deleteConfirm").innerHTML = message;
         }
@@ -91,6 +91,12 @@ function confirmEditProfileUser() {
     var editForm = document.querySelector(".editUser");
     editForm.style.display = "none";
 }
+
+function cancelEditProfile() {
+    var editForm = document.querySelector(".editUser");
+    editForm.style.display = "none";
+}
+
 
 // ########################################
 //           EDIT GIFT
