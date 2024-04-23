@@ -258,4 +258,19 @@ class UserController extends Controller
         exit();
         // $this->render('user/profileUser', ['userProfile' => $userProfile]);
     }
+
+    public function adminPage()
+    {
+        $id_account = $_SESSION['id_account'];
+        $account = new Account();
+        $account->setId_account($id_account);
+
+        $userModel = new UserModel();
+        $listUsers = $userModel->getUsersByAccountId($account);
+
+        $accountModel = new AccountModel();
+        $accountInfos = $accountModel->getAccountById($id_account);
+
+        $this->render("user/profileAdmin", ['listUsers' => $listUsers, 'accountInfos' => $accountInfos]);
+    }
 }
