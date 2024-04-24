@@ -176,22 +176,40 @@ class AccountController extends Controller
     }
 
     // ############################################################
-    // ###################### xxxxxxxxxxxxx #######################
+    //                           UPDATE ACCOUNT 
     // ############################################################
-    // public function isLoggedIn()
-    // {
-    //     return isset($_SESSION['username_user']);
-    // }
+    public function editAccount()
+    {
 
-    // public function protectRoute()
-    // {
-    //     if (!$this->isLoggedIn()) {
-    //         // Redirigez l'utilisateur vers la page de connexion s'il n'est pas connecté
-    //         // header("Location: /quizz/app_web/public/user/login");
-    //         exit();
-    //     }
-    // }
+        $nickname_account = $_POST['nickname_account'];
+        $email_account = $_POST['email_account'];
+        $oldPassword = $_POST['oldPassword'];
+        $newPassword = $_POST['newPassword'];
+        $confirmNewPassword = $_POST['confirmNewPassword'];
+
+        $accountModel = new AccountModel();
+        $account = $accountModel->getAccountById($_SESSION['id_account']);
+
+        $account = new Account();
+        $account->setId_account($_SESSION['id_account']);
+        $account->setNickname_account($nickname_account);
+        $account->setEmail_account($email_account);
+        $account->setPassword_account($confirmNewPassword);
+
+        if (!password_verify($oldPassword, $account->getPassword_account())) {
+            $_SESSION['error_message'] = 'Le mot de passe actuel est incorrect.';
+        }
+
+
+
+
+
+        if (isset($newPassword) && isset($confirmNewPassword)) {
+            if ($newPassword === $confirmNewPassword) {
+                $accountModel->updateAccount($account, $confirmNewPassword);
+            }
+        } else {
+            $_SESSION['error_message'] = 'La modification a échouée';
+        }
+    }
 }
-
-
-/* mettre ça: $this->protectRoute(); dans les méthodes rendant la vue à protéger par un loggin */

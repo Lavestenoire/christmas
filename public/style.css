@@ -457,6 +457,7 @@ footer ul li a {
     justify-content: space-around;
 }
 
+
 .listSecretPage {
     width: 100%;
     margin: 25px;
@@ -514,7 +515,7 @@ footer ul li a {
     border: solid #546E5A 5px;
     border-color: #546E5A;
     float: left;
-    overflow: visible;
+    overflow-y: auto;
 }
 
 .list td,
@@ -605,8 +606,23 @@ footer ul li a {
                     ADMIN PAGE PROFIL
 ############################################################ 
 */
-#profileCard {
-    margin: 3em;
+#adminCards {
     display: flex;
+    justify-content: space-between;
+}
+
+#imgAndUl {
+    display: flex;
+    flex-direction: row;
     align-items: center;
+    margin: 2em;
+}
+
+#profileCard,
+#accountCard {
+    width: 50%;
+}
+
+.editAccountForm {
+    display: none;
 }

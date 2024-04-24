@@ -6,6 +6,7 @@ RewriteRule ^home$ index.php?controller=home&action=index [QSA,L]
 RewriteRule ^loginAccount$ index.php?controller=Account&action=loginAccount [QSA,L]
 RewriteRule ^createAccount$ index.php?controller=Account&action=createAccount [QSA,L]
 RewriteRule ^logoutAccount$ index.php?controller=Account&action=logoutAccount [QSA,L]
+RewriteRule ^editAccount$ index.php?controller=Account&action=editAccount [QSA,L]
 RewriteRule ^viewLogin$ index.php?controller=Account&action=viewLogin [QSA,L]
 
 RewriteRule ^createUser$ index.php?controller=User&action=createUser [QSA,L]

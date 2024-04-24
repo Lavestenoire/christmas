@@ -89,4 +89,26 @@ class AccountModel extends DbConnect
             return false;
         }
     }
+
+    // ############################################################
+    //                           UPDATE ACCOUNT 
+    // ############################################################
+    public function updateAccount(Account $account, $newPassword)
+    {
+        try {
+            $hashNewPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+
+            $this->request = $this->connection->prepare("UPDATE c_account SET nickname_account = :nickname_account, email_account = :email_account, password_account = :newPassword WHERE id_account = :id_account");
+
+            $this->request->bindValue(":id_account", $account->getId_account());
+            $this->request->bindValue(":nickname_account", $account->getNickname_account());
+            $this->request->bindValue(":email_account", $account->getEmail_account());
+            $this->request->bindValue(":newPassword", $hashNewPassword);
+
+            $this->request->execute();
+        } catch (Exception $e) {
+            echo "Erreur :" . $e->getMessage();
+            return false;
+        }
+    }
 }

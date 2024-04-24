@@ -20,10 +20,6 @@ togglePasswords.forEach(function (togglePassword) {
     });
 });
 
-
-
-
-
 // ############################################################
 //                AUTO COMPLETION INPUT CATEGORY
 // ############################################################
@@ -97,6 +93,18 @@ function cancelEditProfile() {
     editForm.style.display = "none";
 }
 
+// ########################################
+//           EDIT ACCOUNT
+// ########################################
+function editAccountForm() {
+    var editAccountForm = document.querySelector('.editAccountForm');
+    editAccountForm.style.display = "block";
+}
+
+function cancelEditAccount() {
+    var cancelBtn = document.querySelector('.editAccountForm');
+    cancelBtn.style.display = "none";
+}
 
 // ########################################
 //           EDIT GIFT
