@@ -65,7 +65,7 @@
                         </li>
                         <?php if (!isset($_SESSION['id_account'])) { ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="/christmas/public/viewLogin">
+                                <a class="nav-link" href="/christmas/public/viewSignIn">
                                     <img src="pictures/icones/connexion.svg" alt="icone connexion" width=50>
                                     <span class="menuText">Connexion/inscription</span>
                                 </a>

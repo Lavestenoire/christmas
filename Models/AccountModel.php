@@ -17,10 +17,11 @@ class AccountModel extends DbConnect
         try {
             $hashpassword = password_hash($password, PASSWORD_DEFAULT);
 
-            $this->request = $this->connection->prepare("INSERT INTO c_account (nickname_account, email_account, password_account) VALUES (:nickname, :email, :password)");
+            $this->request = $this->connection->prepare("INSERT INTO c_account (nickname_account, email_account, password_account, tag_account) VALUES (:nickname, :email, :password, :tag_account)");
             $this->request->bindValue(":nickname", $account->getNickname_account());
             $this->request->bindValue(":email", $account->getEmail_account());
             $this->request->bindValue(":password", $hashpassword);
+            $this->request->bindValue(':tag_account', $account->getTag_account());
             $this->request->execute();
 
             // Renvoyer l'ID du compte nouvellement créé. Cela permet de le mettre en session afin que l'utilisateurt soit connecté dès qu'il est inscrit. Sinon il serait inscrit, mais devrait se connecter ensuite
@@ -38,6 +39,20 @@ class AccountModel extends DbConnect
         try {
             $this->request = $this->connection->prepare("SELECT * FROM c_account WHERE id_account = :id");
             $this->request->bindValue(":id", $accountId);
+            $this->request->execute();
+
+            // Renvoyer les informations du compte sous forme de tableau associatif
+            return $this->request->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            // Gérer l'exception de manière appropriée
+            throw new Exception("Erreur lors de la récupération du compte : " . $e->getMessage());
+        }
+    }
+    public function getAccountByTag($tag_account)
+    {
+        try {
+            $this->request = $this->connection->prepare("SELECT * FROM c_account WHERE tag_account = :tag_account");
+            $this->request->bindValue(":tag_account", $tag_account);
             $this->request->execute();
 
             // Renvoyer les informations du compte sous forme de tableau associatif

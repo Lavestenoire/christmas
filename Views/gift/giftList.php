@@ -5,7 +5,7 @@ $title = "Christmas - Ma liste";
 
 
 <h1>Ma liste de cadeaux</h1>
-<?php if (isset($_SESSION['id_account']) && isset($_SESSION['id_user'])) { ?>
+<?php if (isset($_SESSION['id_account']) || isset($_SESSION['id_user'])) { ?>
     <div id="logoutUserBtn"><button type="submit" name="logOutUser" role="button"><a href="logoutUser"><img src="pictures/BoutonDecoUser.svg" alt="bouton" width=150></a></button></div>
     <section id="listSection">
         <button id="addGift" name="addGift" class="button-paper" role="button"><a href="pageCreateGift">Ajouter un cadeau à ma liste</a></button>

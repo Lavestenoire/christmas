@@ -71,7 +71,9 @@ if (isset($_SESSION['id_account'])) { ?>
     <?php }
     }
 } else { ?>
-    <h1>Il faut la connexion d'un parent pour accéder ou créer ton profil</h1>
-    <button type="button" name="addGift" class="button-paper" role="button"><a href="/christmas/public/signInAccount">Connexion</a></button>
+    <h1>Bienvenue sur ce site de partages de listes en famille</h1>
+
+    <button type="button" name="addGift" class="button-paper" role="button"><a href="/christmas/public/signInAccount">Identifiez-vous</a></button>
+    <p>Si vous n'avez pas encore de compte, <a href="signUp">cliquez ici</a></p>
 
 <?php } ?>

@@ -312,6 +312,10 @@ footer ul li a {
                       CONNEXION/INSCRIPTION
 ############################################################ 
 */
+#signUpForms {
+    display: flex;
+}
+
 #connexionInscription {
     display: flex;
     flex-direction: row;

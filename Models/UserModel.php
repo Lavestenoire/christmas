@@ -15,45 +15,63 @@ class UserModel extends DbConnect
     // ########################################
     //    NOMBRE DE USER POUR UN ID_ACCOUNT
     // ########################################
-    public function userCount(Account $account)
-    {
-        try {
-            $this->request = $this->connection->prepare("SELECT COUNT(*) as count FROM c_user WHERE id_account = :id_account");
-            $this->request->bindValue(':id_account', $account->getId_account());
+    // public function userCount(Account $account)
+    // {
+    //     try {
+    //         $this->request = $this->connection->prepare("SELECT COUNT(*) as count FROM c_user WHERE id_account = :id_account");
+    //         $this->request->bindValue(':id_account', $account->getId_account());
 
-            $this->request->execute();
-            $result = $this->request->fetch(PDO::FETCH_ASSOC);
-            // var_dump($result['count']);
-            return $result['count'];
-            // var_dump($result['count']);
-        } catch (Exception $e) {
-            echo "Erreur de récupération des données: " . $e->getMessage();
-        }
-    }
+    //         $this->request->execute();
+    //         $result = $this->request->fetch(PDO::FETCH_ASSOC);
+    //         // var_dump($result['count']);
+    //         return $result['count'];
+    //         // var_dump($result['count']);
+    //     } catch (Exception $e) {
+    //         echo "Erreur de récupération des données: " . $e->getMessage();
+    //     }
+    // }
 
     // ########################################
     //              INSERT USER
     // ########################################
-    public function createUser(User $user, int $accountId)
+    public function createUser(User $user, $passwordUser)
     {
+        // suppression de la colone role_user car elle a une valeur par défaut dans la bdd
         try {
-            $this->request = $this->connection->prepare("INSERT INTO c_user (nickname_user, picture_user, email_user, password_user, role_user, status_user, id_account)
-            VALUES (:nickname, :picture, :email_user, :password_user, :role, :status, :id_account)");
-            $this->request->bindValue(':nickname', $user->getNickname_user());
+            $hashpassword = password_hash($passwordUser, PASSWORD_DEFAULT);
+            $this->request = $this->connection->prepare("INSERT INTO c_user (nickname_user, picture_user, email_user, password_user, status_user, id_account)
+            VALUES (:nickname_user, :picture_user, :email_user, :password_user, :status_user, :id_account)");
+
+            $this->request->bindValue(':nickname_user', $user->getNickname_user());
 
             if (empty($user->getPicture_user())) {
-
-                $this->request->bindValue(":picture", DEFAULT_AVATAR);
+                $this->request->bindValue(':picture_user', DEFAULT_AVATAR);
             } else {
-                $this->request->bindValue(":picture", $user->getPicture_user());
+                $this->request->bindValue(':picture_user', $user->getPicture_user());
             }
-            $this->request->bindValue(':email_user', $user->getEmail_user());
-            $this->request->bindValue(':password_user', $user->getPassword_user());
-            $this->request->bindValue(':role', $user->getRole_user());
-            $this->request->bindValue(':status', $user->getStatus_user());
-            $this->request->bindValue(':id_account', $accountId);
 
+            $this->request->bindValue(':email_user', $user->getEmail_user());
+            $this->request->bindValue(':password_user', $hashpassword);
+            $this->request->bindValue(':status_user', $user->getStatus_user());
+            $this->request->bindValue(':id_account', $user->getId_account());
             $this->request->execute();
+            die;
+        } catch (Exception $e) {
+            echo "Erreur lors de la connexion à la base de données : " . $e->getMessage();
+        }
+    }
+
+    // ########################################
+    //              GET USER BY EMAIL
+    // ########################################
+    public function getUserByEmail($email)
+    {
+        try {
+            $this->request = $this->connection->prepare('SELECT * FROM c_account WHERE email_account = :email');
+            $this->request->bindValue(":email", $email);
+            $this->request->execute();
+
+            return $this->request->fetch(PDO::FETCH_ASSOC);
         } catch (Exception $e) {
             echo "Erreur lors de la connexion à la base de données : " . $e->getMessage();
         }

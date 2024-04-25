@@ -8,6 +8,7 @@ class Account
     private $nickname_account;
     private $email_account;
     private $password_account;
+    private $tag_account;
 
     /**
      * Get the value of id_account
@@ -85,6 +86,26 @@ class Account
     public function setPassword_account($password_account)
     {
         $this->password_account = $password_account;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of tag_account
+     */
+    public function getTag_account()
+    {
+        return $this->tag_account;
+    }
+
+    /**
+     * Set the value of tag_account
+     *
+     * @return  self
+     */
+    public function setTag_account($tag_account)
+    {
+        $this->tag_account = $tag_account;
 
         return $this;
     }
