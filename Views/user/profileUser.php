@@ -29,13 +29,13 @@ if (isset($_SESSION['id_account']) && isset($_SESSION['id_user'])) { ?>
                 <input type="text" name="nickname_user" value="<?= $userProfile['nickname_user'] ?>" class="form-control" id="nickname_user" aria-describedby="usernameHelp" required>
             </div>
             <div class="mb-3 col-7">
-                <label for="question_user" class="form-label">Modifie ta question personnelle.</label>
-                <input type="text" name="question_user" value="<?= $userProfile['question_user'] ?>" class="form-control" id="question_user" aria-describedby="usernameHelp" required>
+                <label for="email_user" class="form-label">Modifie ta question personnelle.</label>
+                <input type="text" name="email_user" value="<?= $userProfile['email_user'] ?>" class="form-control" id="email_user" aria-describedby="usernameHelp" required>
             </div>
             <div class="mb-3 col-7 mdp">
                 <div class="eye"><i class="fa-regular fa-eye"></i></div>
-                <label for="response_user" class="form-label">Modifie la réponse à ta question</label>
-                <input type="password" name="response_user" value="<?= $userProfile['response_user'] ?>" class="form-control loginPassword" id="response_user" required>
+                <label for="password_user" class="form-label">Modifie la réponse à ta question</label>
+                <input type="password" name="password_user" value="<?= $userProfile['password_user'] ?>" class="form-control loginPassword" id="password_user" required>
             </div>
             <div class="mb-3 col-12">
                 <label for="formFile" class="form-label">Modifie l'image de profil</label>
@@ -56,6 +56,6 @@ if (isset($_SESSION['id_account']) && isset($_SESSION['id_user'])) { ?>
 <?php } else if (!isset($_SESSION['id_user'])) {
     header('Location: home');
 } else {
-    header('Location: loginAccount');
+    header('Location: signInAccount');
     exit();
 } ?>

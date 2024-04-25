@@ -92,6 +92,6 @@ $title = "Christmas - Page secrète";
 <?php } else if (!isset($_SESSION['id_user'])) {
     header('Location: home');
 } else {
-    header('Location: loginAccount');
+    header('Location: signInAccount');
     exit();
 } ?>

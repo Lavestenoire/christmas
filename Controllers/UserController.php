@@ -34,15 +34,15 @@ class UserController extends Controller
             $user->setId_account($accountId);
 
             $nicknameUser = $this->protectedValues($_POST['nickname_user']);
-            $question = $this->protectedValues($_POST['question_user']);
-            $response = $this->protectedValues($_POST['response_user']);
+            $question = $this->protectedValues($_POST['email_user']);
+            $response = $this->protectedValues($_POST['password_user']);
             $role = $this->protectedValues($_POST['role_user']);
             $status = $this->protectedValues($_POST['status_user']);
             // var_dump($_POST);
 
             $user->setNickname_user($nicknameUser);
-            $user->setQuestion_user($question);
-            $user->setResponse_user($response);
+            $user->setEmail_user($question);
+            $user->setPassword_user($response);
             $user->setRole_user($role);
             $user->setStatus_user($status);
             $user->setPicture_user(DEFAULT_AVATAR);
@@ -98,21 +98,21 @@ class UserController extends Controller
 
             $id_user = $_POST['id_user'];
             $nickname_user = $_POST['nickname_user'];
-            $question = $_POST['question_user'];
-            $response = $_POST['response_user'];
+            $question = $_POST['email_user'];
+            $response = $_POST['password_user'];
 
             $user = new User();
 
             $user->setNickname_user($nickname_user);
-            $user->setQuestion_user($question);
-            $user->setResponse_user($response);
+            $user->setEmail_user($question);
+            $user->setPassword_user($response);
 
 
             // instancer la classe userModel
             $userModel = new UserModel();
             // appeler la méthode du model qui gère la requete
             $userData = $userModel->loginUser($user);
-            if ($userData !== false && $userData['nickname_user'] === $nickname_user && $userData['question_user'] === $question && $userData['response_user'] === $response) {
+            if ($userData !== false && $userData['nickname_user'] === $nickname_user && $userData['email_user'] === $question && $userData['password_user'] === $response) {
                 $_SESSION['id_user'] = $userData['id_user'];
                 $_SESSION['nickname_user'] = $userData['nickname_user'];
                 $_SESSION['role_user'] = $userData['role_user'];
@@ -207,8 +207,8 @@ class UserController extends Controller
     public function editUser()
     {
         $nickname_user = $_POST['nickname_user'];
-        $question_user = $_POST['question_user'];
-        $response_user = $_POST['response_user'];
+        $email_user = $_POST['email_user'];
+        $password_user = $_POST['password_user'];
 
         $account = new Account();
         $account->setId_account($_SESSION['id_account']);
@@ -216,8 +216,8 @@ class UserController extends Controller
         $user = new User();
         $user->setId_user($_SESSION['id_user']);
         $user->setNickname_user($nickname_user);
-        $user->setQuestion_user($question_user);
-        $user->setResponse_user($response_user);
+        $user->setEmail_user($email_user);
+        $user->setPassword_user($password_user);
 
         $userModel = new UserModel();
         $userProfile = $userModel->getUserByIdUser($user);
@@ -248,8 +248,8 @@ class UserController extends Controller
         }
         $userModel->editUser($user, $account, $newAvatar);
         $_SESSION['nickname_user'] = $nickname_user;
-        $_SESSION['question_user'] = $question_user;
-        $_SESSION['response_user'] = $response_user;
+        $_SESSION['email_user'] = $email_user;
+        $_SESSION['password_user'] = $password_user;
         $_SESSION['picture_user'] = $newAvatar;
         // $_SESSION['role_user'] = $role_user;
         // Assurez-vous de ne pas stocker la réponse de l'utilisateur en session pour des raisons de sécurité

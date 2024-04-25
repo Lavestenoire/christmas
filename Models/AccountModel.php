@@ -68,7 +68,7 @@ class AccountModel extends DbConnect
     // ############################################################
     //                           LOGIN 
     // ############################################################
-    public function loginAccount(Account $account)
+    public function signInAccount(Account $account)
     {
         try {
             // ici on utilise l'opérateur = pour comparer la valeur de la colonne nickname_account. Si la valeur correspond, la ligne est renvoyée dans le résultat de la requête
@@ -93,17 +93,17 @@ class AccountModel extends DbConnect
     // ############################################################
     //                           UPDATE ACCOUNT 
     // ############################################################
-    public function updateAccount(Account $account, $newPassword)
+    public function updateAccount(Account $account)
     {
         try {
-            $hashNewPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+            // $hashNewPassword = password_hash($newPassword, PASSWORD_DEFAULT);
 
             $this->request = $this->connection->prepare("UPDATE c_account SET nickname_account = :nickname_account, email_account = :email_account, password_account = :newPassword WHERE id_account = :id_account");
 
             $this->request->bindValue(":id_account", $account->getId_account());
             $this->request->bindValue(":nickname_account", $account->getNickname_account());
             $this->request->bindValue(":email_account", $account->getEmail_account());
-            $this->request->bindValue(":newPassword", $hashNewPassword);
+            $this->request->bindValue(":newPassword", $account->getPassword_account());
 
             $this->request->execute();
         } catch (Exception $e) {

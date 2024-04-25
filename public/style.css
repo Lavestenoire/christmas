@@ -323,14 +323,14 @@ footer ul li a {
         width: 100%;
     }
 
-    #loginAccount,
+    #signInAccount,
     #createAccount {
         display: flex;
         flex-direction: column;
     }
 
     #createAccount h2,
-    #loginAccount h2 {
+    #signInAccount h2 {
         text-align: center;
     }
 }

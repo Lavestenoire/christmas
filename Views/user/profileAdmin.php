@@ -11,7 +11,7 @@ $title = "Christmas - Profil Administrateur";
                     <div><img src="<?= $user->getPicture_user() ?>" alt="avatar" width=150></div>
                     <ul>
                         <li><?= $user->getNickname_user() ?></li>
-                        <li><?= $user->getQuestion_user() ?></li>
+                        <li><?= $user->getEmail_user() ?></li>
                     </ul>
                 </div>
             <?php } ?>
@@ -56,14 +56,14 @@ $title = "Christmas - Profil Administrateur";
                     <label for="confirmNewPassword" class="form-label">Confirmer le nouveau mot de passe</label>
                     <input type="password" name="confirmNewPassword" class="form-control loginPassword" id="confirmNewPassword">
                 </div>
-                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']['create_account']; ?>">
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']['editAccount']; ?>">
                 <?php
                 if (isset($_SESSION['error_messageC'])) : ?>
                     <div class="text-danger"><?= ($_SESSION['error_messageC']) ?></div>
                 <?php endif;
                 unset($_SESSION['error_messageC']);
                 ?>
-                <button type="submit" name="createAccount" class="button-paper" role="button">Valider</button>
+                <button type="submit" name="editAccount" class="button-paper" role="button">Valider</button>
                 <button type="button" class='button-paper' onclick="cancelEditAccount()">Annuler la modification</button>
             </form>
         </div>

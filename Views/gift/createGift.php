@@ -41,6 +41,6 @@ if (isset($_GET['message']) && $_GET['message'] == 'gift_added') {
 <?php } else if (!isset($_SESSION['id_user'])) {
     header('Location: home');
 } else {
-    header('Location: loginAccount');
+    header('Location: signInAccount');
     exit();
 } ?>

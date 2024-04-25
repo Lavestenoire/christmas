@@ -24,8 +24,8 @@ CREATE TABLE c_user(
         id_user       Int  Auto_increment  NOT NULL ,
         nickname_user Varchar (50) NOT NULL ,
         picture_user  Varchar (50) NOT NULL ,
-        question_user Varchar (255) NOT NULL ,
-        response_user Varchar (50) NOT NULL ,
+        email_user Varchar (255) NOT NULL ,
+        password_user Varchar (50) NOT NULL ,
         role_user     Bool NOT NULL ,
         id_account    Int NOT NULL
 	,CONSTRAINT c_user_PK PRIMARY KEY (id_user)
