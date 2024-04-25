@@ -3,9 +3,9 @@ $title = "Christmas - LogIn";
 ?>
 
 <section id="connexionInscription">
-    <div id="loginAccount">
+    <div id="signInAccount">
         <h2>Connexion</h2>
-        <form class="mx-auto w-80" action="loginAccount" method="POST">
+        <form class="mx-auto w-80" action="signInAccount" method="POST">
             <div class="mb-3 col-5">
                 <label for="nickname_account" class="form-label">Pseudo familial</label>
                 <input type="text" name="nickname_account" class="form-control" aria-describedby="usernameHelp" required>

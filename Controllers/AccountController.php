@@ -20,7 +20,7 @@ class AccountController extends Controller
         // les :: sont utilisés pour appeler une méthode statique de la classe Token. Elle peut être appelée sur la classe elle-même plutôt que sur une instance de classe
         Token::tokenGenerator('create_account');
         Token::tokenGenerator('login_account');
-        $this->render('account/loginAccount');
+        $this->render('account/signInAccount');
     }
 
     // ############################################################
@@ -105,7 +105,7 @@ class AccountController extends Controller
     // ############################################################
     // ###################### CONNEXION ###########################
     // ############################################################
-    public function loginAccount()
+    public function signInAccount()
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Vérification du jeton CSRF
@@ -131,9 +131,9 @@ class AccountController extends Controller
             $account->setNickname_account($nickname);
             $account->setPassword_account($password);
 
-            $loginAccount = new AccountModel();
+            $signInAccount = new AccountModel();
 
-            $accountInfos = $loginAccount->loginAccount($account);
+            $accountInfos = $signInAccount->signInAccount($account);
 
             if ($accountInfos !== NULL && password_verify($password, $accountInfos['password_account'])) {
                 // Supprimer les informations de l'utilisateur "user" de la session
@@ -176,22 +176,53 @@ class AccountController extends Controller
     }
 
     // ############################################################
-    // ###################### xxxxxxxxxxxxx #######################
+    //                           UPDATE ACCOUNT 
     // ############################################################
-    // public function isLoggedIn()
-    // {
-    //     return isset($_SESSION['username_user']);
-    // }
+    public function editAccount()
+    {
+        Token::tokenGenerator('editAccount');
 
-    // public function protectRoute()
-    // {
-    //     if (!$this->isLoggedIn()) {
-    //         // Redirigez l'utilisateur vers la page de connexion s'il n'est pas connecté
-    //         // header("Location: /quizz/app_web/public/user/login");
-    //         exit();
-    //     }
-    // }
+        $id_account = $_SESSION['id_account'];
+
+        $account = new Account();
+
+        $accountModel = new AccountModel();
+        $accountData = $accountModel->getAccountById($id_account);
+
+        // Récupérer les données POST
+        $nickname_account = $_POST['nickname_account'];
+        $email_account = $_POST['email_account'];
+        $oldPassword = $_POST['oldPassword'];
+        $newPassword = $_POST['newPassword'];
+        $confirmNewPassword = $_POST['confirmNewPassword'];
+
+        // Comparer les données
+        if ($nickname_account != $accountData['nickname_account']) {
+            $account->setNickname_account($nickname_account);
+        }
+
+        if ($email_account != $accountData['email_account']) {
+            $account->setEmail_account($email_account);
+        }
+
+        // Vérifier si l'ancien mot de passe est correct (vous devez stocker les mots de passe de manière sécurisée, par exemple en utilisant password_hash)
+        if (!password_verify($oldPassword, $accountData['password_account'])) {
+            $_SESSION['error_message'] = 'L\'ancien mot de passe est incorrect';
+        } else {
+            $hashNewPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+            $account->setPassword_account($hashNewPassword);
+        }
+
+        // Vérifier si le nouveau mot de passe et la confirmation correspondent
+        if ($newPassword != $confirmNewPassword) {
+            $_SESSION['error_message'] = 'Les nouveaux mots de passe ne correspondent pas';
+        }
+
+        // Vérifier s'il y a des erreurs
+        if (!isset($_SESSION['error_message'])) {
+            $accountModel->updateAccount($account);
+            header('Location: editAccount');
+            exit();
+        }
+    }
 }
-
-
-/* mettre ça: $this->protectRoute(); dans les méthodes rendant la vue à protéger par un loggin */

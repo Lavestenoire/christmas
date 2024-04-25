@@ -14,19 +14,18 @@
 <body>
     <header>
         <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary container-fluid">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="home"> <!-- le lien href de home: home = réecriture d'URL = controller et action donc render -->
+                    <img src="pictures/logo.svg" alt="Logo">
+                </a>
+                <?php if (isset($_SESSION['nickname_account'])) { ?>
+                    <span class="navbar-brand mb-0 h1 familyName">Famille <?= $_SESSION['nickname_account']; ?></span>
+                <?php } ?>
+                <button class="navbar-toggler justify-content-end" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-            <a class="navbar-brand" href="home"> <!-- le lien href de home: home = réecriture d'URL = controller et action donc render -->
-                <img src="pictures/logo.svg" alt="Logo" width="200">
-            </a>
-            <?php if (isset($_SESSION['nickname_account'])) { ?>
-                <h3>Famille <?= $_SESSION['nickname_account']; ?></h3>
-            <?php } ?>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="container-fluid justify-content-end">
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse w-100" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="home">

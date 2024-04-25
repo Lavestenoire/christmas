@@ -7,8 +7,8 @@ class User
     private $id_user;
     private $nickname_user;
     private $picture_user;
-    private $question_user;
-    private $response_user;
+    private $email_user;
+    private $password_user;
     private $role_user;
     private $status_user;
     private $id_account;
@@ -74,41 +74,41 @@ class User
     }
 
     /**
-     * Get the value of question_user
+     * Get the value of email_user
      */
-    public function getQuestion_user()
+    public function getEmail_user()
     {
-        return $this->question_user;
+        return $this->email_user;
     }
 
     /**
-     * Set the value of question_user
+     * Set the value of email_user
      *
      * @return  self
      */
-    public function setQuestion_user($question_user)
+    public function setEmail_user($email_user)
     {
-        $this->question_user = $question_user;
+        $this->email_user = $email_user;
 
         return $this;
     }
 
     /**
-     * Get the value of response_user
+     * Get the value of password_user
      */
-    public function getResponse_user()
+    public function getPassword_user()
     {
-        return $this->response_user;
+        return $this->password_user;
     }
 
     /**
-     * Set the value of response_user
+     * Set the value of password_user
      *
      * @return  self
      */
-    public function setResponse_user($response_user)
+    public function setPassword_user($password_user)
     {
-        $this->response_user = $response_user;
+        $this->password_user = $password_user;
 
         return $this;
     }
