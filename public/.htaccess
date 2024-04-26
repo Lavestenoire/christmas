@@ -3,17 +3,17 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
 RewriteRule ^home$ index.php?controller=home&action=index [QSA,L]
+
 RewriteRule ^signInAccount$ index.php?controller=Account&action=signInAccount [QSA,L]
-RewriteRule ^createAccount$ index.php?controller=Account&action=createAccount [QSA,L]
+RewriteRule ^signUpAccount$ index.php?controller=Account&action=signUpAccount [QSA,L]
+
+RewriteRule ^signUpAccount$ index.php?controller=Account&action=signUpAccount [QSA,L]
 RewriteRule ^logoutAccount$ index.php?controller=Account&action=logoutAccount [QSA,L]
 RewriteRule ^editAccount$ index.php?controller=Account&action=editAccount [QSA,L]
-RewriteRule ^viewLogin$ index.php?controller=Account&action=viewLogin [QSA,L]
+RewriteRule ^signUpUser$ index.php?controller=User&action=signUpUser [QSA,L]
 
-RewriteRule ^createUser$ index.php?controller=User&action=createUser [QSA,L]
-RewriteRule ^pageCreateUser$ index.php?controller=User&action=pageCreateUser [QSA,L]
-RewriteRule ^pageLoginUser$ index.php?controller=User&action=pageLoginUser [QSA,L]
-RewriteRule ^loginUser$ index.php?controller=User&action=loginUser [QSA,L]
-RewriteRule ^logoutUser$ index.php?controller=User&action=logoutUser [QSA,L]
+RewriteRule ^signInUser$ index.php?controller=User&action=signInUser [QSA,L]
+RewriteRule ^logOutUser$ index.php?controller=User&action=logOutUser [QSA,L]
 RewriteRule ^profileUser$ index.php?controller=User&action=profileUser [QSA,L]
 RewriteRule ^editUser$ index.php?controller=User&action=editUser [QSA,L]
 RewriteRule ^deleteUser$ index.php?controller=User&action=deleteUser [QSA,L]

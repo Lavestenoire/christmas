@@ -3,9 +3,7 @@ $title = "Christmas - Page secrète";
 // var_dump($giftList);
 ?>
 
-<?php if (isset($_SESSION['id_account']) && isset($_SESSION['id_user'])) { ?>
-    <div id="logoutUserBtn"><button type="submit" name="logOutAUser" role="button"><a href="logoutUser"><img src="pictures/BoutonDecoUser.svg" alt="bouton" width=150></a></button></div>
-
+<?php if (isset($_SESSION['id_account']) || isset($_SESSION['id_user'])) { ?>
     <h1>
         <?= $_SESSION['nickname_user'] ?>, bienvenue sur ta page secrète
     </h1>
