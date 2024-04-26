@@ -1,5 +1,5 @@
 <?php
-$title = "Christmas - Ma liste";
+$title = "Fami'list - Ma liste";
 // var_dump($_SESSION['role_user']);
 ?>
 

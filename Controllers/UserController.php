@@ -27,9 +27,9 @@ class UserController extends Controller
             $tag_account = $_POST['tag_user'];
 
             $accountModel = new AccountModel();
-            $account = $accountModel->getAccountByTag($tag_account);
+            $tag = $accountModel->getAccountByTag($tag_account);
 
-            if ($account) {
+            if ($tag) {
                 $nicknameUser = $_POST['nickname_user'];
                 $email_user = $_POST['email_user'];
                 $passwordUser = $_POST['password_user'];
@@ -65,7 +65,7 @@ class UserController extends Controller
                 $user->setPassword_user(password_hash($passwordUser, PASSWORD_DEFAULT));
                 $user->setStatus_user(0);
                 $user->setPicture_user(DEFAULT_AVATAR);
-                $user->setId_account($account['id_account']);
+                $user->setId_account($tag['id_account']);
 
                 $userModel = new UserModel();
                 $existingUser = $userModel->getUserByEmail($email_user);
@@ -82,15 +82,9 @@ class UserController extends Controller
                 $_SESSION['nickname_user'] = $userInfos['nickname_user'];
                 $_SESSION['email_user'] = $userInfos['email_user'];
 
-                // Redirection vers la page d'accueil
                 header('Location: home');
                 exit();
             } else {
-                // Le tag_account n'existe pas, afficher un message d'erreur
-                $_SESSION['error_messageUser'] = 'Le code famille n\'existe pas';
-                // Rediriger l'utilisateur vers la page d'inscription avec les messages d'erreur
-                header('Location: signUpAccount');
-                exit();
             }
         } else {
             $this->render("account/signUpAccount");
@@ -187,6 +181,7 @@ class UserController extends Controller
 
             // Supprimer les variables de session spécifiques à l'utilisateur
             unset($_SESSION['id_user']);
+            unset($_SESSION['id_account']);
             unset($_SESSION['nickname_user']);
             unset($_SESSION['role_user']);
             unset($_SESSION['status_user']);
@@ -218,75 +213,87 @@ class UserController extends Controller
         $this->render('user/profileUser', ['userProfile' => $userProfile]);
     }
 
+
+    // ########################################
+    //           EDIT PROFILE USER
+    // ########################################
+    public function editUser()
+    {
+        $nickname_user = $_POST['nickname_user'];
+        $email_user = $_POST['email_user'];
+        $current_password_user = $_POST['current_password_user'];
+        $new_password_user = $_POST['new_password_user'];
+        $confirm_new_password_user = $_POST['confirm_new_password_user'];
+
+        // Vérifier si un nouveau mot de passe a été fourni
+        if (!empty($new_password_user)) {
+            // Hasher le nouveau mot de passe
+            $hashed_new_password = password_hash($new_password_user, PASSWORD_DEFAULT);
+        } else {
+            // Si aucun nouveau mot de passe n'a été fourni, utiliser le mot de passe actuel
+            $hashed_new_password = $current_password_user;
+        }
+
+
+        $user = new User();
+        $user->setId_user($_SESSION['id_user']);
+        $user->setNickname_user($nickname_user);
+        $user->setEmail_user($email_user);
+        $user->setPassword_user($hashed_new_password);
+
+        $userModel = new UserModel();
+        $userProfile = $userModel->getUserByIdUser($user);
+
+        $newAvatar = null;
+        if (isset($_FILES['avatar']) && !empty($_FILES['avatar']['name'])) {
+            //target_dir est le chemin du fichier dans lequel les images seront stockées
+            $target_dir = "../public/pictures/";
+            //basename($_FILES["avatar"]["name"]) extrait le nom du fichier image téléchargé par l'utilisateur, sans le chemin d'accès. Cette valeur est ensuite concaténée avec $target_dir pour former le chemin complet où le fichier sera téléchargé sur le serveur.
+            $target_file = $target_dir . basename($_FILES["avatar"]["name"]);
+            // Vérifiez si le fichier est une image valide
+            $check = getimagesize($_FILES["avatar"]["tmp_name"]);
+
+            if ($check !== false) {
+                if (move_uploaded_file($_FILES["avatar"]["tmp_name"], $target_file)) {
+
+                    // Enregistrez le chemin de l'image dans la base de données
+                    $newAvatar = 'pictures/' . basename($_FILES["avatar"]["name"]);
+                } else {
+                    $_SESSION['error_message'] = "Désolé, une erreur s'est produite lors du téléchargement de l'image.t";
+                }
+            } else {
+                $_SESSION['error_message'] = "Ce fichier est invalide.";
+            }
+        } else {
+            //si (!isset($_FILES['avatar])), on met l'avatar déjà enregistré
+            $newAvatar = $userProfile['picture_user'];
+        }
+        $userModel->editUser($user, $newAvatar);
+        $_SESSION['nickname_user'] = $nickname_user;
+        $_SESSION['email_user'] = $email_user;
+        $_SESSION['picture_user'] = $newAvatar;
+        // $_SESSION['role_user'] = $role_user;
+        // Assurez-vous de ne pas stocker la réponse de l'utilisateur en session pour des raisons de sécurité
+
+        header("Location: profileUser");
+        exit();
+        // $this->render('user/profileUser', ['userProfile' => $userProfile]);
+    }
+
     // ########################################
     //           DELETE PROFILE USER
     // ########################################
-    // public function deleteUser()
-    // {
-    //     $user = new User();
-    //     $user->setId_user($_SESSION['id_user']);
+    public function deleteUser()
+    {
+        $user = new User();
+        $user->setId_user($_SESSION['id_user']);
 
-    //     $userModel = new UserModel();
-    //     $userModel->deleteUser($user);
-    //     unset($_SESSION['id_user']);
+        $userModel = new UserModel();
+        $userModel->deleteUser($user);
+        unset($_SESSION['id_user']);
 
-    //     header("Location: home");
-    // }
-
-    // public function editUser()
-    // {
-    //     $nickname_user = $_POST['nickname_user'];
-    //     $email_user = $_POST['email_user'];
-    //     $password_user = $_POST['password_user'];
-
-    //     $account = new Account();
-    //     $account->setId_account($_SESSION['id_account']);
-
-    //     $user = new User();
-    //     $user->setId_user($_SESSION['id_user']);
-    //     $user->setNickname_user($nickname_user);
-    //     $user->setEmail_user($email_user);
-    //     $user->setPassword_user($password_user);
-
-    //     $userModel = new UserModel();
-    //     $userProfile = $userModel->getUserByIdUser($user);
-
-    //     $newAvatar = null;
-    //     if (isset($_FILES['avatar']) && !empty($_FILES['avatar']['name'])) {
-    //         //target_dir est le chemin du fichier dans lequel les images seront stockées
-    //         $target_dir = "../public/pictures/";
-    //         //basename($_FILES["avatar"]["name"]) extrait le nom du fichier image téléchargé par l'utilisateur, sans le chemin d'accès. Cette valeur est ensuite concaténée avec $target_dir pour former le chemin complet où le fichier sera téléchargé sur le serveur.
-    //         $target_file = $target_dir . basename($_FILES["avatar"]["name"]);
-    //         // Vérifiez si le fichier est une image valide
-    //         $check = getimagesize($_FILES["avatar"]["tmp_name"]);
-
-    //         if ($check !== false) {
-    //             if (move_uploaded_file($_FILES["avatar"]["tmp_name"], $target_file)) {
-
-    //                 // Enregistrez le chemin de l'image dans la base de données
-    //                 $newAvatar = 'pictures/' . basename($_FILES["avatar"]["name"]);
-    //             } else {
-    //                 $_SESSION['error_message'] = "Désolé, une erreur s'est produite lors du téléchargement de l'image.t";
-    //             }
-    //         } else {
-    //             $_SESSION['error_message'] = "Ce fichier est invalide.";
-    //         }
-    //     } else {
-    //         //si (!isset($_FILES['avatar])), on met l'avatar déjà enregistré
-    //         $newAvatar = $userProfile['picture_user'];
-    //     }
-    //     $userModel->editUser($user, $account, $newAvatar);
-    //     $_SESSION['nickname_user'] = $nickname_user;
-    //     $_SESSION['email_user'] = $email_user;
-    //     $_SESSION['password_user'] = $password_user;
-    //     $_SESSION['picture_user'] = $newAvatar;
-    //     // $_SESSION['role_user'] = $role_user;
-    //     // Assurez-vous de ne pas stocker la réponse de l'utilisateur en session pour des raisons de sécurité
-
-    //     header("Location: profileUser");
-    //     exit();
-    //     // $this->render('user/profileUser', ['userProfile' => $userProfile]);
-    // }
+        header("Location: home");
+    }
 
     // public function adminPage()
     // {

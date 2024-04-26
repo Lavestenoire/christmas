@@ -138,17 +138,6 @@ class UserModel extends DbConnect
         }
     }
 
-    // ########################################
-    //      LES QUESTIONS DE TOUS LES USERS
-    // ########################################
-    // public function questionsUsers(Account $account)
-    // {
-    //     $this->request = $this->connection->prepare("SELECT email_user FROM c_user JOIN c_account on c_user.id_account = c_account.id_account WHERE c_account.id_account = :id_account");
-    //     $this->request->bindValue(':id_account', $account->getId_account());
-    //     $this->request->execute();
-    //     $questions = $this->request->fetchAll(PDO::FETCH_ASSOC);
-    //     return $questions;
-    // }
 
     // ########################################
     //       SELECT USERS PAR ID_ACCOUNT
@@ -214,11 +203,10 @@ class UserModel extends DbConnect
     // ########################################
     //           EDIT PROFILE USER
     // ########################################
-    public function editUser(User $user, Account $account, $avatar)
+    public function editUser(User $user, $avatar)
     {
         try {
-            $this->request = $this->connection->prepare("UPDATE c_user SET nickname_user = :nickname_user, picture_user = :picture_user, email_user = :email_user, password_user = :password_user WHERE id_user = :id_user AND id_account = :id_account");
-            $this->request->bindValue(':id_account', $account->getId_account());
+            $this->request = $this->connection->prepare("UPDATE c_user SET nickname_user = :nickname_user, picture_user = :picture_user, email_user = :email_user, password_user = :password_user WHERE id_user = :id_user");
             $this->request->bindValue(':id_user', $user->getId_user());
             $this->request->bindValue(':nickname_user', $user->getNickname_user());
             $this->request->bindValue(':picture_user', $avatar);

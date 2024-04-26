@@ -60,8 +60,8 @@ function deleteConfirm() {
         if (this.readyState == 4 && this.status == 200) {
             var message = "<p>Tu es sur de vouloir supprimer?</p>"
             message += "<form action='deleteUser'>"
-            message += "<button type='submit' name='deleteUser' class='button-paper deleteOui' role='button'>Oui</button>"
-            message += "<button class='button-paper deleteNon' onclick='cancelDelete()'>Non</button>"
+            message += "<button type='submit' name='deleteUser' class='button-paper lutinBtn deleteOui' role='button'>Oui</button>"
+            message += "<button class='button-paper lutinBtn deleteNon' onclick='cancelDelete()'>Non</button>"
             message += "</form>"
             document.getElementById("deleteConfirm").innerHTML = message;
         }

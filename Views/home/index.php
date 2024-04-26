@@ -1,5 +1,5 @@
 <?php
-$title = "Christmas - Accueil";
+$title = "Fami'list - Accueil";
 ?>
 
 <?php
@@ -12,16 +12,11 @@ if (isset($_SESSION['id_user'])) { ?>
         <button type="button" name="connectionAccount" class="button-paper lutinBtn" role="button"><a href="pageCreateGift">Ajoute un cadeau à ta liste</a></button>
         <button type="button" name="connectionAccount" class="button-paper lutinBtn" role="button"><a href="secretPage">Page secrète</a></button>
     </div>
-
-
-
 <?php }
 //sinon affichage des profils existant 
 else if (isset($_SESSION['id_account'])) { ?>
     <h1 id="titreAccueilConnexion">Accède à ta page profil pour supprimer des utilisateurs</h1>
     <button type="submit" name="addGift" class="button-paper lutinBtn" role="button"><a href="profileUser">Profil</a></button>
-
-
 <?php } else { ?>
     <h1 id="titreAccueilConnexion">Bienvenue dans le quartier général du Père Noël pour créer une liste de cadeaux unique et personnalisée ! </h1>
     <h2 class="sousTitreAccueilConnexion">Que vous soyez un parent en quête de l'ultime cadeau surprise ou un enfant déterminé à garantir que votre liste au père Noël ne se perde pas dans la neige, vous êtes au bon endroit.</h2>

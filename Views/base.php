@@ -19,7 +19,7 @@
                     <img src="pictures/logo.svg" alt="Logo">
                 </a>
                 <?php if (isset($_SESSION['tag_account'])) { ?>
-                    <span class="navbar-brand mb-0 h1 familyName">Famille <?= $_SESSION['tag_account']; ?></span>
+                    <span class="navbar-brand mb-0 h1 familyName">Lutin administateur</span>
                 <?php } ?>
                 <button class="navbar-toggler justify-content-end" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -64,7 +64,6 @@
                                     <span class="menuText">Contact</span>
                                 </a>
                             </li>
-
                             <li class="nav-item">
                                 <a class="nav-link" href="/christmas/public/logOutUser">
                                     <img src="pictures/icones/deconnexion.svg" alt="icone deconnexion" width=50>

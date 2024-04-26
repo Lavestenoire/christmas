@@ -46,7 +46,7 @@ $title = "Christmas - SignUp";
             unset($_SESSION['error_messageAccount']);
             // var_dump($_SESSION['csrf_token']['loginNoTags_account']);
             ?>
-            <button type="submit" name="signUpAccountAndTag" class="button-paper" role="button">Créer le compte</button>
+            <button type="submit" name="signUpAccountAndTag" class="button-paper lutinBtn" role="button">Créer le compte</button>
 
         </form>
     </section>
@@ -93,7 +93,7 @@ $title = "Christmas - SignUp";
             <?php endif;
             unset($_SESSION['error_messageUser']);
             ?>
-            <button type="submit" name="signUpAccountWithTag" class="button-paper" role="button">Créer le compte</button>
+            <button type="submit" name="signUpAccountWithTag" class="button-paper lutinBtn" role="button">Créer le compte</button>
         </form>
 
     </section>

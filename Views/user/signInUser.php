@@ -1,5 +1,5 @@
 <?php
-$title = "Christmas - SignIn";
+$title = "Fami'list - SignIn";
 // var_dump($_SESSION);
 // die;
 ?>
@@ -28,7 +28,7 @@ $title = "Christmas - SignIn";
                 <?php endif;
                 unset($_SESSION['error_message']);
                 ?>
-                <button type="submit" name="connectionUser" class="button-paper" role="button">Connexion</button>
+                <button type="submit" name="connectionUser" class="button-paper lutinBtn" role="button">Connexion</button>
             </form>
             <div><img src="pictures/lutin.svg" alt="dessinLutin"></div>
         </div>
