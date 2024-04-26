@@ -141,6 +141,7 @@ class UserController extends Controller
                 $_SESSION['id_user'] = $userData['id_user'];
                 $_SESSION['nickname_user'] = $userData['nickname_user'];
                 $_SESSION['status_user'] = $userData['status_user'];
+                $_SESSION['id_account'] = $userData['id_account'];
             } else {
                 $_SESSION['error_message'] = "Les informations de connexion sont incorrectes.";
                 header("Location: signInUser");

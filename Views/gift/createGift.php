@@ -1,5 +1,5 @@
 <?php
-$title = "Christmas - Créer un cadeau";
+$title = "Fami'list - Créer un cadeau";
 // echo '<pre>';
 // var_dump($_SESSION);
 // echo '</pre>';
