@@ -4,7 +4,7 @@ $title = "Christmas - SignUp";
 <div id="signUpForms">
     <section>
         <h1>Pour créer un compte et inviter des membres, passez par là</h1>
-        <form class="mx-auto w-80" action="createAccount" method="POST">
+        <form class="mx-auto w-80" action="signUpAccount" method="POST">
             <div class="mb-3 col-5">
                 <label for="nickname_account" class="form-label">Pseudo</label>
                 <input type="text" name="nickname_account" class="form-control" aria-describedby="usernameHelp" required>
@@ -33,7 +33,7 @@ $title = "Christmas - SignUp";
                 <input type="password" name="confirmPassword" class="form-control loginPassword" id="confirmPassword" required>
             </div>
             <div class="mb-3 col-5">
-                <label for="tag_account" class="form-label">Créer un code cadeau</label>
+                <label for="tag_account" class="form-label">Créer un code famille</label>
                 <input type="text" name="tag_account" class="form-control" aria-describedby="usernameHelp" required>
                 <?php if (isset($error['tag_account'])) : ?>
                     <div class="text-danger"><?= ($error['tag_account']) ?></div>
@@ -46,13 +46,13 @@ $title = "Christmas - SignUp";
             unset($_SESSION['error_messageAccount']);
             // var_dump($_SESSION['csrf_token']['loginNoTags_account']);
             ?>
-            <button type="submit" name="createAccountAndTag" class="button-paper" role="button">Créer le compte</button>
+            <button type="submit" name="signUpAccountAndTag" class="button-paper" role="button">Créer le compte</button>
 
         </form>
     </section>
     <section>
-        <h1>Si vous avez un code cadeau mais pas de compte, passez par ici</h1>
-        <form class="mx-auto w-80" action="createUser" method="POST">
+        <h1>Si vous avez un code famille mais pas de compte, passez par ici</h1>
+        <form class="mx-auto w-80" action="signUpUser" method="POST">
             <div class="mb-3 col-5">
                 <label for="nickname_user" class="form-label">Pseudo</label>
                 <input type="text" name="nickname_user" class="form-control" aria-describedby="usernameHelp" required>
@@ -81,7 +81,7 @@ $title = "Christmas - SignUp";
                 <input type="password" name="confirmPassword_user" class="form-control loginPassword" id="confirmPassword_user" required>
             </div>
             <div class="mb-3 col-5">
-                <label for="tag_user" class="form-label">Indiquez votre code cadeau</label>
+                <label for="tag_user" class="form-label">Indiquez votre code famille</label>
                 <input type="text" name="tag_user" class="form-control" aria-describedby="usernameHelp" required>
                 <?php if (isset($error['tag_user'])) : ?>
                     <div class="text-danger"><?= ($error['tag_user']) ?></div>
@@ -93,7 +93,7 @@ $title = "Christmas - SignUp";
             <?php endif;
             unset($_SESSION['error_messageUser']);
             ?>
-            <button type="submit" name="createAccountWithTag" class="button-paper" role="button">Créer le compte</button>
+            <button type="submit" name="signUpAccountWithTag" class="button-paper" role="button">Créer le compte</button>
         </form>
 
     </section>

@@ -4,8 +4,7 @@ $title = "Christmas - Profil";
 ?>
 
 <?php
-if (isset($_SESSION['id_account']) && isset($_SESSION['id_user'])) { ?>
-    <div id="logoutUserBtn"><button type="button" name="logOutUser" role="button"><a href="logoutUser"><img src="pictures/BoutonDecoUser.svg" alt="bouton" width=150></a></button></div>
+if (isset($_SESSION['id_account']) || isset($_SESSION['id_user'])) { ?>
     <?php if (isset($_SESSION['role_user']) && $_SESSION['role_user'] === 1) { ?>
         <div>
             <button type="button" name="allProfileAccess" class="button-paper" role="button"><a href="adminPage">Accéder à tous les profils</a></button>

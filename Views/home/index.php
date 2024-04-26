@@ -1,79 +1,43 @@
 <?php
 $title = "Christmas - Accueil";
-// var_dump($_SESSION['csrf_token']);
 ?>
 
 <?php
-if (isset($_SESSION['id_account'])) { ?>
+if (isset($_SESSION['id_user'])) { ?>
     <!-- // s'il n'y a pas de profil créé -->
-    <?php if (isset($showForm) && $showForm) {
-    ?>
-        <!-- ##########################################################################
-        Si 0 users existent pour cet id_account > affichage formulaire pour en créer un
-        ############################################################################### -->
-        <p>Merci de créer le premier profil de ce compte, qui vous permettra de modifier et supprimer votre compte familial, et d'avoir accès aux profils des membres de votre famille.</p>
 
-        <form class="mx-auto w-80" action="createUser" method="POST">
-            <img src="pictures/avatar.png" alt=" avatar">
-            <div class="mb-3 col-4">
-                <label for="nickname_user" class="form-label">Choisi un pseudo</label>
-                <input type="text" name="nickname_user" class="form-control" id="nickname_user" aria-describedby="usernameHelp" required>
-            </div>
-            <div class="mb-3 col-4">
-                <label for="email_user" class="form-label">Merci d'indiquer une question personnelle.</label>
-                <input type="text" name="email_user" class="form-control" id="email_user" aria-describedby="usernameHelp" required>
-            </div>
-            <div class="mb-3 col-4 mdp">
-                <div class="eye"><i class="fa-regular fa-eye"></i></div>
-                <label for="password_user" class="form-label">Merci d'indiquer la réponse à ta question</label>
-                <input type="password" name="password_user" class="form-control loginPassword" id="password_user" required>
-            </div>
-            <!-- champs caché pour insérer le rôle admin (1) par défaut -->
-            <input type="hidden" name="role_user" value="1">
-            <input type="hidden" name="status_user" value="0">
-            <button type="submit" name="addAUser" class="button-paper" role="button">Ajouter ce profil</button>
+    <h1 id="titreAccueilConnexion">Bienvenue à toi, petit lutin <?= isset($_SESSION['nickname_account']) ? $_SESSION['nickname_account'] : (isset($_SESSION['nickname_user']) ? $_SESSION['nickname_user'] : '') ?></h1>
+    <h2 class="sousTitreAccueilConnexion">Crée et partage ta liste, puis choisis dans les listes de ta famille les cadeaux que tu veux offrir, via la page secrète.</h2>
+    <div id="btnAccueil">
+        <button type="button" name="connectionAccount" class="button-paper lutinBtn" role="button"><a href="pageCreateGift">Ajoute un cadeau à ta liste</a></button>
+        <button type="button" name="connectionAccount" class="button-paper lutinBtn" role="button"><a href="secretPage">Page secrète</a></button>
+    </div>
 
-        </form>
-        <?php }
-    // si au moins un profil créé
-    else if (isset($showProfiles) && $showProfiles) {
-        // si un profil est connecté
-        if (isset($_SESSION['id_user'])) { ?>
-            <div id="logoutUserBtn"><button type="submit" name="logOutAUser" role="button"><a href="logoutUser"><img src="pictures/BoutonDecoUser.svg" alt="bouton" width=150></a></button></div>
-            <h1>Bienvenue à toi, petit lutin <?= $_SESSION['nickname_user'] ?></h1>
-            <p>Bienvenue dans le quartier général du Père Noël pour les listes et les cadeaux parfaits ! 🎅🎁
 
-                Êtes-vous prêt à transformer le pôle Nord en une zone de planification festive ? 🎄 Imaginez un endroit où les lutins développeurs se joignent à nous pour créer la magie de Noël en ligne !
 
-                Que vous soyez un parent en quête de l'ultime cadeau-surprise ou un enfant déterminé à garantir que votre lettre au Père Noël ne se perde pas dans la neige, vous êtes au bon endroit.
+<?php }
+//sinon affichage des profils existant 
+else if (isset($_SESSION['id_account'])) { ?>
+    <h1 id="titreAccueilConnexion">Accède à ta page profil pour supprimer des utilisateurs</h1>
+    <button type="submit" name="addGift" class="button-paper lutinBtn" role="button"><a href="profileUser">Profil</a></button>
 
-                Ici, vous pouvez créer, partager et collaborer sur vos listes de souhaits les plus extravagantes. Pensez-y comme un tableau de bord de rêve pour Noël, où chaque clic rapproche votre moment de joie sous l'arbre.
 
-                Préparez-vous à être plus efficace que jamais dans votre quête du cadeau parfait. Avec notre aide, vous aurez les cadeaux les plus épiques depuis les rennes volants du Père Noël.
+<?php } else { ?>
+    <h1 id="titreAccueilConnexion">Bienvenue dans le quartier général du Père Noël pour créer une liste de cadeaux unique et personnalisée ! </h1>
+    <h2 class="sousTitreAccueilConnexion">Que vous soyez un parent en quête de l'ultime cadeau surprise ou un enfant déterminé à garantir que votre liste au père Noël ne se perde pas dans la neige, vous êtes au bon endroit.</h2>
+    <div id="explanations">
+        <div class="imgExplanation"><img src="pictures/9.svg" alt="logo explication" width=200></div>
+        <div class="imgExplanation"><img src="pictures/10.svg" alt="logo explication" width=200></div>
+        <div class="imgExplanation"><img src="pictures/11.svg" alt="logo explication" width=200></div>
+        <div class="imgExplanation"><img src="pictures/12.svg" alt="logo explication" width=200></div>
+    </div>
+    <div id="connexionAnchor"></div>
+    <p id="linkCreerCompte">Si vous n'avez pas encore de compte, <a href="signUpAccount">cliquez ici</a></p>
+    <div id="btnAccueil">
+        <button type="button" name="" class="button-paper lutinBtn" role="button"><a href="/christmas/public/signInAccount">Lutin administrateur, identifiez-vous</a></button>
+        <button type="button" name="" class="button-paper lutinBtn" role="button"><a href="/christmas/public/signInUser">Lutin, identifiez-vous</a></button>
+    </div>
+    <h2 class="sousTitreAccueilConnexion">Ce site vous permet de créer, partager et collaborer sur vos listes de souhaits. Pensez-y comme un tableau de bord de rêves pour Noël. Allez hop, plongez avec nous dans le joyeux chaos de la saison des fêtes!</h2>
 
-                Alors, qu'attendez-vous ? Plongez dans le joyeux chaos de la saison des fêtes avec nous ! 🎉</p>
-        <?php }
-        //sinon affichage des profils existant 
-        else { ?>
-            <h3>Connecte toi afin de gérer tes listes</h3>
-            <div id="profileCards">
-                <?php foreach ($users as $user) { ?>
-                    <div class="profile">
-                        <a href="/christmas/public/pageLoginUser?id_user=<?= $user->getId_user() ?>">
-                            <div class="profile-image"><img src="<?= $user->getPicture_user() ?>" alt="avatar"></div>
-                            <div class="profile-name"><?= $user->getNickname_user() ?></div>
-                        </a>
-                    </div>
-                <?php } ?>
-            </div>
-            <a href="pageCreateUser"><button class="button-paper" role="button">Ajouter un profil</button>
-            </a>
-    <?php }
-    }
-} else { ?>
-    <h1>Bienvenue sur ce site de partages de listes en famille</h1>
-
-    <button type="button" name="addGift" class="button-paper" role="button"><a href="/christmas/public/signInAccount">Identifiez-vous</a></button>
-    <p>Si vous n'avez pas encore de compte, <a href="signUp">cliquez ici</a></p>
 
 <?php } ?>

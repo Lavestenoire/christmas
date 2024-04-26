@@ -149,7 +149,7 @@ class giftController extends Controller
 
     public function secretPage()
     {
-        if (!isset($_SESSION['id_account']) || !isset($_SESSION['id_user'])) {
+        if (!isset($_SESSION['id_user'])) {
             header('Location: home');
             exit();
         }
@@ -196,7 +196,6 @@ class giftController extends Controller
         // var_dump($gift);
         // echo '</pre>';
         // die;
-
 
         $this->render('gift/secretPage', ['giftList' => $giftLists, 'listToOffer' => $listToOffer]);
     }

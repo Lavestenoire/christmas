@@ -12,7 +12,7 @@ class AccountModel extends DbConnect
     // ############################################################
     // ####################### CREATE ACCOUNT #####################
     // ############################################################
-    public function createAccount(Account $account, $password)
+    public function signUpAccount(Account $account, $password)
     {
         try {
             $hashpassword = password_hash($password, PASSWORD_DEFAULT);

@@ -285,24 +285,24 @@ footer ul li a {
                     BOUTON DECONNEXION USER
 ############################################################ 
 */
-#logoutUserBtn {
+#logOutUserBtn {
     float: right;
     width: 150px;
 }
 
-#logoutUserBtn button,
+#logOutUserBtn button,
 .save-button {
     background-color: transparent;
     border: none;
 }
 
-#logoutUserBtn a {
+#logOutUserBtn a {
     text-decoration: none;
     color: inherit;
 }
 
 @media screen and (max-width: 480px) {
-    #logoutUserBtn {
+    #logOutUserBtn {
         width: 120px;
     }
 }
@@ -321,6 +321,54 @@ footer ul li a {
     flex-direction: row;
 }
 
+#titreAccueilConnexion {
+    text-align: center;
+    color: #D9372A;
+    font-size: 35px;
+    margin-bottom: 1em;
+}
+
+#explanations {
+    margin: 4em;
+    display: flex;
+    justify-content: space-around;
+}
+
+.sousTitreAccueilConnexion {
+    color: #546E5A;
+    text-align: center;
+    font-size: 25px;
+}
+
+#btnAccueil {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3em;
+
+}
+
+#btnAccueil button {
+    margin: 1em;
+}
+
+#linkCreerCompte {
+    text-align: center;
+}
+
+#linkCreerCompte a {
+    text-decoration: underline;
+}
+
+.lutinBtn {
+    color: #D9372A;
+}
+
+.lutinBtn a {
+    color: #D9372A;
+}
+
+
+
 @media screen and (max-width: 480px) {
     #connexionInscription {
         flex-direction: column-reverse;
@@ -328,15 +376,44 @@ footer ul li a {
     }
 
     #signInAccount,
-    #createAccount {
+    #signUpAccount {
         display: flex;
         flex-direction: column;
     }
 
-    #createAccount h2,
+    #signUpAccount h2,
     #signInAccount h2 {
         text-align: center;
     }
+
+    #explanations {
+        flex-wrap: wrap;
+    }
+}
+
+/* 
+############################################################
+                      CONNEXION ADMIN
+############################################################ 
+*/
+#connexionInscription {
+    width: 100%;
+}
+
+#signInAccount {
+    margin: 0 auto;
+}
+
+.accountForm {
+    margin: 0 auto;
+    margin-top: 2em;
+    display: flex;
+    justify-content: center;
+}
+
+.adminForm {
+    margin: 0;
+    width: 80%;
 }
 
 /* 
@@ -377,13 +454,13 @@ footer ul li a {
 ############################################################ 
 */
 
-.loginUser img {
+.signInUser img {
     width: 15%;
     margin-bottom: 2rem;
 }
 
 @media screen and (max-width: 480px) {
-    .loginUser img {
+    .signInUser img {
         margin-bottom: 1rem;
     }
 }

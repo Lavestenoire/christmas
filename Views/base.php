@@ -18,8 +18,8 @@
                 <a class="navbar-brand" href="home"> <!-- le lien href de home: home = réecriture d'URL = controller et action donc render -->
                     <img src="pictures/logo.svg" alt="Logo">
                 </a>
-                <?php if (isset($_SESSION['nickname_account'])) { ?>
-                    <span class="navbar-brand mb-0 h1 familyName">Famille <?= $_SESSION['nickname_account']; ?></span>
+                <?php if (isset($_SESSION['tag_account'])) { ?>
+                    <span class="navbar-brand mb-0 h1 familyName">Famille <?= $_SESSION['tag_account']; ?></span>
                 <?php } ?>
                 <button class="navbar-toggler justify-content-end" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -27,57 +27,120 @@
 
                 <div class="collapse navbar-collapse w-100" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="home">
-                                <img src="pictures/icones/home.svg" alt="icone home" width=50>
-                                <span class="menuText">Home</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="pageCreateGift">
-                                <img src="pictures/icones/cadeau.svg" alt="icone cadeau" width=50>
-                                <span class="menuText">Ajouter un cadeau</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="giftList">
-                                <img src="pictures/icones/liste.svg" alt="icone liste" width=50>
-                                <span class="menuText">Ma liste</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="secretPage">
-                                <img src="pictures/icones/pageSecrete.svg" alt="icone page secrète" width=50>
-                                <span class="menuText">Page Secrète</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="profileUser">
-                                <img src="pictures/icones/profil.svg" alt="icone profil" width=50>
-                                <span class="menuText">Profil</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <img src="pictures/icones/contact.svg" alt="icone contact" width=50>
-                                <span class="menuText">Contact</span>
-                            </a>
-                        </li>
-                        <?php if (!isset($_SESSION['id_account'])) { ?>
+                        <?php if (isset($_SESSION['id_user'])) { ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="/christmas/public/viewSignIn">
-                                    <img src="pictures/icones/connexion.svg" alt="icone connexion" width=50>
-                                    <span class="menuText">Connexion/inscription</span>
+                                <a class="nav-link active" aria-current="page" href="home">
+                                    <img src="pictures/icones/home.svg" alt="icone home" width=50>
+                                    <span class="menuText">Home</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="pageCreateGift">
+                                    <img src="pictures/icones/cadeau.svg" alt="icone cadeau" width=50>
+                                    <span class="menuText">Ajouter un cadeau</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="giftList">
+                                    <img src="pictures/icones/liste.svg" alt="icone liste" width=50>
+                                    <span class="menuText">Ma liste</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="secretPage">
+                                    <img src="pictures/icones/pageSecrete.svg" alt="icone page secrète" width=50>
+                                    <span class="menuText">Page Secrète</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="profileUser">
+                                    <img src="pictures/icones/profil.svg" alt="icone profil" width=50>
+                                    <span class="menuText">Profil</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <img src="pictures/icones/contact.svg" alt="icone contact" width=50>
+                                    <span class="menuText">Contact</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/christmas/public/logOutUser">
+                                    <img src="pictures/icones/deconnexion.svg" alt="icone deconnexion" width=50>
+                                    <span class="menuText">Déconnexion</span>
+                                </a>
+                            </li>
+                        <?php } else if (isset($_SESSION['id_account'])) { ?>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="home">
+                                    <img src="pictures/icones/home.svg" alt="icone home" width=50>
+                                    <span class="menuText">Home</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="profileUser">
+                                    <img src="pictures/icones/profil.svg" alt="icone profil" width=50>
+                                    <span class="menuText">Profil</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <img src="pictures/icones/contact.svg" alt="icone contact" width=50>
+                                    <span class="menuText">Contact</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/christmas/public/logoutAccount">
+                                    <img src="pictures/icones/deconnexion.svg" alt="icone deconnexion" width=50>
+                                    <span class="menuText">Déconnexion</span>
                                 </a>
                             </li>
                         <?php } else { ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="/christmas/public/logoutAccount">
-                                    <img src="pictures/icones/deconnexion.svg" alt="icone deconnexion" width=50>
-                                    <span class="menuText">Se déconnecter</span>
+                                <a class="nav-link active" aria-current="page" href="home">
+                                    <img src="pictures/icones/home.svg" alt="icone home" width=50>
+                                    <span class="menuText">Home</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#connexionAnchor">
+                                    <img src="pictures/icones/cadeau.svg" alt="icone cadeau" width=50>
+                                    <span class="menuText">Ajouter un cadeau</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#connexionAnchor">
+                                    <img src="pictures/icones/liste.svg" alt="icone liste" width=50>
+                                    <span class="menuText">Ma liste</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#connexionAnchor">
+                                    <img src="pictures/icones/pageSecrete.svg" alt="icone page secrète" width=50>
+                                    <span class="menuText">Page Secrète</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#connexionAnchor">
+                                    <img src="pictures/icones/profil.svg" alt="icone profil" width=50>
+                                    <span class="menuText">Profil</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <img src="pictures/icones/contact.svg" alt="icone contact" width=50>
+                                    <span class="menuText">Contact</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#connexionAnchor">
+                                    <img src="pictures/icones/connexion.svg" alt="icone connexion" width=50>
+                                    <span class="menuText">Connexion</span>
                                 </a>
                             </li>
                         <?php } ?>
+
                     </ul>
                 </div>
             </div>

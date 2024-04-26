@@ -15,104 +15,106 @@ class AccountController extends Controller
     // ###################### VUE CONNEXION #######################
     // ############################################################
 
-    public function signUp()
-    {
-        $this->render("account/signUpAccount");
-    }
+    // public function pageSignUpAccount()
+    // {
+    //     $this->render("account/signUpAccount");
+    // }
 
-    public function viewSignIn()
-    {
-        // les :: sont utilisés pour appeler une méthode statique de la classe Token. Elle peut être appelée sur la classe elle-même plutôt que sur une instance de classe
-        // Token::tokenGenerator('create_account');
-        // Token::tokenGenerator('login_account');
-        $this->render('account/signInAccount');
-    }
+
 
     // ############################################################
     // ####################### CREATE AND LOGIN ACCOUNT ###########
     // ############################################################
-    public function createAccount()
+    public function signUpAccount()
     {
-        // if ($_POST['createAccountWithTag']) {
+        // if ($_POST['signUpAccountWithTag']) {
         // vérification TOKEN
         // if (!Token::tokenValidator($_POST['csrf_token'], 'create_account')) {
         //     http_response_code(400);
         //     $_SESSION['error_message'] = "Erreur de jeton CSRF.";
-        //     header("Location: viewSignIn");
+        //     header("Location: signInAccount");
         //     exit();
         // }
+        if (($_SERVER["REQUEST_METHOD"] == "POST")) {
+            $nicknameAccount = $this->protectedValues($_POST['nickname_account']);
+            $emailAccount = $this->protectedValues($_POST['email_account']);
+            $password = trim($_POST['password']);
+            $confirmPassword = trim($_POST['confirmPassword']);
+            $tag_account = $_POST['tag_account'];
 
-        $nicknameAccount = $this->protectedValues($_POST['nickname_account']);
-        $emailAccount = $this->protectedValues($_POST['email_account']);
-        $password = trim($_POST['password']);
-        $confirmPassword = trim($_POST['confirmPassword']);
-        $tag_account = $_POST['tag_account'];
+            // si une variable est définie (donc déclarée) et différente de null > message d'erreur
+            if (!isset($_POST['nickname_account']) || !isset($_POST['email_account']) || !isset($_POST['password']) || !isset($_POST['confirmPassword']) || !isset($_POST['tag_account'])) {
+                http_response_code(400);
+                $_SESSION['error_messageAccount'] = "Toutes les valeurs ne sont pas soumises.";
+                header("Location: signUpAccount");
+                exit();
+            }
+            if (!filter_var($emailAccount, FILTER_VALIDATE_EMAIL)) {
+                $_SESSION['error_messageAccount'] = "L'adresse e-mail n'est pas valide.";
+                header("Location: signUpAccount");
+                exit();
+            }
+            if (strlen($password) < 8 || !preg_match("/[A-Z]/", $password) || !preg_match("/[a-z]/", $password) || !preg_match("/[0-9]/", $password)) {
+                http_response_code(400);
+                $_SESSION['error_messageAccount'] = "Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre.";
+                header("Location: signUpAccount");
+                exit();
+            }
 
-        // si une variable est définie (donc déclarée) et différente de null > message d'erreur
-        if (!isset($_POST['nickname_account']) || !isset($_POST['email_account']) || !isset($_POST['password']) || !isset($_POST['confirmPassword']) || !isset($_POST['tag_account'])) {
-            http_response_code(400);
-            $_SESSION['error_messageAccount'] = "Toutes les valeurs ne sont pas soumises.";
-            header("Location: signUp");
+            if ($password !== $confirmPassword) {
+                http_response_code(400);
+                $_SESSION['error_messageAccount'] = "Les mots de passe ne correspondent pas.";
+                header("Location: signUpAccount");
+                exit();
+            }
+
+            $account = new Account();
+            $account->setNickname_account($nicknameAccount);
+            $account->setEmail_account($emailAccount);
+            $account->setPassword_account($password);
+            $account->setTag_account($tag_account);
+
+
+            $accountModel = new AccountModel();
+            $existingAccount = $accountModel->getAccountByEmail($emailAccount);
+            // si mail existe déjà, afficher message d'erreur
+            if ($existingAccount) {
+                http_response_code(409);
+                $_SESSION['error_message'] = "Cet email existe déjà, merci d'en sélectionner un autre.";
+                header("Location: signUpAccount");
+                exit();
+            }
+            // Insérer un nouvel utilisateur dans la base de données
+            $accountId = $accountModel->signUpAccount($account, $password);
+
+            // Récupérer les informations de l'utilisateur nouvellement inséré
+            $accountInfos = $accountModel->getAccountById($accountId);
+
+            // Stocker les informations de l'utilisateur en session
+            $_SESSION['id_account'] = $accountInfos['id_account'];
+            $_SESSION['nickname_account'] = $accountInfos['nickname_account'];
+            $_SESSION['email_account'] = $accountInfos['email_account'];
+            $_SESSION['tag_account'] = $accountInfos['tag_account'];
+
+            // Redirection vers la page d'accueil
+            header('Location: home');
             exit();
+        } else {
+            $this->render("account/signUpAccount");
         }
-        if (!filter_var($emailAccount, FILTER_VALIDATE_EMAIL)) {
-            $_SESSION['error_messageAccount'] = "L'adresse e-mail n'est pas valide.";
-            header("Location: signUp");
-            exit();
-        }
-        if (strlen($password) < 8 || !preg_match("/[A-Z]/", $password) || !preg_match("/[a-z]/", $password) || !preg_match("/[0-9]/", $password)) {
-            http_response_code(400);
-            $_SESSION['error_messageAccount'] = "Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre.";
-            header("Location: signUp");
-            exit();
-        }
-
-        if ($password !== $confirmPassword) {
-            http_response_code(400);
-            $_SESSION['error_messageAccount'] = "Les mots de passe ne correspondent pas.";
-            header("Location: signUp");
-            exit();
-        }
-
-        $account = new Account();
-        $account->setNickname_account($nicknameAccount);
-        $account->setEmail_account($emailAccount);
-        $account->setPassword_account($password);
-        $account->setTag_account($tag_account);
-
-
-        $accountModel = new AccountModel();
-        $existingAccount = $accountModel->getAccountByEmail($emailAccount);
-        // si mail existe déjà, afficher message d'erreur
-        if ($existingAccount) {
-            http_response_code(409);
-            $_SESSION['error_message'] = "Cet email existe déjà, merci d'en sélectionner un autre.";
-            header("Location: signUp");
-            exit();
-        }
-        // Insérer un nouvel utilisateur dans la base de données
-        $accountId = $accountModel->createAccount($account, $password);
-
-        // Récupérer les informations de l'utilisateur nouvellement inséré
-        // $accountInfos = $accountModel->getAccountById($accountId);
-
-        // Stocker les informations de l'utilisateur en session
-        // $_SESSION['id_account'] = $accountInfos['id_account'];
-        // $_SESSION['nickname_account'] = $accountInfos['nickname_account'];
-        // $_SESSION['email_account'] = $accountInfos['email_account'];
-        // $_SESSION['tag_account'] = $accountInfos['tag_account'];
-
-        // Redirection vers la page d'accueil
-        header('Location: home');
-        exit();
-
-        // header("Location: signUp");
-        // exit();
     }
+
 
     // ############################################################
     // ###################### CONNEXION ###########################
     // ############################################################
+    // public function signInAccount()
+    // {
+    // les :: sont utilisés pour appeler une méthode statique de la classe Token. Elle peut être appelée sur la classe elle-même plutôt que sur une instance de classe
+    // Token::tokenGenerator('create_account');
+    // Token::tokenGenerator('login_account');
+    //     $this->render('account/signInAccount');
+    // }
     public function signInAccount()
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -120,7 +122,7 @@ class AccountController extends Controller
             // if (!Token::tokenValidator($_POST['csrf_token'], 'login_account')) {
             //     http_response_code(400);
             //     $_SESSION['error_messageC'] = "Erreur de jeton CSRF.";
-            //     header("Location: viewSignIn");
+            //     header("Location: signInAccount");
             //     exit();
             // }
 
@@ -131,7 +133,7 @@ class AccountController extends Controller
             if (!$nickname_account || !$password) {
                 http_response_code(400);
                 $_SESSION['error_message'] = "Merci de saisir un pseudo et un mot de passe";
-                header("Location: viewSignIn");
+                header("Location: signInAccount");
                 exit();
             }
             // Récupération des données
@@ -159,16 +161,12 @@ class AccountController extends Controller
                 exit();
             } else {
                 $_SESSION['error_message'] = "Le pseudo ou le mot de passe sont invalides";
-                header("Location: viewSignIn");
+                header("Location: signInAccount");
                 exit();
             }
         } else {
-            header("Location: viewSignIn");
-            exit();
-            // $this->render("account/viewSignIn");
-            $_SESSION['error_message'] = 'La connexion a échouée';
+            $this->render("account/signInAccount");
         }
-        $this->render("account/viewSignIn");
     }
 
 
