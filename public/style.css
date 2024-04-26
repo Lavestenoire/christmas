@@ -132,14 +132,18 @@ footer ul li {
     text-align: justify;
 }
 
+footer div a {
+    color: #F8F3E8;
+}
+
 
 footer ul li a {
-    color: #FAF8F8;
+    color: #F8F3E8;
 }
 
 .footerItem {
     width: 30%;
-    color: #FAF8F8;
+    color: #F8F3E8;
     text-align: center;
 }
 
@@ -529,6 +533,17 @@ footer ul li a {
                     LISTES PAGE SECRÈTE
 ############################################################ 
 */
+#iconeSecrete {
+    text-align: center;
+}
+
+.secretBtn {
+    margin: 0 auto;
+    display: block;
+}
+
+
+
 #containerList,
 #containerListToOffer {
     width: 100%;
@@ -544,11 +559,11 @@ footer ul li a {
     margin: 25px;
     padding: 25px;
     height: 350px;
-    border: solid #546E5A 5px;
-    border-color: #546E5A;
+    border: solid #D9372A 5px;
+    border-color: #D9372A;
     float: left;
     overflow-y: auto;
-    scrollbar-color: #546E5A;
+    scrollbar-color: #D9372A;
 }
 
 #containerList {
@@ -556,14 +571,39 @@ footer ul li a {
 }
 
 .boxName {
-    width: fit-content;
-    transform: rotate(-4deg);
-    margin: 15px;
-    padding: 0 5px;
-    /* float: left; */
-    background: #ddd;
-    border: 1px solid #222;
-    box-shadow: 3px 3px 0 #222;
+    align-items: center;
+    background-color: #546E5A;
+    border: 1px solid #DFDFDF;
+    border-radius: 16px;
+    box-sizing: border-box;
+    color: #F8F3E8;
+    display: flex;
+    font-family: Inter, sans-serif;
+    font-size: 18px;
+    justify-content: center;
+    line-height: 20px;
+    max-width: 100%;
+    padding: 14px 22px;
+    text-decoration: none;
+    transition: all .2s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 100%;
+}
+
+#giftCount {
+    text-align: center;
+    font-size: 20px;
+
+}
+
+@media (min-width: 768px) {
+    .boxName {
+        font-size: 20px;
+        min-width: 200px;
+        padding: 14px 16px;
+    }
 }
 
 .liAndInputList {

@@ -42,4 +42,9 @@ class HomeController extends Controller
     {
         $this->render("home/index");
     }
+
+    public function cgu()
+    {
+        $this->render("home/cgu");
+    }
 }

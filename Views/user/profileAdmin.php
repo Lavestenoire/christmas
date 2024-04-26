@@ -1,5 +1,5 @@
 <?php
-$title = "Christmas - Profil Administrateur";
+$title = "Fami'list - Profil Administrateur";
 // var_dump($accountInfos);
 ?>
 <?php if (isset($_SESSION['id_account'])) { ?>

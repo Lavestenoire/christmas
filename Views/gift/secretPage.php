@@ -1,13 +1,17 @@
 <?php
-$title = "Christmas - Page secrète";
+$title = "Fami'list - Page secrète";
 // var_dump($giftList);
 ?>
 
 <?php if (isset($_SESSION['id_account']) || isset($_SESSION['id_user'])) { ?>
-    <h1>
+    <h1 id="titreAccueilConnexion">
         <?= $_SESSION['nickname_user'] ?>, bienvenue sur ta page secrète
     </h1>
-    <p>Tu peux ici sélectionner des cadeaux dans les listes des membres de ta famille et les ajouter dans ta liste de cadeaux à offrir.</p>
+    <div id="iconeSecrete">
+        <img src="pictures/icones/pageSecrete.svg" alt="icone page secrète" width=100>
+    </div>
+
+    <h2 class="sousTitreAccueilConnexion">Choisis les cadeaux dans les listes des lutins de ta famille. Tu les retrouveras en bas de page dans ta liste de cadeaux à offrir.</h2>
     <!-- listes des users avec un status == 0 (non connecté) -->
     <div id="containerList">
         <?php
@@ -22,7 +26,8 @@ $title = "Christmas - Page secrète";
             <form action="reservedGift" method="POST">
                 <input type="hidden" name="id_user" value="<?= $_SESSION['id_user'] ?>">
                 <div class="listSecretPage">
-                    <div class="boxName"><?= $nickname ?></div>
+                    <div class="boxName">La liste de <?= $nickname ?>&nbsp&nbsp&nbsp<img src="pictures/cadeau.svg" alt="icone page secrète" width=50>
+                    </div>
                     <?php if (empty($list)) { ?>
                         <p><?= $nickname ?> n'a pas encore ajouté de cadeau à sa liste</p>
                         <?php } else {
@@ -51,11 +56,12 @@ $title = "Christmas - Page secrète";
                     ?>
                 </div>
                 <!-- afficher le nombre de cadeaux non réservés, avec une opération ternaire por le pluriel -->
-                <p><?= $unreservedCount ?> cadeau<?= $unreservedCount > 1 ? 'x' : '' ?> non réservé<?= $unreservedCount > 1 ? 's' : '' ?> dans la liste</p>
-                <button type="submit" class="button-paper" role="button">Ajouter</button>
+                <p id="giftCount">Il y a <?= $unreservedCount ?> cadeau<?= $unreservedCount > 1 ? 'x' : '' ?> non réservé<?= $unreservedCount > 1 ? 's' : '' ?> dans la liste</p>
+                <button type="submit" class="button-paper lutinBtn secretBtn" role="button">Coche un cadeau pour le réserver</button>
             </form>
         <?php
         } ?>
+
     </div>
 
 
