@@ -1,5 +1,6 @@
 <?php
 $title = "Fami'list - Accueil";
+// var_dump($_SESSION);
 ?>
 
 <?php
@@ -27,7 +28,7 @@ else if (isset($_SESSION['id_account'])) { ?>
         <div class="imgExplanation"><img src="pictures/12.svg" alt="logo explication" width=200></div>
     </div>
     <div id="connexionAnchor"></div>
-    <p id="linkCreerCompte">Si vous n'avez pas encore de compte, <a href="signUpAccount">cliquez ici</a></p>
+    <p id="linkCreerCompte">Si vous n'avez pas encore de compte, <a href="signUpPage">cliquez ici</a></p>
     <div id="btnAccueil">
         <button type="button" name="" class="button-paper lutinBtn" role="button"><a href="/christmas/public/signInAccount">Lutin administrateur, identifiez-vous</a></button>
         <button type="button" name="" class="button-paper lutinBtn" role="button"><a href="/christmas/public/signInUser">Lutin, identifiez-vous</a></button>

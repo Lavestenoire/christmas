@@ -510,6 +510,10 @@ footer ul li a {
     scrollbar-color: #D9372A;
 }
 
+.reservedGift {
+    color: #D9372A;
+}
+
 #containerList {
     width: 100%;
 }
@@ -658,6 +662,7 @@ footer ul li a {
 .deleteOui {
     margin-right: 2em;
 }
+
 
 @media screen and (max-width: 480px) {
     #profilePage {

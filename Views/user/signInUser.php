@@ -7,7 +7,7 @@ $title = "Fami'list - SignIn";
 <section id="connexionInscription">
     <div id="signInUser">
         <h1 id="titreAccueilConnexion">Lutin, connecte toi</h1>
-        <h2 class="sousTitreAccueilConnexion">En tant que lutin, tu pourras créer ta liste de cadeaux et choisir dans les autres litses les cadeaux à offrir.</h2>
+        <h2 class="sousTitreAccueilConnexion">En tant que lutin, tu pourras créer ta liste de cadeaux et choisir dans les autres listes les cadeaux à offrir.</h2>
 
         <div class="accountForm">
             <form class="mx-auto w-80" action="signInUser" method="POST">
@@ -21,7 +21,6 @@ $title = "Fami'list - SignIn";
                     <label for="loginPasswordUser" class="form-label">Mot de passe</label>
                     <input type="password" name="loginPasswordUser" class="form-control loginPassword" required>
                 </div>
-
                 <?php
                 if (isset($_SESSION['error_message'])) : ?>
                     <span class="text-danger"><?= ($_SESSION['error_message']) ?></span>

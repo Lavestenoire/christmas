@@ -23,71 +23,68 @@ class UserController extends Controller
     // #############################
     public function signUpUser()
     {
+
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $tag_account = $_POST['tag_user'];
 
             $accountModel = new AccountModel();
             $tag = $accountModel->getAccountByTag($tag_account);
 
-            if ($tag) {
-                $nicknameUser = $_POST['nickname_user'];
-                $email_user = $_POST['email_user'];
-                $passwordUser = $_POST['password_user'];
-                $confirmPasswordUser = $_POST['confirmPassword_user'];
+            $nicknameUser = $_POST['nickname_user'];
+            $email_user = $_POST['email_user'];
+            $passwordUser = $_POST['password_user'];
+            $confirmPasswordUser = $_POST['confirmPassword_user'];
 
-                // si une variable est définie (donc déclarée) et différente de null > message d'erreur
-                if (!isset($nicknameUser) || !isset($email_user) || !isset($passwordUser) || !isset($confirmPasswordUser)) {
-                    http_response_code(400);
-                    $_SESSION['error_messageUser'] = "Toutes les valeurs ne sont pas soumises.";
-                    header("Location: signUpAccount");
-                    exit();
-                }
-                if (!filter_var($email_user, FILTER_VALIDATE_EMAIL)) {
-                    $_SESSION['error_messageUser'] = "L'adresse e-mail n'est pas valide.";
-                    header("Location: signUpAccount");
-                    exit();
-                }
-                if (strlen($passwordUser) < 8 || !preg_match("/[A-Z]/", $passwordUser) || !preg_match("/[a-z]/", $passwordUser) || !preg_match("/[0-9]/", $passwordUser)) {
-                    http_response_code(400);
-                    $_SESSION['error_messageUser'] = "Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre.";
-                    header("Location: signUpAccount");
-                    exit();
-                }
-                if ($passwordUser !== $confirmPasswordUser) {
-                    http_response_code(400);
-                    $_SESSION['error_messageUser'] = "Les mots de passe ne correspondent pas.";
-                    header("Location: signUpAccount");
-                    exit();
-                }
-                $user = new User();
-                $user->setNickname_user($nicknameUser);
-                $user->setEmail_user($email_user);
-                $user->setPassword_user(password_hash($passwordUser, PASSWORD_DEFAULT));
-                $user->setStatus_user(0);
-                $user->setPicture_user(DEFAULT_AVATAR);
-                $user->setId_account($tag['id_account']);
-
-                $userModel = new UserModel();
-                $existingUser = $userModel->getUserByEmail($email_user);
-                if ($existingUser) {
-                    http_response_code(409);
-                    $_SESSION['error_message'] = "Cet email existe déjà, merci d'en sélectionner un autre.";
-                    header("Location: signUpAccount");
-                    exit();
-                }
-                $userId = $userModel->signUpUser($user, $passwordUser);
-                $userInfos = $userModel->getUserById($userId);
-
-                $_SESSION['id_user'] = $userInfos['id_user'];
-                $_SESSION['nickname_user'] = $userInfos['nickname_user'];
-                $_SESSION['email_user'] = $userInfos['email_user'];
-
-                header('Location: home');
+            // si une variable est définie (donc déclarée) et différente de null > message d'erreur
+            if (empty($nicknameUser) || empty($email_user) || empty($passwordUser) || empty($confirmPasswordUser)) {
+                http_response_code(400);
+                $_SESSION['error_message'] = "Toutes les valeurs ne sont pas soumises.";
+                header("Location: signUpAccount");
                 exit();
-            } else {
+            }
+            if (!filter_var($email_user, FILTER_VALIDATE_EMAIL)) {
+                $_SESSION['error-message']['email_user'] = "L'adresse e-mail n'est pas valide.";
+                header("Location: signUpAccount");
+                exit();
+            }
+            if (strlen($passwordUser) < 8 || !preg_match("/[A-Z]/", $passwordUser) || !preg_match("/[a-z]/", $passwordUser) || !preg_match("/[0-9]/", $passwordUser)) {
+                http_response_code(400);
+                $_SESSION['error-message']['password_user'] = "Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre.";
+                header("Location: signUpAccount");
+                exit();
+            }
+            if ($passwordUser !== $confirmPasswordUser) {
+                http_response_code(400);
+                $_SESSION['error-message']['samePassword_user'] = "Les mots de passe ne correspondent pas.";
+                header("Location: signUpAccount");
+                exit();
+            }
+            $user = new User();
+            $user->setNickname_user($nicknameUser);
+            $user->setEmail_user($email_user);
+            $user->setPassword_user(password_hash($passwordUser, PASSWORD_DEFAULT));
+            $user->setStatus_user(0);
+            $user->setPicture_user(DEFAULT_AVATAR);
+            $user->setId_account($tag['id_account']);
+
+            $userModel = new UserModel();
+            $existingUser = $userModel->getUserByEmail($email_user);
+            if ($existingUser) {
+                http_response_code(409);
+                $_SESSION['error-message']['email_user'] = "Cet email existe déjà, merci d'en sélectionner un autre.";
+                header("Location: signUpUser");
+                exit();
+            }
+            $userModel->signUpUser($user, $passwordUser);
+            header('Location: home');
+            exit();
+            if (!$tag) {
+                http_response_code(400);
+                $_SESSION['error-message']['tag_user'] = "Ce code familial n'existe pas.";
+                header("Location: signUpUser");
             }
         } else {
-            $this->render("account/signUpAccount");
+            $this->render("user/signUpUser");
         }
     }
 
@@ -136,23 +133,22 @@ class UserController extends Controller
                 $_SESSION['nickname_user'] = $userData['nickname_user'];
                 $_SESSION['status_user'] = $userData['status_user'];
                 $_SESSION['id_account'] = $userData['id_account'];
+
+                // Mettre à jour le status_user à 1
+                $user->setNickname_user($userData['nickname_user']);
+                $user->setPassword_user($userData['password_user']);
+                $user->setId_user($userData['id_user']);
+                $user->setStatus_user(1);
+
+                $userModel->updateUserStatus($user);
+
+                header('Location: home');
+                exit();
             } else {
                 $_SESSION['error_message'] = "Les informations de connexion sont incorrectes.";
                 header("Location: signInUser");
+                exit();
             }
-            // Mettre à jour le status_user à 1
-            $user->setNickname_user($userData['nickname_user']);
-            $user->setPassword_user($userData['password_user']);
-            $user->setId_user($userData['id_user']);
-            $user->setStatus_user(1);
-            // echo '<pre>';
-            // var_dump($user);
-            // echo '</pre>';
-            // die;
-            $userModel->updateUserStatus($user);
-
-            header('Location: home');
-            exit();
         } else {
             $this->render("user/signInUser");
         }
@@ -291,6 +287,10 @@ class UserController extends Controller
         $userModel = new UserModel();
         $userModel->deleteUser($user);
         unset($_SESSION['id_user']);
+        unset($_SESSION['id_account']);
+        unset($_SESSION['nickname_user']);
+        unset($_SESSION['role_user']);
+        unset($_SESSION['status_user']);
 
         header("Location: home");
     }

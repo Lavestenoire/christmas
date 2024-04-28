@@ -85,16 +85,16 @@ class AccountController extends Controller
                 exit();
             }
             // Insérer un nouvel utilisateur dans la base de données
-            $accountId = $accountModel->signUpAccount($account, $password);
+            $accountModel->signUpAccount($account, $password);
 
-            // Récupérer les informations de l'utilisateur nouvellement inséré
-            $accountInfos = $accountModel->getAccountById($accountId);
+            // Récupérer les informations de l'utilisateur nouvellement sinséré pour qu'il soit connecté une fois inscrit
+            // $accountInfos = $accountModel->getAccountById($accountId);
 
             // Stocker les informations de l'utilisateur en session
-            $_SESSION['id_account'] = $accountInfos['id_account'];
-            $_SESSION['nickname_account'] = $accountInfos['nickname_account'];
-            $_SESSION['email_account'] = $accountInfos['email_account'];
-            $_SESSION['tag_account'] = $accountInfos['tag_account'];
+            // $_SESSION['id_account'] = $accountInfos['id_account'];
+            // $_SESSION['nickname_account'] = $accountInfos['nickname_account'];
+            // $_SESSION['email_account'] = $accountInfos['email_account'];
+            // $_SESSION['tag_account'] = $accountInfos['tag_account'];
 
             // Redirection vers la page d'accueil
             header('Location: home');

@@ -37,7 +37,6 @@ class UserModel extends DbConnect
             $this->request->bindValue(':status_user', $user->getStatus_user());
             $this->request->bindValue(':id_account', $user->getId_account());
             $this->request->execute();
-            die;
         } catch (Exception $e) {
             echo "Erreur lors de la connexion à la base de données : " . $e->getMessage();
         }

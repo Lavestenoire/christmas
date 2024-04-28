@@ -39,7 +39,7 @@ $title = "Fami'list - Page secrète";
                                     <li><?= $gift['description_gift'] ?></li>
                                     <li><?= $gift['name_category'] ?></li>
                                     <?php if ($gift['reserved_gift'] == 1) { ?>
-                                        <li>Reservé</li>
+                                        <li class="reservedGift">Reservé</li>
                                     <?php } else if ($gift['reserved_gift'] == 0) {
                                         // pour tous les cadeaux non réservés, incrémenter le nombre initialisé plus haut à 0
                                         $unreservedCount++;
