@@ -3,7 +3,9 @@
 namespace App\Controllers;
 
 use App\Entities\Account;
+use App\Entities\User;
 use App\Models\AccountModel;
+use App\Models\UserModel;
 use App\Core\Token;
 
 
@@ -190,14 +192,21 @@ class AccountController extends Controller
     {
         $account = new Account();
         $account->setId_account($_SESSION['id_account']);
+        $account->setTag_account($_SESSION['tag_account']);
 
         $idAccount = $account->getId_account();
+
+
         // si je met $accountModel->getAccountById($Account), comme $account est un objet (récupéré de la requete préparée via bindValue du model), il ne peut être traduit en string. donc je dois passer l'id à la méthode getAccountById, et non l'objet lui-même
         $accountModel = new AccountModel();
         $accountInfos = $accountModel->getAccountById($idAccount);
 
+        $userModel = new UserModel();
 
-        $this->render('account/profileAccount', ['accountInfos' => $accountInfos]);
+        $userInfos = $userModel->getUsersByTagAccount($account);
+
+
+        $this->render('account/profileAccount', ['accountInfos' => $accountInfos, 'userInfos' => $userInfos]);
     }
 
     // ############################################################

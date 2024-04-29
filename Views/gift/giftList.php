@@ -8,7 +8,7 @@ $title = "Fami'list - Ma liste";
 <?php if (isset($_SESSION['id_account']) || isset($_SESSION['id_user'])) { ?>
     <section id="listSection">
         <div class="divBtn">
-            <button id="addGift" name="addGift" class="button-paper lutinBtn" role="button"><a href="pageCreateGift">Ajouter un cadeau à ma liste</a></button>
+            <a href="pageCreateGift"><button id="addGift" name="addGift" class="button-paper lutinBtn" role="button">Ajouter un cadeau à ma liste</button></a>
         </div>
         <table class="list listFromListPage">
             <tr>
@@ -35,7 +35,7 @@ $title = "Fami'list - Ma liste";
                         </td>
                         <td>
                             <div class="gift-category"><?= $gift['name_category']; ?></div>
-                            <input type="text" class="edit-input" name="name_category" value="<?= $gift['name_category']; ?>">
+                            <input type="url" class="edit-input" name="name_category" value="<?= $gift['name_category']; ?>">
                         </td>
                         <td>
                             <i class="fa-regular fa-pen-to-square edit-button"></i>

@@ -391,6 +391,11 @@ footer ul li a {
     width: 80%;
 }
 
+#userprofileAccount {
+    display: flex;
+    flex-direction: row;
+}
+
 /* 
 ############################################################
                 ACCUEIL ACCOUNT(ADMIN)
@@ -399,6 +404,25 @@ footer ul li a {
 .profilBtn {
     text-align: center;
     margin-top: 2em;
+}
+
+/* 
+############################################################
+                      SIGN UP PAGE
+############################################################ 
+*/
+#signUpPageButton {
+    display: flex;
+}
+
+#signUpAccountButton,
+#signUpUserButton {
+    text-align: center;
+}
+
+#signUpAccountButton img,
+#signUpUserButton img {
+    margin-bottom: 2em;
 }
 
 /* 

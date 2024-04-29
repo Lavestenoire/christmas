@@ -7,7 +7,7 @@ $title = "Fami'list - Profil";
 if (isset($_SESSION['id_user'])) { ?>
     <?php if (isset($_SESSION['role_user']) && $_SESSION['role_user'] === 1) { ?>
         <div>
-            <button type="button" name="allProfileAccess" class="button-paper" role="button"><a href="adminPage">Accéder à tous les profils</a></button>
+            <a href="adminPage"><button type="button" name="allProfileAccess" class="button-paper" role="button">Accéder à tous les profils</button></a>
         </div>
     <?php } ?>
 

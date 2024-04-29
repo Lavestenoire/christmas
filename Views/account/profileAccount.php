@@ -1,8 +1,19 @@
 <?php
 $title = "Fami'list - Profil";
+// var_dump($userInfos);
 ?>
-
+<div id="userprofileAccount">
+    <?php
+    foreach ($userInfos as $info) { ?>
+        <div>
+            <div><img src="<?= $info['picture_user'] ?>" alt="avatar" width=150></div>
+            <div><?= $info['nickname_user'] ?></div>
+        </div>
+    <?php } ?>
+</div>
 <?php
+
+
 if (isset($_SESSION['id_account'])) { ?>
 
     <section id="profilePage">
@@ -49,6 +60,8 @@ if (isset($_SESSION['id_account'])) { ?>
             <button type="submit" name="editAccount" class='button-paper lutinBtn' onclick="confirmEditProfileAccount()">Modifier le profil</button>
             <button type="button" class='button-paper lutinBtn' onclick="cancelEditProfileAccount()">Annuler la modification</button>
         </form>
+        <div><img src="pictures/lutinAdmin.svg" alt="image lutin admin"></div>
+
     </section>
 
 <?php } else if (!isset($_SESSION['id_account'])) {
