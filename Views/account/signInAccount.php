@@ -1,5 +1,5 @@
 <?php
-$title = "Christmas - SignIn";
+$title = "Fami'list - SignIn";
 ?>
 
 <section id="connexionInscription">

@@ -37,7 +37,6 @@ class UserModel extends DbConnect
             $this->request->bindValue(':status_user', $user->getStatus_user());
             $this->request->bindValue(':id_account', $user->getId_account());
             $this->request->execute();
-            die;
         } catch (Exception $e) {
             echo "Erreur lors de la connexion à la base de données : " . $e->getMessage();
         }
@@ -67,6 +66,19 @@ class UserModel extends DbConnect
             $this->request->execute();
 
             return $this->request->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            echo "Erreur lors de la connexion à la base de données : " . $e->getMessage();
+        }
+    }
+
+    public function getUsersByTagAccount(Account $account)
+    {
+        try {
+            $this->request = $this->connection->prepare("SELECT * FROM c_user JOIN c_account ON c_user.id_account = c_account.id_account WHERE c_account.tag_account = :tag_account");
+            $this->request->bindValue('tag_account', $account->getTag_account());
+            $this->request->execute();
+
+            return $this->request->fetchAll(PDO::FETCH_ASSOC);
         } catch (Exception $e) {
             echo "Erreur lors de la connexion à la base de données : " . $e->getMessage();
         }
@@ -138,17 +150,6 @@ class UserModel extends DbConnect
         }
     }
 
-    // ########################################
-    //      LES QUESTIONS DE TOUS LES USERS
-    // ########################################
-    // public function questionsUsers(Account $account)
-    // {
-    //     $this->request = $this->connection->prepare("SELECT email_user FROM c_user JOIN c_account on c_user.id_account = c_account.id_account WHERE c_account.id_account = :id_account");
-    //     $this->request->bindValue(':id_account', $account->getId_account());
-    //     $this->request->execute();
-    //     $questions = $this->request->fetchAll(PDO::FETCH_ASSOC);
-    //     return $questions;
-    // }
 
     // ########################################
     //       SELECT USERS PAR ID_ACCOUNT
@@ -214,11 +215,10 @@ class UserModel extends DbConnect
     // ########################################
     //           EDIT PROFILE USER
     // ########################################
-    public function editUser(User $user, Account $account, $avatar)
+    public function editUser(User $user, $avatar)
     {
         try {
-            $this->request = $this->connection->prepare("UPDATE c_user SET nickname_user = :nickname_user, picture_user = :picture_user, email_user = :email_user, password_user = :password_user WHERE id_user = :id_user AND id_account = :id_account");
-            $this->request->bindValue(':id_account', $account->getId_account());
+            $this->request = $this->connection->prepare("UPDATE c_user SET nickname_user = :nickname_user, picture_user = :picture_user, email_user = :email_user, password_user = :password_user WHERE id_user = :id_user");
             $this->request->bindValue(':id_user', $user->getId_user());
             $this->request->bindValue(':nickname_user', $user->getNickname_user());
             $this->request->bindValue(':picture_user', $avatar);

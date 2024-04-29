@@ -3,7 +3,9 @@
 namespace App\Controllers;
 
 use App\Entities\Account;
+use App\Entities\User;
 use App\Models\AccountModel;
+use App\Models\UserModel;
 use App\Core\Token;
 
 
@@ -85,16 +87,16 @@ class AccountController extends Controller
                 exit();
             }
             // Insérer un nouvel utilisateur dans la base de données
-            $accountId = $accountModel->signUpAccount($account, $password);
+            $accountModel->signUpAccount($account, $password);
 
-            // Récupérer les informations de l'utilisateur nouvellement inséré
-            $accountInfos = $accountModel->getAccountById($accountId);
+            // Récupérer les informations de l'utilisateur nouvellement sinséré pour qu'il soit connecté une fois inscrit
+            // $accountInfos = $accountModel->getAccountById($accountId);
 
             // Stocker les informations de l'utilisateur en session
-            $_SESSION['id_account'] = $accountInfos['id_account'];
-            $_SESSION['nickname_account'] = $accountInfos['nickname_account'];
-            $_SESSION['email_account'] = $accountInfos['email_account'];
-            $_SESSION['tag_account'] = $accountInfos['tag_account'];
+            // $_SESSION['id_account'] = $accountInfos['id_account'];
+            // $_SESSION['nickname_account'] = $accountInfos['nickname_account'];
+            // $_SESSION['email_account'] = $accountInfos['email_account'];
+            // $_SESSION['tag_account'] = $accountInfos['tag_account'];
 
             // Redirection vers la page d'accueil
             header('Location: home');
@@ -171,7 +173,7 @@ class AccountController extends Controller
 
 
     // ############################################################
-    // ###################### DECONNEXION #########################
+    //                        DECONNEXION 
     // ############################################################
 
     public function logoutAccount()
@@ -182,54 +184,100 @@ class AccountController extends Controller
         header("Location: home");
     }
 
+
+    // ############################################################
+    //                       PROFILE ACCOUNT 
+    // ############################################################
+    public function profileAccount()
+    {
+        $account = new Account();
+        $account->setId_account($_SESSION['id_account']);
+        $account->setTag_account($_SESSION['tag_account']);
+
+        $idAccount = $account->getId_account();
+
+
+        // si je met $accountModel->getAccountById($Account), comme $account est un objet (récupéré de la requete préparée via bindValue du model), il ne peut être traduit en string. donc je dois passer l'id à la méthode getAccountById, et non l'objet lui-même
+        $accountModel = new AccountModel();
+        $accountInfos = $accountModel->getAccountById($idAccount);
+
+        $userModel = new UserModel();
+
+        $userInfos = $userModel->getUsersByTagAccount($account);
+
+
+        $this->render('account/profileAccount', ['accountInfos' => $accountInfos, 'userInfos' => $userInfos]);
+    }
+
     // ############################################################
     //                           UPDATE ACCOUNT 
     // ############################################################
-    // public function editAccount()
-    // {
-    //     Token::tokenGenerator('editAccount');
+    public function editAccount()
+    {
+        $id_account = $_SESSION['id_account'];
+        $nickname_account = $_POST['nickname_account'];
+        $email_account = $_POST['email_account'];
+        $current_password_account = $_POST['current_password_account'];
+        $new_password_account = $_POST['new_password_account'];
+        $confirm_new_password_account = $_POST['confirm_new_password_account'];
 
-    //     $id_account = $_SESSION['id_account'];
+        $accountModel = new AccountModel();
+        $accountData = $accountModel->getAccountById($id_account);
 
-    //     $account = new Account();
+        // Vérifier si un nouveau mot de passe a été fourni
+        if (!empty($new_password_account)) {
+            if (!password_verify($current_password_account, $accountData['password_account'])) {
+                $_SESSION['error_message'] = 'L\'ancien mot de passe est incorrect';
+                header('Location: editAccount');
+                exit();
+            } elseif ($new_password_account != $confirm_new_password_account) {
+                $_SESSION['error_message'] = 'Les nouveaux mots de passe ne correspondent pas';
+                header('Location: editAccount');
+                exit();
+            } else {
+                $hashed_new_password = password_hash($new_password_account, PASSWORD_DEFAULT);
+            }
+        } else {
+            $hashed_new_password = $accountData['password_account'];
+        }
 
-    //     $accountModel = new AccountModel();
-    //     $accountData = $accountModel->getAccountById($id_account);
+        $account = new Account();
+        $account->setId_account($id_account);
+        $account->setNickname_account($nickname_account);
+        $account->setEmail_account($email_account);
+        $account->setPassword_account($hashed_new_password);
 
-    //     // Récupérer les données POST
-    //     $nickname_account = $_POST['nickname_account'];
-    //     $email_account = $_POST['email_account'];
-    //     $oldPassword = $_POST['oldPassword'];
-    //     $newPassword = $_POST['newPassword'];
-    //     $confirmNewPassword = $_POST['confirmNewPassword'];
 
-    //     // Comparer les données
-    //     if ($nickname_account != $accountData['nickname_account']) {
-    //         $account->setNickname_account($nickname_account);
-    //     }
 
-    //     if ($email_account != $accountData['email_account']) {
-    //         $account->setEmail_account($email_account);
-    //     }
+        // Comparer les données
+        if ($nickname_account != $accountData['nickname_account']) {
+            $account->setNickname_account($nickname_account);
+        }
 
-    //     // Vérifier si l'ancien mot de passe est correct (vous devez stocker les mots de passe de manière sécurisée, par exemple en utilisant password_hash)
-    //     if (!password_verify($oldPassword, $accountData['password_account'])) {
-    //         $_SESSION['error_message'] = 'L\'ancien mot de passe est incorrect';
-    //     } else {
-    //         $hashNewPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-    //         $account->setPassword_account($hashNewPassword);
-    //     }
+        if ($email_account != $accountData['email_account']) {
+            $account->setEmail_account($email_account);
+        }
 
-    //     // Vérifier si le nouveau mot de passe et la confirmation correspondent
-    //     if ($newPassword != $confirmNewPassword) {
-    //         $_SESSION['error_message'] = 'Les nouveaux mots de passe ne correspondent pas';
-    //     }
 
-    //     // Vérifier s'il y a des erreurs
-    //     if (!isset($_SESSION['error_message'])) {
-    //         $accountModel->updateAccount($account);
-    //         header('Location: editAccount');
-    //         exit();
-    //     }
-    // }
+        // Vérifier s'il y a des erreurs
+        if (!isset($_SESSION['error_message'])) {
+            $accountModel->updateAccount($account);
+            header('Location: profileAccount');
+            exit();
+        }
+    }
+    public function deleteAccount()
+    {
+        $account = new Account();
+        $account->setId_account($_SESSION['id_account']);
+
+        $userModel = new AccountModel();
+        $userModel->deleteAccount($account);
+        unset($_SESSION['id_account']);
+        unset($_SESSION['nickname_account']);
+        unset($_SESSION['role_account']);
+        unset($_SESSION['tag_account']);
+
+        header("Location: home");
+    }
 }

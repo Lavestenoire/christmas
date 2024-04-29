@@ -1,5 +1,5 @@
 <?php
-$title = "Christmas - SignIn";
+$title = "Fami'list - SignIn";
 // var_dump($_SESSION);
 // die;
 ?>
@@ -7,7 +7,7 @@ $title = "Christmas - SignIn";
 <section id="connexionInscription">
     <div id="signInUser">
         <h1 id="titreAccueilConnexion">Lutin, connecte toi</h1>
-        <h2 class="sousTitreAccueilConnexion">En tant que lutin, tu pourras créer ta liste de cadeaux et choisir dans les autres litses les cadeaux à offrir.</h2>
+        <h2 class="sousTitreAccueilConnexion">En tant que lutin, tu pourras créer ta liste de cadeaux et choisir dans les autres listes les cadeaux à offrir.</h2>
 
         <div class="accountForm">
             <form class="mx-auto w-80" action="signInUser" method="POST">
@@ -21,14 +21,13 @@ $title = "Christmas - SignIn";
                     <label for="loginPasswordUser" class="form-label">Mot de passe</label>
                     <input type="password" name="loginPasswordUser" class="form-control loginPassword" required>
                 </div>
-
                 <?php
                 if (isset($_SESSION['error_message'])) : ?>
                     <span class="text-danger"><?= ($_SESSION['error_message']) ?></span>
                 <?php endif;
                 unset($_SESSION['error_message']);
                 ?>
-                <button type="submit" name="connectionUser" class="button-paper" role="button">Connexion</button>
+                <button type="submit" name="connectionUser" class="button-paper lutinBtn" role="button">Connexion</button>
             </form>
             <div><img src="pictures/lutin.svg" alt="dessinLutin"></div>
         </div>
