@@ -37,17 +37,16 @@ class AccountModel extends DbConnect
     public function getAccountById($accountId)
     {
         try {
-            $this->request = $this->connection->prepare("SELECT * FROM c_account WHERE id_account = :id");
-            $this->request->bindValue(":id", $accountId);
+            $this->request = $this->connection->prepare("SELECT * FROM c_account WHERE id_account = :id_account");
+            $this->request->bindValue(":id_account", $accountId);
             $this->request->execute();
 
-            // Renvoyer les informations du compte sous forme de tableau associatif
             return $this->request->fetch(PDO::FETCH_ASSOC);
         } catch (Exception $e) {
-            // Gérer l'exception de manière appropriée
             throw new Exception("Erreur lors de la récupération du compte : " . $e->getMessage());
         }
     }
+
     public function getAccountByTag($tag_account)
     {
         try {
@@ -125,5 +124,12 @@ class AccountModel extends DbConnect
             echo "Erreur :" . $e->getMessage();
             return false;
         }
+    }
+
+    public function deleteAccount(Account $account)
+    {
+        $this->request = $this->connection->prepare("DELETE FROM c_account WHERE id_account = :id_account");
+        $this->request->bindValue('id_account', $account->getId_account());
+        $this->request->execute();
     }
 }

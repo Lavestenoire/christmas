@@ -3,8 +3,8 @@ $title = "Fami'list - SignUpAccount";
 ?>
 <div id="signUpForms">
     <section>
-        <h1>Pour créer un compte et inviter des membres, passez par là</h1>
-        <form class="mx-auto w-80" action=" " method="POST">
+        <h1 id="titreAccueilConnexion">Pour créer un compte et inviter des membres, passez par là</h1>
+        <form class=" mx-auto w-80" action=" " method="POST">
             <div class="mb-3 col-5">
                 <label for="nickname_account" class="form-label">Pseudo</label>
                 <input type="text" name="nickname_account" class="form-control" aria-describedby="usernameHelp" required>

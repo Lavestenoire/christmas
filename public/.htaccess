@@ -11,6 +11,9 @@ RewriteRule ^signInAccount$ index.php?controller=Account&action=signInAccount [Q
 RewriteRule ^signUpAccount$ index.php?controller=Account&action=signUpAccount [QSA,L]
 RewriteRule ^logoutAccount$ index.php?controller=Account&action=logoutAccount [QSA,L]
 RewriteRule ^editAccount$ index.php?controller=Account&action=editAccount [QSA,L]
+RewriteRule ^profileAccount$ index.php?controller=Account&action=profileAccount [QSA,L]
+RewriteRule ^deleteAccount$ index.php?controller=Account&action=deleteAccount [QSA,L]
+
 RewriteRule ^signUpUser$ index.php?controller=User&action=signUpUser [QSA,L]
 
 RewriteRule ^signInUser$ index.php?controller=User&action=signInUser [QSA,L]

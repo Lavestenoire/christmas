@@ -162,9 +162,6 @@ footer ul li a {
         flex-direction: column;
     }
 
-    /* .footerItem ul {
-        display: none;
-    } */
 
     .footerItem {
         width: 0;
@@ -394,7 +391,15 @@ footer ul li a {
     width: 80%;
 }
 
-
+/* 
+############################################################
+                ACCUEIL ACCOUNT(ADMIN)
+############################################################ 
+*/
+.profilBtn {
+    text-align: center;
+    margin-top: 2em;
+}
 
 /* 
 ############################################################
@@ -495,6 +500,7 @@ footer ul li a {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
+    margin-top: 2em;
 }
 
 
@@ -512,10 +518,6 @@ footer ul li a {
 
 .reservedGift {
     color: #D9372A;
-}
-
-#containerList {
-    width: 100%;
 }
 
 .boxName {
@@ -546,12 +548,28 @@ footer ul li a {
 
 }
 
-@media (min-width: 768px) {
+.countColor {
+    color: #546E5A;
+}
+
+/* bouton - de la liste à offrir */
+.update-button {
+    background-color: transparent;
+    border: none;
+}
+
+@media (min-width: 480px) {
+    .listSecretPage {
+        margin: 2em auto;
+    }
+
     .boxName {
         font-size: 20px;
         min-width: 200px;
         padding: 14px 16px;
     }
+
+
 }
 
 .liAndInputList {
@@ -644,7 +662,8 @@ footer ul li a {
     width: 100px;
 }
 
-.editUser {
+.editUser,
+.editAccount {
     display: none;
 }
 
@@ -667,7 +686,11 @@ footer ul li a {
 @media screen and (max-width: 480px) {
     #profilePage {
         flex-direction: column;
+    }
 
+    #profile {
+
+        text-align: center;
     }
 }
 

@@ -4,7 +4,7 @@ $title = "Fami'list - Profil";
 ?>
 
 <?php
-if (isset($_SESSION['id_account']) || isset($_SESSION['id_user'])) { ?>
+if (isset($_SESSION['id_user'])) { ?>
     <?php if (isset($_SESSION['role_user']) && $_SESSION['role_user'] === 1) { ?>
         <div>
             <button type="button" name="allProfileAccess" class="button-paper" role="button"><a href="adminPage">Accéder à tous les profils</a></button>
@@ -17,8 +17,8 @@ if (isset($_SESSION['id_account']) || isset($_SESSION['id_user'])) { ?>
             <div><?= $userProfile['nickname_user'] ?></div>
             <div id="btnProfil">
                 <button name='modifyUser' class='button-paper lutinBtn' id="editBtn" role='button' onclick="editProfileUser()">Modifie ton profil</button>
-                <button name="deleteUser" class="button-paper lutinBtn" role="button" onclick="deleteConfirm()">Supprimer ton profil</button>
-                <div id="deleteConfirm"></div>
+                <button name="deleteUser" class="button-paper lutinBtn" role="button" onclick="deleteConfirmUser()">Supprimer ton profil</button>
+                <div id="deleteConfirmUser"></div>
             </div>
         </div>
 
@@ -34,17 +34,17 @@ if (isset($_SESSION['id_account']) || isset($_SESSION['id_user'])) { ?>
             <div class="mb-3 col-7 mdp">
                 <div class="eye"><i class="fa-regular fa-eye"></i></div>
                 <label for="password_user" class="form-label">Indique ton mot de passe actuel</label>
-                <input type="password" name="current_password_user" class="form-control loginPassword" id="password_user" required>
+                <input type="password" name="current_password_user" class="form-control loginPassword" id="current_password_user">
             </div>
             <div class="mb-3 col-7 mdp">
                 <div class="eye"><i class="fa-regular fa-eye"></i></div>
                 <label for="password_user" class="form-label">Indique ton nouveau mot de passe</label>
-                <input type="password" name="new_password_user" class="form-control loginPassword" id="password_user" required>
+                <input type="password" name="new_password_user" class="form-control loginPassword" id="new_password_user">
             </div>
             <div class="mb-3 col-7 mdp">
                 <div class="eye"><i class="fa-regular fa-eye"></i></div>
                 <label for="password_user" class="form-label">Valide ton nouveau mot de passe</label>
-                <input type="password" name="confirm_new_password_user" class="form-control loginPassword" id="password_user" required>
+                <input type="password" name="confirm_new_password_user" class="form-control loginPassword" id="confirm_new_password_user">
             </div>
             <div class="mb-3 col-12">
                 <label for="formFile" class="form-label">Modifie l'image de profil</label>
@@ -58,13 +58,13 @@ if (isset($_SESSION['id_account']) || isset($_SESSION['id_user'])) { ?>
             <?php endif; ?>
 
             <button type="submit" name="editUser" class='button-paper lutinBtn' onclick="confirmEditProfileUser()">Modifier le profil</button>
-            <button type="button" class='button-paper lutinBtn' onclick="cancelEditProfile()">Annuler la modification</button>
+            <button type="button" class='button-paper lutinBtn' onclick="cancelEditProfileUser()">Annuler la modification</button>
         </form>
     </section>
 
 <?php } else if (!isset($_SESSION['id_user'])) {
     header('Location: home');
 } else {
-    header('Location: signInAccount');
+    header('Location: signInUser');
     exit();
 } ?>

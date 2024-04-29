@@ -78,7 +78,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="profileUser">
+                                <a class="nav-link" href="profileAccount">
                                     <img src="pictures/icones/profil.svg" alt="icone profil" width=50>
                                     <span class="menuText">Profil</span>
                                 </a>

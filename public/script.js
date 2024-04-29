@@ -52,25 +52,47 @@ function selectCategory(category) {
 
 
 // ############################################################
-//                CONFIRMATION SUPPRESSION PROFIL
+//                CONFIRMATION SUPPRESSION USER
 // ############################################################
-function deleteConfirm() {
+function deleteConfirmUser() {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var message = "<p>Tu es sur de vouloir supprimer?</p>"
             message += "<form action='deleteUser'>"
             message += "<button type='submit' name='deleteUser' class='button-paper lutinBtn deleteOui' role='button'>Oui</button>"
-            message += "<button class='button-paper lutinBtn deleteNon' onclick='cancelDelete()'>Non</button>"
+            message += "<button class='button-paper lutinBtn deleteNon' onclick='cancelDeleteUser()'>Non</button>"
             message += "</form>"
-            document.getElementById("deleteConfirm").innerHTML = message;
+            document.getElementById("deleteConfirmUser").innerHTML = message;
         }
     };
     xmlhttp.open("GET", "profileUser", true);
     xmlhttp.send();
 }
-function cancelDelete() {
-    document.getElementById("deleteConfirm").innerHTML = ""; // Efface le message de confirmation
+function cancelDeleteUser() {
+    document.getElementById("deleteConfirmUser").innerHTML = ""; // Efface le message de confirmation
+}
+
+// ############################################################
+//                CONFIRMATION SUPPRESSION ACCOUNT
+// ############################################################
+function deleteConfirmAccount() {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var message = "<p>Tu es sur de vouloir supprimer?</p>"
+            message += "<form action='deleteAccount'>"
+            message += "<button type='submit' name='deleteAccount' class='button-paper lutinBtn deleteOui' role='button'>Oui</button>"
+            message += "<button class='button-paper lutinBtn deleteNon' onclick='cancelDeleteAccount()'>Non</button>"
+            message += "</form>"
+            document.getElementById("deleteConfirmAccount").innerHTML = message;
+        }
+    };
+    xmlhttp.open("GET", "profileAccount", true);
+    xmlhttp.send();
+}
+function cancelDeleteAccount() {
+    document.getElementById("deleteConfirmAccount").innerHTML = ""; // Efface le message de confirmation
 }
 
 
@@ -88,23 +110,37 @@ function confirmEditProfileUser() {
     editForm.style.display = "none";
 }
 
-function cancelEditProfile() {
+function cancelEditProfileUser() {
     var editForm = document.querySelector(".editUser");
     editForm.style.display = "none";
 }
 
 // ########################################
-//           EDIT ACCOUNT
+//           EDIT PROFILE ACCOUNT
 // ########################################
-function editAccountForm() {
-    var editAccountForm = document.querySelector('.editAccountForm');
-    editAccountForm.style.display = "block";
+function editProfileAccount() {
+    var editForm = document.querySelector(".editAccount");
+    editForm.style.display = "block";
 }
 
-function cancelEditAccount() {
-    var cancelBtn = document.querySelector('.editAccountForm');
-    cancelBtn.style.display = "none";
+function confirmEditProfileAccount() {
+    var editForm = document.querySelector(".editAccount");
+    editForm.style.display = "none";
 }
+
+function cancelEditProfileAccount() {
+    var editForm = document.querySelector(".editAccount");
+    editForm.style.display = "none";
+}
+// function editAccountForm() {
+//     var editAccountForm = document.querySelector('.editAccountForm');
+//     editAccountForm.style.display = "block";
+// }
+
+// function cancelEditAccount() {
+//     var cancelBtn = document.querySelector('.editAccountForm');
+//     cancelBtn.style.display = "none";
+// }
 
 // ########################################
 //           EDIT GIFT
