@@ -5,12 +5,15 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^home$ index.php?controller=home&action=index [QSA,L]
 RewriteRule ^cgu$ index.php?controller=home&action=cgu [QSA,L]
 
-RewriteRule ^signInAccount$ index.php?controller=Account&action=signInAccount [QSA,L]
-RewriteRule ^signUpAccount$ index.php?controller=Account&action=signUpAccount [QSA,L]
+RewriteRule ^signUpPage$ index.php?controller=home&action=signUpPage [QSA,L]
 
+RewriteRule ^signInAccount$ index.php?controller=Account&action=signInAccount [QSA,L]
 RewriteRule ^signUpAccount$ index.php?controller=Account&action=signUpAccount [QSA,L]
 RewriteRule ^logoutAccount$ index.php?controller=Account&action=logoutAccount [QSA,L]
 RewriteRule ^editAccount$ index.php?controller=Account&action=editAccount [QSA,L]
+RewriteRule ^profileAccount$ index.php?controller=Account&action=profileAccount [QSA,L]
+RewriteRule ^deleteAccount$ index.php?controller=Account&action=deleteAccount [QSA,L]
+
 RewriteRule ^signUpUser$ index.php?controller=User&action=signUpUser [QSA,L]
 
 RewriteRule ^signInUser$ index.php?controller=User&action=signInUser [QSA,L]

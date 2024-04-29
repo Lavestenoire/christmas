@@ -4,7 +4,6 @@ footer
 MESSAGE D'ERREUR DONNEES FORMULAIRE
 EYE BUTTON ON INPUT PASSWORD
 BOUTONS
-BOUTON DECONNEXION USER
 CONNEXION/INSCRIPTION
 AVATARS PROFIL ACCUEIL
 PAGE LOGIN USER
@@ -163,9 +162,6 @@ footer ul li a {
         flex-direction: column;
     }
 
-    /* .footerItem ul {
-        display: none;
-    } */
 
     .footerItem {
         width: 0;
@@ -284,32 +280,7 @@ footer ul li a {
     }
 }
 
-/* 
-############################################################
-                    BOUTON DECONNEXION USER
-############################################################ 
-*/
-#logOutUserBtn {
-    float: right;
-    width: 150px;
-}
 
-#logOutUserBtn button,
-.save-button {
-    background-color: transparent;
-    border: none;
-}
-
-#logOutUserBtn a {
-    text-decoration: none;
-    color: inherit;
-}
-
-@media screen and (max-width: 480px) {
-    #logOutUserBtn {
-        width: 120px;
-    }
-}
 
 /* 
 ############################################################
@@ -420,36 +391,38 @@ footer ul li a {
     width: 80%;
 }
 
+#userprofileAccount {
+    display: flex;
+    flex-direction: row;
+}
+
 /* 
 ############################################################
-                      AVATARS PROFIL ACCUEIL
+                ACCUEIL ACCOUNT(ADMIN)
 ############################################################ 
 */
-.profile {
-    width: 150px;
-    height: 200px;
-    margin: 20px;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    display: inline-block;
-}
-
-.profile-image {
-    width: 100%;
-    height: 70%;
-}
-
-.profile-name {
-    padding: 15px;
+.profilBtn {
     text-align: center;
-    color: #333;
-    text-decoration: none;
-    display: block;
+    margin-top: 2em;
 }
 
-.profile-name:hover {
-    color: pink;
+/* 
+############################################################
+                      SIGN UP PAGE
+############################################################ 
+*/
+#signUpPageButton {
+    display: flex;
+}
+
+#signUpAccountButton,
+#signUpUserButton {
+    text-align: center;
+}
+
+#signUpAccountButton img,
+#signUpUserButton img {
+    margin-bottom: 2em;
 }
 
 /* 
@@ -484,10 +457,10 @@ footer ul li a {
 }
 
 @media screen and (max-width: 480px) {
-    .profile {
+    /* .profile {
         width: 40%;
         height: auto;
-    }
+    } */
 
     #profileCards {
         display: flex;
@@ -551,6 +524,7 @@ footer ul li a {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
+    margin-top: 2em;
 }
 
 
@@ -566,8 +540,8 @@ footer ul li a {
     scrollbar-color: #D9372A;
 }
 
-#containerList {
-    width: 100%;
+.reservedGift {
+    color: #D9372A;
 }
 
 .boxName {
@@ -598,12 +572,28 @@ footer ul li a {
 
 }
 
-@media (min-width: 768px) {
+.countColor {
+    color: #546E5A;
+}
+
+/* bouton - de la liste à offrir */
+.update-button {
+    background-color: transparent;
+    border: none;
+}
+
+@media (min-width: 480px) {
+    .listSecretPage {
+        margin: 2em auto;
+    }
+
     .boxName {
         font-size: 20px;
         min-width: 200px;
         padding: 14px 16px;
     }
+
+
 }
 
 .liAndInputList {
@@ -693,10 +683,11 @@ footer ul li a {
 }
 
 #profile img {
-    width: 15%;
+    width: 100px;
 }
 
-.editUser {
+.editUser,
+.editAccount {
     display: none;
 }
 
@@ -715,10 +706,15 @@ footer ul li a {
     margin-right: 2em;
 }
 
+
 @media screen and (max-width: 480px) {
     #profilePage {
         flex-direction: column;
+    }
 
+    #profile {
+
+        text-align: center;
     }
 }
 

@@ -9,9 +9,11 @@
 
 CREATE TABLE c_account(
         id_account       Int  Auto_increment  NOT NULL ,
-        nickname_account Varchar (255) NOT NULL ,
+        nickname_account Varchar (50) NOT NULL ,
         email_account    Varchar (50) NOT NULL ,
-        password_account Varchar (255) NOT NULL
+        password_account Varchar (255) NOT NULL ,
+        role_account     Bool NOT NULL ,
+        tag_account      Varchar (50) NOT NULL
 	,CONSTRAINT c_account_PK PRIMARY KEY (id_account)
 )ENGINE=InnoDB;
 
@@ -24,13 +26,25 @@ CREATE TABLE c_user(
         id_user       Int  Auto_increment  NOT NULL ,
         nickname_user Varchar (50) NOT NULL ,
         picture_user  Varchar (50) NOT NULL ,
-        email_user Varchar (255) NOT NULL ,
-        password_user Varchar (50) NOT NULL ,
+        email_user    Varchar (50) NOT NULL ,
+        password_user Varchar (255) NOT NULL ,
         role_user     Bool NOT NULL ,
+        status_user   Bool NOT NULL ,
         id_account    Int NOT NULL
 	,CONSTRAINT c_user_PK PRIMARY KEY (id_user)
 
 	,CONSTRAINT c_user_c_account_FK FOREIGN KEY (id_account) REFERENCES c_account(id_account)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: c_category
+#------------------------------------------------------------
+
+CREATE TABLE c_category(
+        id_category   Int  Auto_increment  NOT NULL ,
+        name_category Varchar (255) NOT NULL
+	,CONSTRAINT c_category_PK PRIMARY KEY (id_category)
 )ENGINE=InnoDB;
 
 
@@ -48,23 +62,12 @@ CREATE TABLE c_gift(
 
 
 #------------------------------------------------------------
-# Table: c_category
-#------------------------------------------------------------
-
-CREATE TABLE c_category(
-        id_category   Int  Auto_increment  NOT NULL ,
-        name_category Varchar (50) NOT NULL
-	,CONSTRAINT c_category_PK PRIMARY KEY (id_category)
-)ENGINE=InnoDB;
-
-
-#------------------------------------------------------------
 # Table: c_giftcomment
 #------------------------------------------------------------
 
 CREATE TABLE c_giftcomment(
         id_giftcomment   Int  Auto_increment  NOT NULL ,
-        text_giftcomment Text NOT NULL ,
+        text_giftcomment Varchar (255) NOT NULL ,
         id_gift          Int NOT NULL
 	,CONSTRAINT c_giftcomment_PK PRIMARY KEY (id_giftcomment)
 

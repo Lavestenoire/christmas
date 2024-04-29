@@ -39,7 +39,7 @@ $title = "Fami'list - Page secrète";
                                     <li><?= $gift['description_gift'] ?></li>
                                     <li><?= $gift['name_category'] ?></li>
                                     <?php if ($gift['reserved_gift'] == 1) { ?>
-                                        <li>Reservé</li>
+                                        <li class="reservedGift">Reservé</li>
                                     <?php } else if ($gift['reserved_gift'] == 0) {
                                         // pour tous les cadeaux non réservés, incrémenter le nombre initialisé plus haut à 0
                                         $unreservedCount++;
@@ -52,16 +52,14 @@ $title = "Fami'list - Page secrète";
                     <?php }
                         $totalUnreservedCount += $unreservedCount;
                     }
-
                     ?>
                 </div>
                 <!-- afficher le nombre de cadeaux non réservés, avec une opération ternaire por le pluriel -->
-                <p id="giftCount">Il y a <?= $unreservedCount ?> cadeau<?= $unreservedCount > 1 ? 'x' : '' ?> non réservé<?= $unreservedCount > 1 ? 's' : '' ?> dans la liste</p>
+                <p id="giftCount">Il y a <span class="countColor"><?= $unreservedCount ?></span> cadeau<?= $unreservedCount > 1 ? 'x' : '' ?> non réservé<?= $unreservedCount > 1 ? 's' : '' ?> dans la liste</p>
                 <button type="submit" class="button-paper lutinBtn secretBtn" role="button">Coche un cadeau pour le réserver</button>
             </form>
         <?php
         } ?>
-
     </div>
 
 
@@ -91,7 +89,7 @@ $title = "Fami'list - Page secrète";
             <?php }
             } ?>
         </div>
-        <p>Total de <?= $totalUnreservedCount ?> cadeau<?= $totalUnreservedCount > 1 ? 'x' : '' ?> non réservé<?= $totalUnreservedCount > 1 ? 's' : '' ?></p>
+        <p>Toutes listes confondues, il reste <span class="countColor"><?= $totalUnreservedCount ?></span> cadeau<?= $totalUnreservedCount > 1 ? 'x' : '' ?> non réservé<?= $totalUnreservedCount > 1 ? 's' : '' ?></p>
     </div>
 <?php } else if (!isset($_SESSION['id_user'])) {
     header('Location: home');
