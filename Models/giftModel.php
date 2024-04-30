@@ -117,7 +117,6 @@ class GiftModel extends DbConnect
                 ON c_gift.id_gift = c_giftlist.id_gift
                 WHERE c_giftlist.id_user = :id_user"
             );
-            // $this->request = $this->connection->prepare("SELECT c_gift.name_gift, c_gift.description_gift, c_category.name_category FROM c_gift JOIN c_categorygift ON c_gift.id_gift = c_category")
             $this->request->bindValue(':id_user', $giftList->getId_user());
             $this->request->execute();
 
