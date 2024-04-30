@@ -2,12 +2,13 @@
 $title = "Fami'list - Profil";
 // var_dump($userInfos);
 ?>
+<h1 id="titreRouge">Voila tous les lutins de ta famille !</h1>
 <div id="userprofileAccount">
     <?php
     foreach ($userInfos as $info) { ?>
-        <div>
-            <div><img src="<?= $info['picture_user'] ?>" alt="avatar" width=150></div>
-            <div><?= $info['nickname_user'] ?></div>
+        <div id="boxUserInAccountProfile">
+            <div id="accountPictureUser"><img src="<?= $info['picture_user'] ?>" alt="avatar"></div>
+            <div id="accountNameUser"><?= $info['nickname_user'] ?></div>
         </div>
     <?php } ?>
 </div>
@@ -18,7 +19,9 @@ if (isset($_SESSION['id_account'])) { ?>
 
     <section id="profilePage">
         <div id="profile">
-            <div><?= $accountInfos['nickname_account'] ?></div>
+            <div>
+                <p id="profileAccountName"><?= $accountInfos['nickname_account'] ?></p>
+            </div>
             <div id="btnProfil">
                 <button name='modifyAccount' class='button-paper lutinBtn' id="editBtn" role='button' onclick="editProfileAccount()">Modifie ton profil</button>
                 <button name="deleteAccount" class="button-paper lutinBtn" role="button" onclick="deleteConfirmAccount()">Supprimer ton profil</button>

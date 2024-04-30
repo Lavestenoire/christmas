@@ -4,14 +4,14 @@ $title = "Fami'list - Page secrète";
 ?>
 
 <?php if (isset($_SESSION['id_account']) || isset($_SESSION['id_user'])) { ?>
-    <h1 id="titreAccueilConnexion">
+    <h1 id="titreRouge">
         <?= $_SESSION['nickname_user'] ?>, bienvenue sur ta page secrète
     </h1>
     <div id="iconeSecrete">
         <img src="pictures/icones/pageSecrete.svg" alt="icone page secrète" width=100>
     </div>
 
-    <h2 class="sousTitreAccueilConnexion">Choisis les cadeaux dans les listes des lutins de ta famille. Tu les retrouveras en bas de page dans ta liste de cadeaux à offrir.</h2>
+    <h2 class="sousTitreVert">Choisis les cadeaux dans les listes des lutins de ta famille. Tu les retrouveras en bas de page dans ta liste de cadeaux à offrir.</h2>
     <!-- listes des users avec un status == 0 (non connecté) -->
     <div id="containerList">
         <?php

@@ -3,7 +3,7 @@ $title = "Fami'list - SignUpAccount";
 ?>
 <div id="signUpForms">
     <section>
-        <h1 id="titreAccueilConnexion">Pour créer un compte et inviter des membres, passez par là</h1>
+        <h1 id="titreRouge">Pour créer un compte et inviter des membres, passez par là</h1>
         <form class=" mx-auto w-80" action=" " method="POST">
             <div class="mb-3 col-5">
                 <label for="nickname_account" class="form-label">Pseudo</label>

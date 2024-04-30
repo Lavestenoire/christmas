@@ -4,8 +4,8 @@ $title = "Fami'list - SignIn";
 
 <section id="connexionInscription">
     <div id="signInAccount">
-        <h1 id="titreAccueilConnexion">Lutin administrateur, connecte toi</h1>
-        <h2 class="sousTitreAccueilConnexion">En tant qu'administrateur, tu pourras gérer les profils des lutins de ta famille. <br> Pour créer ta liste de cadeaux, inscrit toi en tant que lutin.</h2>
+        <h1 id="titreRouge">Lutin administrateur, connecte toi</h1>
+        <h2 class="sousTitreVert">En tant qu'administrateur, tu pourras gérer les profils des lutins de ta famille. <br> Pour créer ta liste de cadeaux, inscrit toi en tant que lutin.</h2>
         <div class="accountForm">
             <form class="mx-auto w-80 adminForm" action="signInAccount" method="POST">
                 <div class="mb-3 col-lg-6 col-10">

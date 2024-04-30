@@ -1,6 +1,6 @@
 <?php
 $title = "Fami'list - Profil";
-// var_dump($_SESSION['role_user']);
+// var_dump($_SESSION['password_user']);
 ?>
 
 <?php
@@ -25,7 +25,7 @@ if (isset($_SESSION['id_user'])) { ?>
         <form class="mx-auto w-80 editUser" id="editForm" action="editUser" method="POST" enctype="multipart/form-data">
             <div class="mb-3 col-7">
                 <label for="nickname_user" class="form-label">Modifie ton pseudo</label>
-                <input type="text" name="nickname_user" value="<?= $userProfile['nickname_user'] ?>" class="form-control" id="nickname_user" aria-describedby="usernameHelp" required>
+                <input type="text" name="nickname_user" value="<?= $userProfile['nickname_user'] ?>" class="form-control" id="nickname_user" aria-describedby="usernameHelp">
             </div>
             <div class="mb-3 col-7">
                 <label for="email_user" class="form-label">Modifie ton email.</label>
