@@ -190,7 +190,7 @@ class UserController extends Controller
 
 
         $userModel = new UserModel();
-        $userProfile = $userModel->getUserByIdUser($user);
+        $userProfile = $userModel->getUserByIdUser($_SESSION['id_user']);
         // var_dump($userProfile);
         // die;
 
@@ -203,38 +203,37 @@ class UserController extends Controller
     // ########################################
     public function editUser()
     {
+        $id_user = $_SESSION['id_user'];
         $nickname_user = $_POST['nickname_user'];
         $email_user = $_POST['email_user'];
         $current_password_user = $_POST['current_password_user'];
         $new_password_user = $_POST['new_password_user'];
         $confirm_new_password_user = $_POST['confirm_new_password_user'];
 
-        $hashed_new_password = password_hash($new_password_user, PASSWORD_DEFAULT);
-
-        $user = new User();
-        $user->setId_user($_SESSION['id_user']);
-        $user->setNickname_user($nickname_user);
-        $user->setEmail_user($email_user);
-        $user->setPassword_user($hashed_new_password);
-
         $userModel = new UserModel();
-        $userProfile = $userModel->getUserByIdUser($user);
+        $userProfile = $userModel->getUserByIdUser($id_user);
 
-        if (!empty($new_password_account)) {
+        if (!empty($new_password_user)) {
             if (!password_verify($current_password_user, $userProfile['password_user'])) {
                 $_SESSION['error_message'] = 'L\'ancien mot de passe est incorrect';
-                header('Location: editAccount');
+                header('Location: editUser');
                 exit();
             } elseif ($new_password_user != $confirm_new_password_user) {
                 $_SESSION['error_message'] = 'Les nouveaux mots de passe ne correspondent pas';
-                header('Location: editAccount');
+                header('Location: editUser');
                 exit();
             } else {
-                $hashed_new_password = $hashed_new_password;
+                $hashed_new_password = password_hash($new_password_user, PASSWORD_DEFAULT);
             }
         } else {
-            $hashed_new_password = $userProfile['password_account'];
+            $hashed_new_password = $userProfile['password_user'];
         }
+
+        $user = new User();
+        $user->setId_user($id_user);
+        $user->setNickname_user($nickname_user);
+        $user->setEmail_user($email_user);
+        $user->setPassword_user($hashed_new_password);
 
         $newAvatar = null;
         if (isset($_FILES['avatar']) && !empty($_FILES['avatar']['name'])) {
@@ -260,6 +259,7 @@ class UserController extends Controller
             //si (!isset($_FILES['avatar])), on met l'avatar déjà enregistré
             $newAvatar = $userProfile['picture_user'];
         }
+
         $userModel->editUser($user, $newAvatar);
         $_SESSION['nickname_user'] = $nickname_user;
         $_SESSION['email_user'] = $email_user;
@@ -288,19 +288,4 @@ class UserController extends Controller
 
         header("Location: home");
     }
-
-    // public function adminPage()
-    // {
-    //     $id_account = $_SESSION['id_account'];
-    //     $account = new Account();
-    //     $account->setId_account($id_account);
-
-    //     $userModel = new UserModel();
-    //     $listUsers = $userModel->getUsersByAccountId($account);
-
-    //     $accountModel = new AccountModel();
-    //     $accountInfos = $accountModel->getAccountById($id_account);
-
-    //     $this->render("user/profileAdmin", ['listUsers' => $listUsers, 'accountInfos' => $accountInfos]);
-    // }
 }
