@@ -4,7 +4,7 @@ $title = "Fami'list - SignUpUser";
 ?>
 <div id="signUpForms">
     <section>
-        <h1 id="titreAccueilConnexion">Si vous avez un code famille mais pas de compte, passez par ici</h1>
+        <h1 id="titreRouge">Si vous avez un code famille mais pas de compte, passez par ici</h1>
         <form class="mx-auto w-80" action="signUpUser" method="POST">
             <div class="mb-3 col-5">
                 <label for="nickname_user" class="form-label">Pseudo</label>

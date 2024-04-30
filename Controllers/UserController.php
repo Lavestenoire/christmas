@@ -90,27 +90,15 @@ class UserController extends Controller
 
 
     // ########################################
-    //          PAGE CONNEXION USER
-    // ########################################
-    // public function pageSignInUser()
-    // {
-    //     $this->render('user/signInUser');
-    // }
-
-
-    // ########################################
     //              CONNEXION USER
     // ########################################
     public function signInUser()
     {
-        // je veux connecter un user avec question et réponse, lui-même lié à l'id_account, et le mettre en session. donc en principe si on var_dump($_SESSION) on aura la session account + la session user
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $nickname_user = $_POST['nickname_user'];
             $password_user = $_POST['loginPasswordUser'];
 
-
-            // Vérification si les valeurs sont vides
             if (!$nickname_user || !$password_user) {
                 http_response_code(400);
                 $_SESSION['error_message'] = "Merci de saisir un pseudo et un mot de passe";
@@ -221,15 +209,7 @@ class UserController extends Controller
         $new_password_user = $_POST['new_password_user'];
         $confirm_new_password_user = $_POST['confirm_new_password_user'];
 
-        // Vérifier si un nouveau mot de passe a été fourni
-        if (!empty($new_password_user)) {
-            // Hasher le nouveau mot de passe
-            $hashed_new_password = password_hash($new_password_user, PASSWORD_DEFAULT);
-        } else {
-            // Si aucun nouveau mot de passe n'a été fourni, utiliser le mot de passe actuel
-            $hashed_new_password = $current_password_user;
-        }
-
+        $hashed_new_password = password_hash($new_password_user, PASSWORD_DEFAULT);
 
         $user = new User();
         $user->setId_user($_SESSION['id_user']);
@@ -239,6 +219,22 @@ class UserController extends Controller
 
         $userModel = new UserModel();
         $userProfile = $userModel->getUserByIdUser($user);
+
+        if (!empty($new_password_account)) {
+            if (!password_verify($current_password_user, $userProfile['password_user'])) {
+                $_SESSION['error_message'] = 'L\'ancien mot de passe est incorrect';
+                header('Location: editAccount');
+                exit();
+            } elseif ($new_password_user != $confirm_new_password_user) {
+                $_SESSION['error_message'] = 'Les nouveaux mots de passe ne correspondent pas';
+                header('Location: editAccount');
+                exit();
+            } else {
+                $hashed_new_password = $hashed_new_password;
+            }
+        } else {
+            $hashed_new_password = $userProfile['password_account'];
+        }
 
         $newAvatar = null;
         if (isset($_FILES['avatar']) && !empty($_FILES['avatar']['name'])) {
@@ -268,8 +264,6 @@ class UserController extends Controller
         $_SESSION['nickname_user'] = $nickname_user;
         $_SESSION['email_user'] = $email_user;
         $_SESSION['picture_user'] = $newAvatar;
-        // $_SESSION['role_user'] = $role_user;
-        // Assurez-vous de ne pas stocker la réponse de l'utilisateur en session pour des raisons de sécurité
 
         header("Location: profileUser");
         exit();

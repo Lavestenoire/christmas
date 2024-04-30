@@ -4,7 +4,7 @@ $title = "Fami'list - Ma liste";
 ?>
 
 
-<h1 id="titreAccueilConnexion">Ma liste de cadeaux</h1>
+<h1 id="titreRouge">Ma liste de cadeaux</h1>
 <?php if (isset($_SESSION['id_account']) || isset($_SESSION['id_user'])) { ?>
     <section id="listSection">
         <div class="divBtn">

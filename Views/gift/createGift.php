@@ -12,7 +12,7 @@ if (isset($_GET['message']) && $_GET['message'] == 'gift_added') {
 <?php if (isset($_SESSION['id_account']) || isset($_SESSION['id_user'])) { ?>
     <div id="giftPage">
         <section class="sectionGift">
-            <h1 id="titreAccueilConnexion">Ajouter un cadeau</h1>
+            <h1 id="titreRouge">Ajouter un cadeau</h1>
             <div class="accountForm">
                 <form class="mx-auto w-80" action="createGift" method="POST">
                     <div class="mb-3 col-lg-12 col-12">
@@ -32,7 +32,7 @@ if (isset($_GET['message']) && $_GET['message'] == 'gift_added') {
                     <input type="hidden" name="reserved_gift" value="0">
 
                     <button type="submit" name="addGift" class="button-paper lutinBtn" role="button">Ajouter ce cadeau à ma liste</button>
-                    <p>Accéder à <a href="giftList">ma liste</a></p>
+                    <p id="linkMaListe">Accéder à <a href="giftList">ma liste</a></p>
                 </form>
                 <div><img src="pictures/cadeauListe.svg" alt="dessinLutin"></div>
             </div>

@@ -1,13 +1,13 @@
 <?php
 $title = "Fami'list - SignIn";
-// var_dump($_SESSION);
+var_dump($_SESSION);
 // die;
 ?>
 
 <section id="connexionInscription">
     <div id="signInUser">
-        <h1 id="titreAccueilConnexion">Lutin, connecte toi</h1>
-        <h2 class="sousTitreAccueilConnexion">En tant que lutin, tu pourras créer ta liste de cadeaux et choisir dans les autres listes les cadeaux à offrir.</h2>
+        <h1 id="titreRouge">Lutin, connecte toi</h1>
+        <h2 class="sousTitreVert">En tant que lutin, tu pourras créer ta liste de cadeaux et choisir dans les autres listes les cadeaux à offrir.</h2>
 
         <div class="accountForm">
             <form class="mx-auto w-80" action="signInUser" method="POST">

@@ -2,4 +2,4 @@
 $title = "Fami'list - CGU";
 ?>
 
-<h1 id="titreAccueilConnexion">CGU</h1>
+<h1 id="titreRouge">CGU</h1>
