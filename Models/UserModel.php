@@ -154,17 +154,14 @@ class UserModel extends DbConnect
     // ########################################
     //       SELECT USERS PAR ID_ACCOUNT
     // ########################################
-    public function getUserByIdUser(User $user)
+    public function getUserByIdUser($idUser)
     {
         try {
             $this->request = $this->connection->prepare("SELECT * FROM c_user WHERE id_user = :id_user");
-            $this->request->bindValue(':id_user', $user->getId_user());
+            $this->request->bindValue(':id_user', $idUser);
             $this->request->execute();
 
-            $user = $this->request->fetch(PDO::FETCH_ASSOC);
-            // var_dump($user);
-            // die;
-            return $user;
+            return $this->request->fetch(PDO::FETCH_ASSOC);
         } catch (Exception $e) {
             echo "Erreur lors de la connexion à la base de données : " . $e->getMessage();
         }
