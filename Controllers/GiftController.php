@@ -154,28 +154,30 @@ class giftController extends Controller
             exit();
         }
 
-        // Récupérer la giftList
+        // Récupérer la giftList de chaque utilisateur n'étant pas connecté
         $id_account = $_SESSION['id_account'];
+
         $account = new Account();
         $account->setId_account($id_account);
 
+        // Définition du status_user à 0 pour "non connecté"
         $user = new User();
         $user->setStatus_user(0);
 
+        // Récupération la liste des users dont le statut est setté à 0
         $userModel = new UserModel();
-        // récupération des users dont le statut est setté à 0
         $getUserByStatus = $userModel->getUserByStatus($account, $user);
 
         $giftLists = [];
-
+        // pour chaque utilisateur non connecté
         foreach ($getUserByStatus as $value) {
             $giftModel = new GiftModel();
             $user->setId_user($value['id_user']);
 
-            $gift = new Gift();
-            $gift->setReserved_gift(0);
+            // $gift = new Gift();
+            // $gift->setReserved_gift(0);
 
-            // Récupérer les données pour la liste des cadeaux de chaque utilisateur
+            // Récupérer les données pour la liste des cadeaux de chaque utilisateur non connecté
             $giftList = $giftModel->listByStatus($user);
             $giftLists[$value['nickname_user']] = $giftList;
         }
@@ -190,12 +192,6 @@ class giftController extends Controller
 
         $giftModel = new GiftModel();
         $listToOffer = $giftModel->giftToOffer($gift, $user, $account);
-        // echo '<pre>';
-        // var_dump($account);
-        // var_dump($user);
-        // var_dump($gift);
-        // echo '</pre>';
-        // die;
 
         $this->render('gift/secretPage', ['giftList' => $giftLists, 'listToOffer' => $listToOffer]);
     }
@@ -216,7 +212,9 @@ class giftController extends Controller
         header('Location: secretPage');
     }
 
-
+    // ############################################################
+    //                    SEARCH CATEGORY
+    // ############################################################
     public function getCategoryHint()
     {
         $search = isset($_GET['q']) ? $_GET['q'] : '';

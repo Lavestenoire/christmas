@@ -11,7 +11,7 @@ $title = "Fami'list - Ma liste";
             <a href="pageCreateGift"><button id="addGift" name="addGift" class="button-paper lutinBtn" role="button">Ajouter un cadeau à ma liste</button></a>
         </div>
         <table class="list listFromListPage">
-            <tr>
+            <tr id="trTitle">
                 <th>Nom</th>
                 <th>Description</th>
                 <th>Lien</th>

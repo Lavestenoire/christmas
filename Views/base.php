@@ -7,6 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/68ae4d1766.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="pictures/faviconFamilistTransparent.png" />
+    <meta name="description" content="<?php echo $description; ?>">
 
     <title><?= $title ?></title>
 </head>
@@ -16,7 +18,7 @@
         <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary container-fluid">
             <div class="container-fluid">
                 <a class="navbar-brand" href="home"> <!-- le lien href de home: home = réecriture d'URL = controller et action donc render -->
-                    <img src="pictures/logo.svg" alt="Logo">
+                    <img src="../pictures/logo.svg" alt="Logo">
                 </a>
                 <?php if (isset($_SESSION['tag_account'])) { ?>
                     <span class="navbar-brand mb-0 h1 familyName">Lutin administateur</span>
@@ -59,12 +61,6 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <img src="pictures/icones/contact.svg" alt="icone contact" width=50>
-                                    <span class="menuText">Contact</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" href="/christmas/public/logOutUser">
                                     <img src="pictures/icones/deconnexion.svg" alt="icone deconnexion" width=50>
                                     <span class="menuText">Déconnexion</span>
@@ -81,12 +77,6 @@
                                 <a class="nav-link" href="profileAccount">
                                     <img src="pictures/icones/profil.svg" alt="icone profil" width=50>
                                     <span class="menuText">Profil</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <img src="pictures/icones/contact.svg" alt="icone contact" width=50>
-                                    <span class="menuText">Contact</span>
                                 </a>
                             </li>
                             <li class="nav-item">

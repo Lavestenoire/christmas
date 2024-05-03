@@ -2,6 +2,7 @@
 $title = "Fami'list - Profil";
 // var_dump($_SESSION['password_user']);
 ?>
+<h1 id="titreRouge">Tu peux modifier ou supprimer ton profil</h1>
 
 <?php
 if (isset($_SESSION['id_user'])) { ?>
@@ -60,6 +61,8 @@ if (isset($_SESSION['id_user'])) { ?>
             <button type="submit" name="editUser" class='button-paper lutinBtn' onclick="confirmEditProfileUser()">Modifier le profil</button>
             <button type="button" class='button-paper lutinBtn' onclick="cancelEditProfileUser()">Annuler la modification</button>
         </form>
+        <div><img src="pictures/lutin.svg" alt="image lutin"></div>
+
     </section>
 
 <?php } else if (!isset($_SESSION['id_user'])) {

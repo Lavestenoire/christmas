@@ -3,8 +3,6 @@
 use App\Autoloader;
 use App\Core\Routeur;
 
-session_start();
-
 define('DEFAULT_AVATAR', 'pictures/avatar.png');
 
 include '../Autoloader.php';

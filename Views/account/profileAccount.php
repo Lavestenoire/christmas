@@ -12,6 +12,9 @@ $title = "Fami'list - Profil";
         </div>
     <?php } ?>
 </div>
+
+<h1 id="titreRouge">Tu peux modifier ou supprimer ton profil administrateur</h1>
+
 <?php
 
 
