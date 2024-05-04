@@ -15,7 +15,7 @@ class Routeur
      */
     public function routes()
     {
-        $controller = isset($_GET['controller']) ? ucfirst($_GET['controller']) : 'home'; /* le isset($_GET['controller']) vérifie si le paramètre controller est présent dans la requete GET
+        $controller = isset($_GET['controller']) ? ucfirst($_GET['controller']) : 'Home'; /* le isset($_GET['controller']) vérifie si le paramètre controller est présent dans la requete GET
         S'il est présent, il est stocké dans la propriété $controller avec une majuscule, sinon c'est home qui est stocké*/
         $controller = '\\App\\Controllers\\' . $controller . 'Controller';
 

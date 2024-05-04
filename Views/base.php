@@ -18,7 +18,7 @@
         <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary container-fluid">
             <div class="container-fluid">
                 <a class="navbar-brand" href="home"> <!-- le lien href de home: home = réecriture d'URL = controller et action donc render -->
-                    <img src="pictures/logo.svg" alt="Logo">
+                    <img src="../pictures/logo.svg" alt="Logo">
                 </a>
                 <?php if (isset($_SESSION['tag_account'])) { ?>
                     <span class="navbar-brand mb-0 h1 familyName">Lutin administateur</span>
