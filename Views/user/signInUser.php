@@ -1,7 +1,5 @@
 <?php
 $title = "Fami'list - SignIn";
-var_dump($_SESSION);
-// die;
 ?>
 
 <section id="connexionInscription">

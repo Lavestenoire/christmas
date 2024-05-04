@@ -32,7 +32,7 @@ class UserController extends Controller
 
             $nicknameUser = $this->protectedValues($_POST['nickname_user']);
             $email_user = $this->protectedValues($_POST['email_user']);
-            $passwordUser = $this->protectedValues($_POST['password_user']);
+            $passwordUser = trim($_POST['password_user']);
             $confirmPasswordUser = trim($_POST['confirmPassword_user']);
 
             // si une variable est définie (donc déclarée) et différente de null > message d'erreur
@@ -97,7 +97,8 @@ class UserController extends Controller
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $nickname_user = $this->protectedValues($_POST['nickname_user']);
-            $password_user = $this->protectedValues($_POST['loginPasswordUser']);
+            $password_user = trim($_POST['loginPasswordUser']);
+
 
             if (!$nickname_user || !$password_user) {
                 http_response_code(400);

@@ -8,11 +8,11 @@ $title = "Fami'list - SignIn";
         <h2 class="sousTitreVert">En tant qu'administrateur, tu pourras gérer les profils des lutins de ta famille. <br> Pour créer ta liste de cadeaux, inscrit toi en tant que lutin.</h2>
         <div class="accountForm">
             <form class="mx-auto w-80 adminForm" action="signInAccount" method="POST">
-                <div class="mb-3 col-lg-6 col-10">
+                <div class="mb-3 col-lg-4 col-10">
                     <label for="nickname_account" class="form-label">Pseudo</label>
                     <input type="text" name="nickname_account" class="form-control" aria-describedby="usernameHelp" required>
                 </div>
-                <div class="mb-3 col-lg-6 col-10 mdp">
+                <div class="mb-3 col-lg-4 col-10 mdp">
                     <div class="eye"><i class="fa-regular fa-eye"></i></div>
                     <label for="loginPassword" class="form-label">Mot de passe</label>
                     <input type="password" name="loginPassword" class="form-control loginPassword" required>

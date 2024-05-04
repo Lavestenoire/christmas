@@ -82,15 +82,6 @@ class AccountController extends Controller
             // Insérer un nouvel utilisateur dans la base de données
             $accountModel->signUpAccount($account, $password);
 
-            // Récupérer les informations de l'utilisateur nouvellement sinséré pour qu'il soit connecté une fois inscrit
-            // $accountInfos = $accountModel->getAccountById($accountId);
-
-            // Stocker les informations de l'utilisateur en session
-            // $_SESSION['id_account'] = $accountInfos['id_account'];
-            // $_SESSION['nickname_account'] = $accountInfos['nickname_account'];
-            // $_SESSION['email_account'] = $accountInfos['email_account'];
-            // $_SESSION['tag_account'] = $accountInfos['tag_account'];
-
             // Redirection vers la page d'accueil
             header('Location: home');
             exit();
@@ -100,16 +91,6 @@ class AccountController extends Controller
     }
 
 
-    // ############################################################
-    // ###################### CONNEXION ###########################
-    // ############################################################
-    // public function signInAccount()
-    // {
-    // les :: sont utilisés pour appeler une méthode statique de la classe Token. Elle peut être appelée sur la classe elle-même plutôt que sur une instance de classe
-    // Token::tokenGenerator('create_account');
-    // Token::tokenGenerator('login_account');
-    //     $this->render('account/signInAccount');
-    // }
     public function signInAccount()
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
