@@ -503,6 +503,10 @@ footer ul li a {
                     PAGE MA LISTE
 ############################################################ 
 */
+#trTitle {
+    height: 100px;
+}
+
 .edit-input {
     display: none;
     width: auto;

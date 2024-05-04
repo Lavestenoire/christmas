@@ -15,11 +15,10 @@ $title = "Fami'list - Page secrète";
     <!-- listes des users avec un status == 0 (non connecté) -->
     <div id="containerList">
         <?php
-        // Initialisation du total
+        // Initialisation du total de cadeau non réservés toutes listes confondues
         $totalUnreservedCount = 0;
-
         foreach ($giftList as $nickname => $list) {
-            // compte le nombre de cadeaux
+            // compte du nombre de cadeaux non réservés dans chaque liste
             $unreservedCount = count($list);
             // initialiser le nombre de cadeaux à 0
             $unreservedCount = 0; ?>
@@ -54,9 +53,9 @@ $title = "Fami'list - Page secrète";
                     }
                     ?>
                 </div>
-                <!-- afficher le nombre de cadeaux non réservés, avec une opération ternaire por le pluriel -->
+                <!-- afficher le nombre de cadeaux non réservés, avec une opération ternaire pour le pluriel -->
                 <p id="giftCount">Il y a <span class="countColor"><?= $unreservedCount ?></span> cadeau<?= $unreservedCount > 1 ? 'x' : '' ?> non réservé<?= $unreservedCount > 1 ? 's' : '' ?> dans la liste</p>
-                <button type="submit" class="button-paper lutinBtn secretBtn" role="button">Coche un cadeau pour le réserver</button>
+                <button type="submit" class="button-paper lutinBtn secretBtn" role="button">Réserve le cadeau coché</button>
             </form>
         <?php
         } ?>
@@ -69,7 +68,7 @@ $title = "Fami'list - Page secrète";
             <div class="boxName">Pour offrir</div>
             <?php if (empty($listToOffer)) { ?>
                 <p>Tu n'as pas encore ajouté de cadeaux à offrir</p>
-                <?php } else if (!empty($listToOffer)) {
+                <?php } else {
 
                 foreach ($listToOffer as $giftToOffer) { ?>
                     <div class="liAndInputList">

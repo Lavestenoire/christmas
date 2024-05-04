@@ -42,15 +42,8 @@ class AccountController extends Controller
             $emailAccount = $this->protectedValues($_POST['email_account']);
             $password = trim($_POST['password']);
             $confirmPassword = trim($_POST['confirmPassword']);
-            $tag_account = $_POST['tag_account'];
+            $tag_account = $this->protectedValues($_POST['tag_account']);
 
-            // si une variable est définie (donc déclarée) et différente de null > message d'erreur
-            if (!isset($_POST['nickname_account']) || !isset($_POST['email_account']) || !isset($_POST['password']) || !isset($_POST['confirmPassword']) || !isset($_POST['tag_account'])) {
-                http_response_code(400);
-                $_SESSION['error_messageAccount'] = "Toutes les valeurs ne sont pas soumises.";
-                header("Location: signUpAccount");
-                exit();
-            }
             if (!filter_var($emailAccount, FILTER_VALIDATE_EMAIL)) {
                 $_SESSION['error_messageAccount'] = "L'adresse e-mail n'est pas valide.";
                 header("Location: signUpAccount");
@@ -128,8 +121,8 @@ class AccountController extends Controller
             //     exit();
             // }
 
-            $nickname_account = $_POST['nickname_account'];
-            $password = $_POST['loginPassword'];
+            $nickname_account = $this->protectedValues($_POST['nickname_account']);
+            $password = $this->protectedValues($_POST['loginPassword']);
 
             // Vérification si les valeurs sont vides
             if (!$nickname_account || !$password) {
@@ -215,11 +208,11 @@ class AccountController extends Controller
     public function editAccount()
     {
         $id_account = $_SESSION['id_account'];
-        $nickname_account = $_POST['nickname_account'];
-        $email_account = $_POST['email_account'];
-        $current_password_account = $_POST['current_password_account'];
-        $new_password_account = $_POST['new_password_account'];
-        $confirm_new_password_account = $_POST['confirm_new_password_account'];
+        $nickname_account = $this->protectedValues($_POST['nickname_account']);
+        $email_account = $this->protectedValues($_POST['email_account']);
+        $current_password_account = trim($_POST['current_password_account']);
+        $new_password_account = trim($_POST['new_password_account']);
+        $confirm_new_password_account = trim($_POST['confirm_new_password_account']);
 
         $accountModel = new AccountModel();
         $accountData = $accountModel->getAccountById($id_account);

@@ -25,15 +25,15 @@ class UserController extends Controller
     {
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $tag_account = $_POST['tag_user'];
+            $tag_account = $this->protectedValues($_POST['tag_user']);
 
             $accountModel = new AccountModel();
             $tag = $accountModel->getAccountByTag($tag_account);
 
-            $nicknameUser = $_POST['nickname_user'];
-            $email_user = $_POST['email_user'];
-            $passwordUser = $_POST['password_user'];
-            $confirmPasswordUser = $_POST['confirmPassword_user'];
+            $nicknameUser = $this->protectedValues($_POST['nickname_user']);
+            $email_user = $this->protectedValues($_POST['email_user']);
+            $passwordUser = $this->protectedValues($_POST['password_user']);
+            $confirmPasswordUser = trim($_POST['confirmPassword_user']);
 
             // si une variable est définie (donc déclarée) et différente de null > message d'erreur
             if (empty($nicknameUser) || empty($email_user) || empty($passwordUser) || empty($confirmPasswordUser)) {
@@ -96,8 +96,8 @@ class UserController extends Controller
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-            $nickname_user = $_POST['nickname_user'];
-            $password_user = $_POST['loginPasswordUser'];
+            $nickname_user = $this->protectedValues($_POST['nickname_user']);
+            $password_user = $this->protectedValues($_POST['loginPasswordUser']);
 
             if (!$nickname_user || !$password_user) {
                 http_response_code(400);
@@ -204,11 +204,11 @@ class UserController extends Controller
     public function editUser()
     {
         $id_user = $_SESSION['id_user'];
-        $nickname_user = $_POST['nickname_user'];
-        $email_user = $_POST['email_user'];
-        $current_password_user = $_POST['current_password_user'];
-        $new_password_user = $_POST['new_password_user'];
-        $confirm_new_password_user = $_POST['confirm_new_password_user'];
+        $nickname_user = $this->protectedValues($_POST['nickname_user']);
+        $email_user = $this->protectedValues($_POST['email_user']);
+        $current_password_user = trim($_POST['current_password_user']);
+        $new_password_user = trim($_POST['new_password_user']);
+        $confirm_new_password_user = trim($_POST['confirm_new_password_user']);
 
         $userModel = new UserModel();
         $userProfile = $userModel->getUserByIdUser($id_user);

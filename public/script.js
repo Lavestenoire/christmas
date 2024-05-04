@@ -186,14 +186,15 @@ editButtons.forEach(button => {
             });
 
             const formData = new FormData();
-            formData.append('id_gift', inputValues['id_gift']);
+            // append = ajoute après le dernier enfant de l'élément formData la paire clef-valeur id_gift (clef) et inputValues (valeur)
+            // formData.append('id_gift', inputValues['id_gift']);
             formData.append('name_gift', inputValues['name_gift']);
             formData.append('description_gift', inputValues['description_gift']);
             formData.append('name_category', inputValues['name_category']);
             formData.append('id_category', inputValues['id_category']);
 
             const xhr = new XMLHttpRequest(); // create a new XMLHttpRequest object
-            xhr.open("UPDATE", "index.php?controller=Gift&action=editGift/" + giftId);
+            xhr.open("PUT", "index.php?controller=Gift&action=editGift/" + giftId);
             xhr.send(formData);
 
             xhr.onload = function () {
@@ -207,7 +208,7 @@ editButtons.forEach(button => {
                     // Remplacer l'icône "save" par l'icône "edit"
                     giftRow.querySelector('.save-button').replaceWith(editIcon);
                     // Appeler la fonction traitement() avec les valeurs mises à jour
-                    traitement(inputValues['id_gift'], inputValues['description_gift'], inputValues['name_category'], inputValues['id_category']);
+                    traitement(inputValues['id_gift'], inputValues['name_gift'], inputValues['description_gift'], inputValues['name_category'], inputValues['id_category']);
                 } else {
                     console.error("La requête AJAX a échoué avec le statut " + xhr.status);
                 }

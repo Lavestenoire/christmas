@@ -29,6 +29,9 @@ le $data est un tableau vide donc on peut soit l'utiliser, soit pas (c'est pour 
 
     // ------------------------ MÉTHODE À APPLIQUER SUR LES $POST $GET ($SESSION) -------------
     // ------------------------pour empêcher l'injection de script js ou html --------------
+    // trim supprime les espaces blancs avant et après
+    // stripslashes supprime les anti slash
+    // htmlsepcailchars traduit les caractères spéciaux en html (< = &et)
     protected function protectedValues($value)
     {
         $value = trim($value);

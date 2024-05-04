@@ -12,7 +12,7 @@ if (isset($_GET['message']) && $_GET['message'] == 'gift_added') {
 <?php if (isset($_SESSION['id_account']) || isset($_SESSION['id_user'])) { ?>
     <div id="giftPage">
         <section class="sectionGift">
-            <h1 id="titreRouge">Ajouter un cadeau</h1>
+            <h1 id="titreRouge">Ajoute un cadeau</h1>
             <div class="accountForm">
                 <form class="mx-auto w-80" action="createGift" method="POST">
                     <div class="mb-3 col-lg-12 col-12">
@@ -24,8 +24,8 @@ if (isset($_GET['message']) && $_GET['message'] == 'gift_added') {
                         <input type="text" name="description_gift" class="form-control" id="description_gift" aria-describedby="usernameHelp">
                     </div>
                     <div class="mb-3 col-lg-12 col-12">
-                        <label for="category_gift" class="form-label">Lien</label>
-                        <input type="url" name="category_gift" class="form-control" id="category_gift" aria-describedby="usernameHelp" onkeyup="showHint(this.value)">
+                        <label for="category_gift" class="form-label">Catégorie</label>
+                        <input type="text" name="category_gift" class="form-control" id="category_gift" aria-describedby="usernameHelp" onkeyup="showHint(this.value)">
                     </div>
                     <div id="suggestions"></div>
                     <!-- champs caché à 0 pour non réservé -->
