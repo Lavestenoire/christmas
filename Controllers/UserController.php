@@ -118,6 +118,9 @@ class UserController extends Controller
             $userData = $userModel->signInUser($user);
 
             if ($userData !== false && password_verify($password_user, $userData['password_user'])) {
+                unset($_SESSION['nickname_account']);
+                unset($_SESSION['email_account']);
+                unset($_SESSION['tag_account']);
                 $_SESSION['id_user'] = $userData['id_user'];
                 $_SESSION['nickname_user'] = $userData['nickname_user'];
                 $_SESSION['status_user'] = $userData['status_user'];

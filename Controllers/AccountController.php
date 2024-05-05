@@ -103,7 +103,7 @@ class AccountController extends Controller
             // }
 
             $nickname_account = $this->protectedValues($_POST['nickname_account']);
-            $password = $this->protectedValues($_POST['loginPassword']);
+            $password = trim($_POST['loginPassword']);
 
             // Vérification si les valeurs sont vides
             if (!$nickname_account || !$password) {
@@ -150,9 +150,9 @@ class AccountController extends Controller
     //                        DECONNEXION 
     // ############################################################
 
-    public function logoutAccount()
+    public function logOutAccount()
     {
-        $_SESSION['logout_message'] = 'Vous avez bien été déconnecté.';
+        $_SESSION['logOut_message'] = 'Vous avez bien été déconnecté.';
         session_unset();
         session_destroy();
         header("Location: home");

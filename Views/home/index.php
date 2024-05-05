@@ -1,6 +1,7 @@
 <?php
 $description = "Accédez à vos listes de cadeaux et sélectionnez des cadeaux à offrir";
 $title = "Fami'list - Accueil";
+var_dump($_SESSION);
 ?>
 
 <?php

@@ -34,7 +34,7 @@ if (isset($_GET['message']) && $_GET['message'] == 'gift_added') {
                     <button type="submit" name="addGift" class="button-paper lutinBtn" role="button">Ajouter ce cadeau à ma liste</button>
                     <p id="linkMaListe">Accéder à <a href="giftList">ma liste</a></p>
                 </form>
-                <div><img src="pictures/cadeauListe.svg" alt="dessinLutin"></div>
+                <div><img src="pictures/cadeau.svg" alt="dessinLutin"></div>
             </div>
 
         </section>

@@ -48,6 +48,11 @@ class HomeController extends Controller
         $this->render("home/cgu");
     }
 
+    public function pdc()
+    {
+        $this->render("home/pdc");
+    }
+
     public function signUpPage()
     {
         $this->render("home/signUpPage");

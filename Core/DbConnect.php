@@ -12,10 +12,10 @@ class DbConnect
     protected $connection;
     protected $request;
 
-    const SERVER = "sqlprive-pc2372-001.eu.clouddb.ovh.net:35167";
-    const USER = "cefiidev1377";
-    const PASSWORD = "6dFt6c3H";
-    const BASE = "cefiidev1377";
+    const SERVER = "localhost";
+    const USER = "root";
+    const PASSWORD = "root";
+    const BASE = "christmas";
 
     public function __construct()
     {
