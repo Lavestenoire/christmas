@@ -33,4 +33,5 @@ RewriteRule ^giftList$ index.php?controller=Gift&action=giftList [QSA,L]
 RewriteRule ^secretPage$ index.php?controller=Gift&action=secretPage [QSA,L]
 RewriteRule ^reservedGift$ index.php?controller=Gift&action=reservedGift [QSA,L]
 RewriteRule ^deleteGiftToOffer$ index.php?controller=Gift&action=deleteGiftToOffer [QSA,L]
+RewriteRule ^getUpdatedGift$ index.php?controller=Gift&action=getUpdatedGift [QSA,L]
 

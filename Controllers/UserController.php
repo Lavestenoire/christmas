@@ -6,6 +6,8 @@ use App\Entities\User;
 use App\Entities\Account;
 use App\Models\AccountModel;
 use App\Models\UserModel;
+use App\Core\Token;
+
 
 class UserController extends Controller
 {
@@ -23,12 +25,17 @@ class UserController extends Controller
     // #############################
     public function signUpUser()
     {
-
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $tag_account = $this->protectedValues($_POST['tag_user']);
+
+            if (!Token::tokenValidator($_POST['csrf_token'])) {
+                $_SESSION['error_message'] = "Une erreur est survenue. Merci de réessayer.";
+                header("Location: signUpUser");
+                exit();
+            }
+            $tag_user = $this->protectedValues($_POST['tag_user']);
 
             $accountModel = new AccountModel();
-            $tag = $accountModel->getAccountByTag($tag_account);
+            $tag = $accountModel->getAccountByTag($tag_user);
 
             $nicknameUser = $this->protectedValues($_POST['nickname_user']);
             $email_user = $this->protectedValues($_POST['email_user']);
@@ -39,24 +46,24 @@ class UserController extends Controller
             if (empty($nicknameUser) || empty($email_user) || empty($passwordUser) || empty($confirmPasswordUser)) {
                 http_response_code(400);
                 $_SESSION['error_message'] = "Toutes les valeurs ne sont pas soumises.";
-                header("Location: signUpAccount");
+                header("Location: signUpUser");
                 exit();
             }
             if (!filter_var($email_user, FILTER_VALIDATE_EMAIL)) {
-                $_SESSION['error-message']['email_user'] = "L'adresse e-mail n'est pas valide.";
-                header("Location: signUpAccount");
+                $_SESSION['error_message'] = "L'adresse e-mail n'est pas valide.";
+                header("Location: signUpUser");
                 exit();
             }
             if (strlen($passwordUser) < 8 || !preg_match("/[A-Z]/", $passwordUser) || !preg_match("/[a-z]/", $passwordUser) || !preg_match("/[0-9]/", $passwordUser)) {
                 http_response_code(400);
-                $_SESSION['error-message']['password_user'] = "Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre.";
-                header("Location: signUpAccount");
+                $_SESSION['error_message'] = "Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre.";
+                header("Location: signUpUser");
                 exit();
             }
             if ($passwordUser !== $confirmPasswordUser) {
                 http_response_code(400);
-                $_SESSION['error-message']['samePassword_user'] = "Les mots de passe ne correspondent pas.";
-                header("Location: signUpAccount");
+                $_SESSION['error_message'] = "Les mots de passe ne correspondent pas.";
+                header("Location: signUpUser");
                 exit();
             }
             $user = new User();
@@ -65,26 +72,29 @@ class UserController extends Controller
             $user->setPassword_user(password_hash($passwordUser, PASSWORD_DEFAULT));
             $user->setStatus_user(0);
             $user->setPicture_user(DEFAULT_AVATAR);
-            $user->setId_account($tag['id_account']);
+            $user->setId_account($tag['tag_user']);
 
             $userModel = new UserModel();
             $existingUser = $userModel->getUserByEmail($email_user);
             if ($existingUser) {
                 http_response_code(409);
-                $_SESSION['error-message']['email_user'] = "Cet email existe déjà, merci d'en sélectionner un autre.";
+                $_SESSION['error_message'] = "Cet email existe déjà, merci d'en sélectionner un autre.";
+                header("Location: signUpUser");
+                exit();
+            }
+            if (!$tag) {
+                http_response_code(400);
+                $_SESSION['error_message'] = "Ce code familial n'existe pas.";
                 header("Location: signUpUser");
                 exit();
             }
             $userModel->signUpUser($user, $passwordUser);
+
             header('Location: home');
             exit();
-            if (!$tag) {
-                http_response_code(400);
-                $_SESSION['error-message']['tag_user'] = "Ce code familial n'existe pas.";
-                header("Location: signUpUser");
-            }
         } else {
-            $this->render("user/signUpUser");
+            $csrfToken = Token::tokenGenerator();
+            $this->render("user/signUpUser", ['csrfToken' => $csrfToken]);
         }
     }
 
@@ -95,6 +105,11 @@ class UserController extends Controller
     public function signInUser()
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (!Token::tokenValidator($_POST['csrf_token'])) {
+                $_SESSION['error_message'] = "Une erreur est survenue. Merci de réessayer.";
+                header("Location: signInUser");
+                exit();
+            }
 
             $nickname_user = $this->protectedValues($_POST['nickname_user']);
             $password_user = trim($_POST['loginPasswordUser']);
@@ -111,10 +126,7 @@ class UserController extends Controller
             $user->setNickname_user($nickname_user);
             $user->setPassword_user($password_user);
 
-
-            // instancer la classe userModel
             $userModel = new UserModel();
-            // appeler la méthode du model qui gère la requete
             $userData = $userModel->signInUser($user);
 
             if ($userData !== false && password_verify($password_user, $userData['password_user'])) {
@@ -123,8 +135,6 @@ class UserController extends Controller
                 unset($_SESSION['tag_account']);
                 $_SESSION['id_user'] = $userData['id_user'];
                 $_SESSION['nickname_user'] = $userData['nickname_user'];
-                $_SESSION['status_user'] = $userData['status_user'];
-                $_SESSION['id_account'] = $userData['id_account'];
 
                 // Mettre à jour le status_user à 1
                 $user->setNickname_user($userData['nickname_user']);
@@ -134,6 +144,12 @@ class UserController extends Controller
 
                 $userModel->updateUserStatus($user);
 
+                // Update the $userData variable with the new status value
+                $userData['status_user'] = 1;
+
+                $_SESSION['status_user'] = $userData['status_user'];
+                $_SESSION['id_account'] = $userData['id_account'];
+
                 header('Location: home');
                 exit();
             } else {
@@ -142,7 +158,8 @@ class UserController extends Controller
                 exit();
             }
         } else {
-            $this->render("user/signInUser");
+            $csrfToken = Token::tokenGenerator();
+            $this->render("user/signInUser", ['csrfToken' => $csrfToken]);
         }
     }
 

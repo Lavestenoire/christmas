@@ -36,7 +36,6 @@ if (isset($_GET['message']) && $_GET['message'] == 'gift_added') {
                 </form>
                 <div><img src="pictures/cadeau.svg" alt="dessinLutin"></div>
             </div>
-
         </section>
     </div>
 <?php } else if (!isset($_SESSION['id_user'])) {

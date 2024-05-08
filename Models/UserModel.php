@@ -84,52 +84,6 @@ class UserModel extends DbConnect
         }
     }
 
-    // ########################################
-    //  SELECT USER PAR NICKNAME ET ID_ACCOUNT
-    // ########################################
-    // public function getUserByNicknameAndAccountId($nicknameUser, $idAccount)
-    // {
-    //     try {
-    //         $this->request = $this->connection->prepare("SELECT * FROM `c_user` WHERE nickname_user = :nicknameUser AND id_account = :id_account");
-    //         $this->request->bindValue(":nicknameUser", $nicknameUser);
-    //         $this->request->bindValue(":id_account", $idAccount);
-    //         $this->request->execute();
-
-    //         $result = $this->request->fetch(PDO::FETCH_ASSOC);
-    //         // var_dump($result);
-    //         // die;
-    //         return $result;
-    //     } catch (Exception $e) {
-    //         echo "Erreur lors de la connexion à la base de données : " . $e->getMessage();
-    //     }
-    // }
-
-    // ########################################
-    //       SELECT USERS PAR ID_ACCOUNT
-    // ########################################
-    // public function getUsersByAccountId(Account $account)
-    // {
-    //     try {
-    //         $this->request = $this->connection->prepare("SELECT * FROM c_user WHERE id_account = :id_account");
-    //         $this->request->bindValue(':id_account', $account->getId_account());
-    //         $this->request->execute();
-
-    //         $usersData = $this->request->fetchAll(PDO::FETCH_ASSOC);
-
-    //         $listUsers = [];
-    //         foreach ($usersData as $userData) {
-    //             $user = new User();
-    //             $user->setId_user($userData['id_user']);
-    //             $user->setNickname_user($userData['nickname_user']);
-    //             $user->setPicture_user($userData['picture_user']);
-    //             $user->setEmail_user($userData['email_user']);
-    //             $listUsers[] = $user;
-    //         }
-    //         return $listUsers;
-    //     } catch (Exception $e) {
-    //         echo "Erreur lors de la connexion à la base de données : " . $e->getMessage();
-    //     }
-    // }
 
     // ########################################
     //                LOGIN USER

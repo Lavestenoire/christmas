@@ -22,7 +22,7 @@
                 </a>
                 <?php if (isset($_SESSION['tag_account'])) { ?>
                     <span class="navbar-brand mb-0 h1 familyName">Lutin administateur</span>
-                <?php } else { ?>
+                <?php } else if (isset($_SESSION['nickname_user'])) { ?>
                     <span class="navbar-brand mb-0 h1 familyName">Lutin <?= $_SESSION['nickname_user'] ?></span>
 
                 <?php } ?>

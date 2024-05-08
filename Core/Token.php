@@ -8,25 +8,25 @@ class Token
     const CSRF_TOKEN_KEY = 'csrf_token';
 
 
-    public static function tokenGenerator($formIdentifier)
+    public static function tokenGenerator()
     {
-        if (!isset($_SESSION['csrf_token'][$formIdentifier])) {
+        if (!isset($_SESSION['csrf_token'])) {
             // Génère un nouveau jeton CSRF
             $token = bin2hex(openssl_random_pseudo_bytes(32));
             // Stocke le jeton en session
-            $_SESSION['csrf_token'][$formIdentifier] = $token;
+            $_SESSION['csrf_token'] = $token;
         }
 
         // Retourne le jeton généré
-        return $_SESSION['csrf_token'][$formIdentifier];
+        return $_SESSION['csrf_token'];
     }
 
-    public static function tokenValidator($submittedToken, $formIdentifier)
+    public static function tokenValidator($submittedToken)
     {
         // Vérifie si le jeton soumis est identique à celui stocké en session pour le formulaire spécifié
-        if (isset($_SESSION['csrf_token'][$formIdentifier]) && $_SESSION['csrf_token'][$formIdentifier] === $submittedToken) {
+        if (isset($_SESSION['csrf_token']) && $_SESSION['csrf_token'] === $submittedToken) {
             // Le jeton est valide, on le supprime de la session pour qu'il ne puisse être réutilisé
-            unset($_SESSION['csrf_token'][$formIdentifier]);
+            unset($_SESSION['csrf_token']);
 
             // Retourne vrai pour indiquer que la validation a réussi
             return true;

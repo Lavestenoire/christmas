@@ -14,30 +14,19 @@ use App\Core\Token;
 class AccountController extends Controller
 {
     // ############################################################
-    // ###################### VUE CONNEXION #######################
-    // ############################################################
-
-    // public function pageSignUpAccount()
-    // {
-    //     $this->render("account/signUpAccount");
-    // }
-
-
-
-    // ############################################################
     // ####################### CREATE AND LOGIN ACCOUNT ###########
     // ############################################################
     public function signUpAccount()
     {
-        // if ($_POST['signUpAccountWithTag']) {
-        // vérification TOKEN
-        // if (!Token::tokenValidator($_POST['csrf_token'], 'create_account')) {
-        //     http_response_code(400);
-        //     $_SESSION['error_message'] = "Erreur de jeton CSRF.";
-        //     header("Location: signInAccount");
-        //     exit();
-        // }
-        if (($_SERVER["REQUEST_METHOD"] == "POST")) {
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+            if (!Token::tokenValidator($_POST['csrf_token'])) {
+                $_SESSION['error_message'] = "Une erreur est survenue. Merci de réessayer.";
+                header("Location: signUpUser");
+                exit();
+            }
+
             $nicknameAccount = $this->protectedValues($_POST['nickname_account']);
             $emailAccount = $this->protectedValues($_POST['email_account']);
             $password = trim($_POST['password']);
@@ -45,20 +34,20 @@ class AccountController extends Controller
             $tag_account = $this->protectedValues($_POST['tag_account']);
 
             if (!filter_var($emailAccount, FILTER_VALIDATE_EMAIL)) {
-                $_SESSION['error_messageAccount'] = "L'adresse e-mail n'est pas valide.";
+                $_SESSION['error_message'] = "L'adresse e-mail n'est pas valide.";
                 header("Location: signUpAccount");
                 exit();
             }
             if (strlen($password) < 8 || !preg_match("/[A-Z]/", $password) || !preg_match("/[a-z]/", $password) || !preg_match("/[0-9]/", $password)) {
                 http_response_code(400);
-                $_SESSION['error_messageAccount'] = "Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre.";
+                $_SESSION['error_message'] = "Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre.";
                 header("Location: signUpAccount");
                 exit();
             }
 
             if ($password !== $confirmPassword) {
                 http_response_code(400);
-                $_SESSION['error_messageAccount'] = "Les mots de passe ne correspondent pas.";
+                $_SESSION['error_message'] = "Les mots de passe ne correspondent pas.";
                 header("Location: signUpAccount");
                 exit();
             }
@@ -86,7 +75,8 @@ class AccountController extends Controller
             header('Location: home');
             exit();
         } else {
-            $this->render("account/signUpAccount");
+            $csrfToken = Token::tokenGenerator();
+            $this->render("account/signUpAccount", ['csrfToken' => $csrfToken]);
         }
     }
 
@@ -94,13 +84,11 @@ class AccountController extends Controller
     public function signInAccount()
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            // Vérification du jeton CSRF
-            // if (!Token::tokenValidator($_POST['csrf_token'], 'login_account')) {
-            //     http_response_code(400);
-            //     $_SESSION['error_messageC'] = "Erreur de jeton CSRF.";
-            //     header("Location: signInAccount");
-            //     exit();
-            // }
+            if (!Token::tokenValidator($_POST['csrf_token'])) {
+                $_SESSION['error_message'] = "Une erreur est survenue. Merci de réessayer.";
+                header("Location: signInUser");
+                exit();
+            }
 
             $nickname_account = $this->protectedValues($_POST['nickname_account']);
             $password = trim($_POST['loginPassword']);
@@ -141,7 +129,8 @@ class AccountController extends Controller
                 exit();
             }
         } else {
-            $this->render("account/signInAccount");
+            $csrfToken = Token::tokenGenerator();
+            $this->render("account/signInAccount", ['csrfToken' => $csrfToken]);
         }
     }
 

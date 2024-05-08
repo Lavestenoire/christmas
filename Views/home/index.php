@@ -1,7 +1,7 @@
 <?php
 $description = "Accédez à vos listes de cadeaux et sélectionnez des cadeaux à offrir";
 $title = "Fami'list - Accueil";
-var_dump($_SESSION);
+// var_dump($_SESSION);
 ?>
 
 <?php
@@ -9,7 +9,7 @@ if (isset($_SESSION['id_user'])) { ?>
     <!-- // s'il n'y a pas de profil créé -->
 
     <h1 id="titreRouge">Bienvenue à toi, petit lutin <?= isset($_SESSION['nickname_account']) ? $_SESSION['nickname_account'] : (isset($_SESSION['nickname_user']) ? $_SESSION['nickname_user'] : '') ?></h1>
-    <h2 class="sousTitreVert">Crée et partage ta liste, puis choisis dans les listes de ta famille les cadeaux que tu veux offrir, via la page secrète.</h2>
+    <h2 class="sousTitreVert">Créé et partage ta liste, puis choisis dans les listes de ta famille les cadeaux que tu veux offrir, via la page secrète.</h2>
     <div id="btnAccueil">
         <a href="pageCreateGift"><button type="button" name="connectionAccount" class="button-paper lutinBtn" role="button">Ajoute un cadeau à ta liste</button></a>
         <a href="secretPage"><button type="button" name="connectionAccount" class="button-paper lutinBtn" role="button">Page secrète</button></a>

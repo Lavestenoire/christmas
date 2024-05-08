@@ -89,20 +89,48 @@ class giftController extends Controller
 
         $this->render('gift/giftList', ['list' => $list]);
     }
+
+
+    public function getUpdatedGift()
+    {
+        $id_gift = $_POST['id_gift'];
+        $id_category = $_POST['id_category'];
+
+        $gift = new Gift();
+        $gift->setId_gift($id_gift);
+
+        $category = new Category();
+        $category->setId_category($id_category);
+
+        $giftModel = new GiftModel();
+        $gift = $giftModel->getGiftById($gift, $category);
+
+        // $categoryName = $gift['category']->getName_category();
+        // // le tableau permet de formater les données pour qu'elles soient compatibles en JS
+        // $response = array(
+        //     'id_gift' => $gift['id_gift'],
+        //     'name_gift' => $gift['name_gift'],
+        //     'description_gift' => $gift['description_gift'],
+        //     'name_category' => $categoryName
+        // );
+
+
+        header('Content-Type: application/json');
+        echo json_encode($gift);
+    }
     // ############################################################
     //                      DELETE GIFT
     // ############################################################
     public function deleteGift()
     {
         $id_user = $_SESSION['id_user'];
-        $id_gift = $_POST['id_gift'];
+        $id_gift = $_GET['id_gift'];
 
 
         $giftList = new GiftList();
         $giftList->setId_user($id_user);
+        $giftList->setId_gift($id_gift);
 
-        $gift = new Gift();
-        $gift->setId_gift($id_gift);
 
         $giftModel = new GiftModel();
         $giftModel->deleteGift($giftList);
@@ -114,32 +142,44 @@ class giftController extends Controller
     // ############################################################
     public function editGift()
     {
-        // Récupérer les valeurs envoyées par le client
-        $id_gift = $_POST['id_gift'];
-        $name_gift = $this->protectedValues($_POST['name_gift']);
-        $description_gift = $this->protectedValues($_POST['description_gift']);
-        $name_category = $this->protectedValues($_POST['name_category']);
-        $id_category = $this->protectedValues($_POST['id_category']);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id_gift = isset($_POST['id_gift']) ? $_POST['id_gift'] : null;
+            $name_gift = isset($_POST['name_gift']) ? $_POST['name_gift'] : null;
+            $description_gift = isset($_POST['description_gift']) ? $_POST['description_gift'] : null;
+            $name_category = isset($_POST['name_category']) ? $_POST['name_category'] : null;
+            $id_category = isset($_POST['id_category']) ? $_POST['id_category'] : null;
+            var_dump($_POST);
 
-        // Créer un objet Gift avec les valeurs récupérées
-        $gift = new Gift();
-        $gift->setId_gift($id_gift);
-        $gift->setName_gift($name_gift);
-        $gift->setDescription_gift($description_gift);
 
-        // Créer un objet Category avec les valeurs récupérées
-        $category = new Category();
-        $category->setId_category($id_category);
-        $category->setName_category($name_category);
 
-        // Appeler la méthode editGift de votre modèle pour mettre à jour le cadeau dans la base de données
-        $model = new GiftModel();
-        $model->editGift($gift);
-        $model->editCategory($category); // Call the editCategory() method
+            // Créer un objet Gift avec les valeurs récupérées
+            $gift = new Gift();
+            $gift->setId_gift($id_gift);
+            $gift->setName_gift($name_gift);
+            $gift->setDescription_gift($description_gift);
 
-        // Retourner une réponse au client
-        echo 'Le cadeau a été mis à jour avec succès.';
+            // Créer un objet Category avec les valeurs récupérées
+            $category = new Category();
+            $category->setId_category($id_category);
+            $category->setName_category($name_category);
+
+            // Appeler la méthode editGift de votre modèle pour mettre à jour le cadeau dans la base de données
+            $model = new GiftModel();
+            $success = $model->editGift($gift, $category);
+
+            // Retourner une réponse au client
+            if ($success) {
+                $response = ['success' => $success];
+                header('Content-Type: application/json');
+                echo json_encode($response);
+            } else {
+                $response = ['success' => $success];
+                header('Content-Type: application/json');
+                echo json_encode($response);
+            }
+        }
     }
+
 
 
 

@@ -14,9 +14,9 @@ $title = "Fami'list - Ma liste";
             <tr id="trTitle">
                 <th>Nom</th>
                 <th>Description</th>
-                <th>Lien</th>
-                <th>Modifier</th>
-                <th>Supprimer</th>
+                <th>Catégorie</th>
+                <th id="iconeEditGift">Modifier</th>
+                <th id="iconeDeleteGift">Supprimer</th>
             </tr>
             <?php if (empty($list)) { ?>
                 <tr>
@@ -24,25 +24,25 @@ $title = "Fami'list - Ma liste";
                 </tr>
                 <?php } else {
                 foreach ($list as $gift) { ?>
-                    <tr class="idGift" data-id="<?= $gift['id_gift'] ?>">
-                        <td>
+                    <tr class="idGift" data-id_gift="<?= $gift['id_gift'] ?>" data-id_category="<?= $gift['id_category']; ?>">
+                        <td class="name_giftDataTable">
                             <div class="gift-name"><?= $gift['name_gift']; ?></div>
                             <input type="text" class="edit-input" name="name_gift" value="<?= $gift['name_gift']; ?>">
                         </td>
-                        <td>
+                        <td class="descriptionDataTable">
                             <div class="gift-description"><?= $gift['description_gift']; ?></div>
                             <input type="text" class="edit-input" name="description_gift" value="<?= $gift['description_gift']; ?>">
                         </td>
-                        <td>
+                        <td class="name_categoryDataTable">
                             <div class="gift-category"><?= $gift['name_category']; ?></div>
-                            <input type="url" class="edit-input" name="name_category" value="<?= $gift['name_category']; ?>">
+                            <input type="text" class="edit-input" name="name_category" value="<?= $gift['name_category']; ?>">
                         </td>
+
                         <td>
                             <i class="fa-regular fa-pen-to-square edit-button"></i>
                         </td>
-                        <td><i class="fa-regular fa-trash-can deleteGiftBtn"><a href="deleteGift"></a></i></td>
+                        <td><i class="fa-regular fa-trash-can deleteGiftBtn"></i></td>
                     </tr>
-                    <input type="hidden" class="edit-input" name="id_category" value="<?= $gift['id_category']; ?>">
             <?php }
             } ?>
         </table>

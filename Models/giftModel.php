@@ -56,6 +56,27 @@ class GiftModel extends DbConnect
     }
 
     // ############################################################
+    // ############### RECUPERER LES GIFTS PAR LEUR ID ############
+    // ############################################################
+
+    public function getGiftbyId(Gift $gift, Category $category)
+    {
+        try {
+            $this->request = $this->connection->prepare("SELECT * FROM c_gift 
+            JOIN c_categorygift ON c_gift.id_gift = c_categorygift.id_gift
+            JOIN c_category ON c_categorygift.id_category = c_category.id_category
+            WHERE c_gift.id_gift = :id_gift AND c_category.id_category = :id_category");
+            $this->request->bindValue('id_gift', $gift->getId_gift());
+            $this->request->bindValue(':id_category', $category->getId_category());
+            $this->request->execute();
+            $result = $this->request->fetch();
+            return $result;
+        } catch (Exception $e) {
+            echo "Erreur lors de la connexion à la base de données : " . $e->getMessage();
+        }
+    }
+
+    // ############################################################
     // #################### AJOUT IDs À GIFTLIST ##################
     // ############################################################
     public function addIdsToGiftList(GiftList $giftList, User $user)
@@ -131,34 +152,33 @@ class GiftModel extends DbConnect
     // ############################################################
     //                      EDIT GIFT
     // ############################################################
-    public function editGift(Gift $gift)
+    public function editGift(Gift $gift, Category $category)
     {
         try {
-            $this->request = $this->connection->prepare("UPDATE c_gift
-            SET c_gift.name_gift = :name_gift,
-                c_gift.description_gift = :description_gift
-            WHERE c_gift.id_gift = :id_gift");
+            // Update the c_gift table
+            $this->request = $this->connection->prepare("UPDATE c_gift JOIN c_categorygift ON c_gift.id_gift = c_categorygift.id_gift
+        SET c_gift.name_gift = :name_gift,
+            c_gift.description_gift = :description_gift
+        WHERE c_gift.id_gift = :id_gift AND c_categorygift.id_category = :id_category");
 
             $this->request->bindValue(':name_gift', $gift->getName_gift());
             $this->request->bindValue(':description_gift', $gift->getDescription_gift());
             $this->request->bindValue(':id_gift', $gift->getId_gift());
+            $this->request->bindValue(':id_category', $category->getId_category());
+            $this->request->execute();
+
+            // Update the c_category table
+            $this->request = $this->connection->prepare("UPDATE c_category
+        SET name_category = :name_category
+        WHERE id_category = :id_category");
+
+            $this->request->bindValue(':name_category', $category->getName_category());
+            $this->request->bindValue(':id_category', $category->getId_category());
             $this->request->execute();
         } catch (Exception $e) {
             echo "Erreur lors de la récupération des données : " . $e->getMessage();
         }
     }
-
-    public function editCategory(Category $category)
-    {
-        $this->request = $this->connection->prepare("UPDATE c_category
-        SET c_category.name_category = :name_category
-        WHERE c_category.id_category = :id_category");
-
-        $this->request->bindValue(':name_category', $category->getName_category());
-        $this->request->bindValue(':id_category', $category->getId_category());
-        $this->request->execute();
-    }
-
     // ############################################################
     //                      DELETE GIFT
     // ############################################################
@@ -244,7 +264,7 @@ class GiftModel extends DbConnect
     // ############################################################
     //                      LISTE À OFFRIR
     // ############################################################
-    public function giftToOffer(Gift $gift, User $user, Account $account)
+    public function giftToOffer(Gift $gift, User $user)
     {
         try {
             $this->request = $this->connection->prepare("SELECT c_gift.id_gift, c_gift.name_gift, c_gift.description_gift, c_gift.reserved_gift, c_category.name_category, c_user.nickname_user
@@ -254,12 +274,10 @@ class GiftModel extends DbConnect
         JOIN c_account ON c_user.id_account = c_account.id_account
         JOIN c_categorygift ON c_gift.id_gift = c_categorygift.id_gift
         JOIN c_category ON c_categorygift.id_category = c_category.id_category
-        WHERE c_gift.reserved_gift = :reserved_gift AND c_user.status_user = :status_user AND c_account.id_account = :id_account");
+        WHERE c_gift.reserved_gift = :reserved_gift AND c_user.status_user = :status_user");
 
             $this->request->bindValue('reserved_gift', $gift->getReserved_gift());
             $this->request->bindValue('status_user', $user->getStatus_user());
-            $this->request->bindValue('id_account', $account->getId_account());
-
             $this->request->execute();
 
             $listToOffer = $this->request->fetchAll(PDO::FETCH_ASSOC);

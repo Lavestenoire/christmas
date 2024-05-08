@@ -15,6 +15,9 @@ PAGE PROFIL
 ADMIN PAGE PROFIL
  */
 
+.gift-name input {
+    background-color: #bb010b;
+}
 
 body {
     max-width: 1280px;
@@ -503,9 +506,16 @@ footer ul li a {
                     PAGE MA LISTE
 ############################################################ 
 */
+.listFromListPage {
+    width: 100%;
+}
+
+
 #trTitle {
     height: 100px;
 }
+
+
 
 .edit-input {
     display: none;
@@ -517,6 +527,17 @@ footer ul li a {
 }
 
 @media screen and (max-width: 480px) {
+
+    #iconeEditGift,
+    #iconeDeleteGift {
+        width: 17%;
+    }
+
+    #trTitle th,
+    .idGift td {
+        font-size: 0.7rem;
+        text-align: center;
+    }
 
     #listSection {
         width: 100%;
