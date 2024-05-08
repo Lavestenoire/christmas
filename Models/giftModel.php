@@ -11,7 +11,6 @@ use App\Entities\Gift;
 use App\Entities\Category;
 use App\Entities\GiftList;
 use App\Entities\User;
-use App\Entities\Account;
 use App\Entities\CategoryGift;
 
 class GiftModel extends DbConnect
@@ -62,10 +61,14 @@ class GiftModel extends DbConnect
     public function getGiftbyId(Gift $gift, Category $category)
     {
         try {
-            $this->request = $this->connection->prepare("SELECT * FROM c_gift 
-            JOIN c_categorygift ON c_gift.id_gift = c_categorygift.id_gift
-            JOIN c_category ON c_categorygift.id_category = c_category.id_category
-            WHERE c_gift.id_gift = :id_gift AND c_category.id_category = :id_category");
+            $this->request = $this->connection->prepare(
+                "SELECT * FROM c_gift 
+                JOIN c_categorygift 
+                ON c_gift.id_gift = c_categorygift.id_gift
+                JOIN c_category 
+                ON c_categorygift.id_category = c_category.id_category
+                WHERE c_gift.id_gift = :id_gift AND c_category.id_category = :id_category"
+            );
             $this->request->bindValue('id_gift', $gift->getId_gift());
             $this->request->bindValue(':id_category', $category->getId_category());
             $this->request->execute();
@@ -124,11 +127,16 @@ class GiftModel extends DbConnect
     // ############################################################
     // ###################### LISTE CADEAUX #######################
     // ############################################################
-    public function giftList(GiftList $giftList)
+    public function giftList(User $user)
     {
         try {
             $this->request = $this->connection->prepare(
-                "SELECT c_gift.id_gift, c_gift.name_gift, c_gift.description_gift, c_category.name_category, c_category.id_category
+                "SELECT c_gift.id_gift, 
+                c_gift.name_gift, 
+                c_gift.description_gift, 
+                c_gift.reserved_gift, 
+                c_category.name_category, 
+                c_category.id_category
                 FROM c_gift
                 JOIN c_categorygift
                 ON c_gift.id_gift = c_categorygift.id_gift
@@ -136,19 +144,52 @@ class GiftModel extends DbConnect
                 ON c_categorygift.id_category = c_category.id_category
                 JOIN c_giftlist
                 ON c_gift.id_gift = c_giftlist.id_gift
-                WHERE c_giftlist.id_user = :id_user"
+                JOIN c_user
+                ON c_giftList.id_user = c_user.id_user
+                WHERE c_user.id_user = :id_user"
             );
-            $this->request->bindValue(':id_user', $giftList->getId_user());
+            $this->request->bindValue(':id_user', $user->getId_user());
+            // echo $this->request->bindValue(':id_user', $user->getId_user());
+            // echo $this->request->debugDumpParams();
             $this->request->execute();
 
             $list = $this->request->fetchAll(PDO::FETCH_ASSOC);
 
             return $list;
         } catch (Exception $e) {
-            echo "Erreur lors de la connexion à la base de données : " . $e->getMessage();
+            error_log("Erreur lors de la connexion à la base de données : " . $e->getMessage());
             return [];
         }
     }
+    // public function giftList(GiftList $giftList)
+    // {
+    //     try {
+    //         $this->request = $this->connection->prepare(
+    //             "SELECT c_gift.id_gift, c_gift.name_gift, 
+    //             c_gift.description_gift, 
+    //             c_category.name_category, 
+    //             c_category.id_category
+    //             FROM c_gift
+    //             JOIN c_categorygift
+    //             ON c_gift.id_gift = c_categorygift.id_gift
+    //             JOIN c_category
+    //             ON c_categorygift.id_category = c_category.id_category
+    //             JOIN c_giftlist
+    //             ON c_gift.id_gift = c_giftlist.id_gift
+    //             WHERE c_giftlist.id_user = :id_user"
+    //         );
+    //         $this->request->bindValue(':id_user', $giftList->getId_user());
+    //         $this->request->execute();
+
+    //         $list = $this->request->fetchAll(PDO::FETCH_ASSOC);
+
+    //         return $list;
+    //     } catch (Exception $e) {
+    //         error_log("Erreur lors de la connexion à la base de données : " . $e->getMessage());
+    //         return [];
+    //     }
+    // }
+
     // ############################################################
     //                      EDIT GIFT
     // ############################################################
@@ -156,10 +197,14 @@ class GiftModel extends DbConnect
     {
         try {
             // Update the c_gift table
-            $this->request = $this->connection->prepare("UPDATE c_gift JOIN c_categorygift ON c_gift.id_gift = c_categorygift.id_gift
-        SET c_gift.name_gift = :name_gift,
-            c_gift.description_gift = :description_gift
-        WHERE c_gift.id_gift = :id_gift AND c_categorygift.id_category = :id_category");
+            $this->request = $this->connection->prepare(
+                "UPDATE c_gift 
+                JOIN c_categorygift 
+                ON c_gift.id_gift = c_categorygift.id_gift 
+                SET c_gift.name_gift = :name_gift, c_gift.description_gift = :description_gift 
+                WHERE c_gift.id_gift = :id_gift 
+                AND c_categorygift.id_category = :id_category"
+            );
 
             $this->request->bindValue(':name_gift', $gift->getName_gift());
             $this->request->bindValue(':description_gift', $gift->getDescription_gift());
@@ -176,7 +221,7 @@ class GiftModel extends DbConnect
             $this->request->bindValue(':id_category', $category->getId_category());
             $this->request->execute();
         } catch (Exception $e) {
-            echo "Erreur lors de la récupération des données : " . $e->getMessage();
+            error_log("Erreur lors de la connexion à la base de données : " . $e->getMessage());
         }
     }
     // ############################################################
@@ -188,16 +233,19 @@ class GiftModel extends DbConnect
             $this->request = $this->connection->prepare(
                 "DELETE c_gift.*
                 FROM c_gift
-                JOIN c_categorygift ON c_gift.id_gift = c_categorygift.id_gift
-                JOIN c_category ON c_categorygift.id_category = c_category.id_category
-                JOIN c_giftlist ON c_gift.id_gift = c_giftlist.id_gift
+                JOIN c_categorygift 
+                ON c_gift.id_gift = c_categorygift.id_gift
+                JOIN c_category 
+                ON c_categorygift.id_category = c_category.id_category
+                JOIN c_giftlist 
+                ON c_gift.id_gift = c_giftlist.id_gift
                 WHERE c_giftlist.id_user = :id_user AND c_gift.id_gift = :id_gift"
             );
             $this->request->bindValue(':id_user', $giftList->getId_user());
             $this->request->bindValue(':id_gift', $giftList->getId_gift());
             $this->request->execute();
         } catch (Exception $e) {
-            echo "Erreur lors de la connexion à la base de données : " . $e->getMessage();
+            error_log("Erreur lors de la connexion à la base de données : " . $e->getMessage());
             return [];
         }
     }
@@ -205,26 +253,37 @@ class GiftModel extends DbConnect
     // ############################################################
     //                  LISTE CADEAUX STATUS 0
     // ############################################################
-    public function listByStatus(User $user)
-    {
-        try {
-            $this->request = $this->connection->prepare("SELECT c_gift.id_gift, c_gift.name_gift, c_gift.description_gift, c_gift.reserved_gift, c_category.name_category
-        FROM c_gift
-        JOIN c_giftlist ON c_gift.id_gift = c_giftlist.id_gift
-        JOIN c_user ON c_giftlist.id_user = c_user.id_user
-        JOIN c_categorygift ON c_gift.id_gift = c_categorygift.id_gift
-        JOIN c_category ON c_categorygift.id_category = c_category.id_category
-        WHERE c_user.status_user = :status_user AND c_user.id_user = :id_user");
-            $this->request->bindValue(':status_user', $user->getStatus_user());
-            $this->request->bindValue(':id_user', $user->getId_user());
-            $this->request->execute();
+    // public function listByStatus(User $user)
+    // {
+    //     try {
+    //         $this->request = $this->connection->prepare(
+    //             "SELECT 
+    //             c_gift.id_gift, 
+    //             c_gift.name_gift, 
+    //             c_gift.description_gift, 
+    //             c_gift.reserved_gift, 
+    //             c_category.name_category 
+    //             FROM c_gift 
+    //             JOIN c_giftlist 
+    //             ON c_gift.id_gift = c_giftlist.id_gift 
+    //             JOIN c_user 
+    //             ON c_giftlist.id_user = c_user.id_user 
+    //             JOIN c_categorygift 
+    //             ON c_gift.id_gift = c_categorygift.id_gift 
+    //             JOIN c_category 
+    //             ON c_categorygift.id_category = c_category.id_category 
+    //             WHERE c_user.status_user = :status_user AND c_user.id_user = :id_user"
+    //         );
+    //         $this->request->bindValue(':status_user', $user->getStatus_user());
+    //         $this->request->bindValue(':id_user', $user->getId_user());
+    //         $this->request->execute();
 
-            $listByStatus = $this->request->fetchAll(PDO::FETCH_ASSOC);
-            return $listByStatus;
-        } catch (Exception $e) {
-            echo "Erreur lors de la récupération de cadeaux par statut user : " . $e->getMessage();
-        }
-    }
+    //         $listByStatus = $this->request->fetchAll(PDO::FETCH_ASSOC);
+    //         return $listByStatus;
+    //     } catch (Exception $e) {
+    //         error_log("Erreur lors de la connexion à la base de données : " . $e->getMessage());
+    //     }
+    // }
     // ############################################################
     //        POUR L'AUTOCOMPLETION DES CATEGORIES
     // ############################################################
@@ -241,7 +300,7 @@ class GiftModel extends DbConnect
             $catList = $this->request->fetchAll(PDO::FETCH_ASSOC);
             return $catList;
         } catch (Exception $e) {
-            echo "Erreur lors de la récupération de catégories de cadeaux : " . $e->getMessage();
+            error_log("Erreur lors de la connexion à la base de données : " . $e->getMessage());
         }
     }
 
@@ -257,7 +316,7 @@ class GiftModel extends DbConnect
             $this->request->bindValue(':id_gift', $gift->getId_gift());
             $this->request->execute();
         } catch (Exception $e) {
-            echo "Erreur lors de la mise à jour du status de réservation de cadeaux : " . $e->getMessage();
+            error_log("Erreur lors de la connexion à la base de données : " . $e->getMessage());
         }
     }
 
@@ -267,17 +326,29 @@ class GiftModel extends DbConnect
     public function giftToOffer(Gift $gift, User $user)
     {
         try {
-            $this->request = $this->connection->prepare("SELECT c_gift.id_gift, c_gift.name_gift, c_gift.description_gift, c_gift.reserved_gift, c_category.name_category, c_user.nickname_user
-        FROM c_gift
-        JOIN c_giftlist ON c_gift.id_gift = c_giftlist.id_gift
-        JOIN c_user ON c_giftlist.id_user = c_user.id_user
-        JOIN c_account ON c_user.id_account = c_account.id_account
-        JOIN c_categorygift ON c_gift.id_gift = c_categorygift.id_gift
-        JOIN c_category ON c_categorygift.id_category = c_category.id_category
-        WHERE c_gift.reserved_gift = :reserved_gift AND c_user.status_user = :status_user");
+            $this->request = $this->connection->prepare(
+                "SELECT 
+                c_gift.id_gift, 
+                c_gift.name_gift, 
+                c_gift.description_gift, 
+                c_gift.reserved_gift, 
+                c_category.name_category, 
+                c_user.nickname_user
+                FROM c_gift
+                JOIN c_giftlist 
+                ON c_gift.id_gift = c_giftlist.id_gift
+                JOIN c_user 
+                ON c_giftlist.id_user = c_user.id_user
+                JOIN c_account 
+                ON c_user.id_account = c_account.id_account
+                JOIN c_categorygift 
+                ON c_gift.id_gift = c_categorygift.id_gift
+                JOIN c_category 
+                ON c_categorygift.id_category = c_category.id_category
+                WHERE c_gift.reserved_gift = :reserved_gift"
+            );
 
             $this->request->bindValue('reserved_gift', $gift->getReserved_gift());
-            $this->request->bindValue('status_user', $user->getStatus_user());
             $this->request->execute();
 
             $listToOffer = $this->request->fetchAll(PDO::FETCH_ASSOC);
@@ -287,7 +358,7 @@ class GiftModel extends DbConnect
             // die;
             return $listToOffer;
         } catch (Exception $e) {
-            echo "Erreur lors de la récupération des données : " . $e->getMessage();
+            error_log("Erreur lors de la connexion à la base de données : " . $e->getMessage());
         }
     }
 }

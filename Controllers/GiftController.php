@@ -80,12 +80,14 @@ class giftController extends Controller
     public function giftList()
     {
         $id_user = $_SESSION['id_user'];
+        $user = new User();
+        $user->setId_user($id_user);
 
         $giftList = new GiftList();
         $giftList->setId_user($id_user);
 
         $giftModel = new GiftModel();
-        $list = $giftModel->giftList($giftList);
+        $list = $giftModel->giftList($user);
 
         $this->render('gift/giftList', ['list' => $list]);
     }
@@ -189,49 +191,43 @@ class giftController extends Controller
 
     public function secretPage()
     {
+
         if (!isset($_SESSION['id_user'])) {
             header('Location: home');
             exit();
         }
 
-        // Récupérer la giftList de chaque utilisateur n'étant pas connecté
-        $id_account = $_SESSION['id_account'];
-
         $account = new Account();
-        $account->setId_account($id_account);
+        $id_account = $account->setId_account($_SESSION['id_account']);
 
-        // Définition du status_user à 0 pour "non connecté"
         $user = new User();
-        $user->setStatus_user(0);
+        $user->setId_user($_SESSION['id_user']);
 
-        // Récupération la liste des users dont le statut est setté à 0
         $userModel = new UserModel();
-        $getUserByStatus = $userModel->getUserByStatus($account, $user);
+        $userByTagAccount = $userModel->getUsersByTagAccount($id_account);
+
 
         $giftLists = [];
-        // pour chaque utilisateur non connecté
-        foreach ($getUserByStatus as $value) {
+        foreach ($userByTagAccount as $value) {
+            if ($value['id_user'] == $_SESSION['id_user']) {
+                continue;
+            }
+
             $giftModel = new GiftModel();
+
             $user->setId_user($value['id_user']);
 
-            // $gift = new Gift();
-            // $gift->setReserved_gift(0);
+            $giftModel->giftList($user, $_SESSION['id_user']);
 
-            // Récupérer les données pour la liste des cadeaux de chaque utilisateur non connecté
-            $giftList = $giftModel->listByStatus($user);
-            $giftLists[$value['nickname_user']] = $giftList;
+            $giftLists[$value['nickname_user']] = $giftModel->giftList($user);
         }
 
-        // Récupérer la listToOffer
         $gift = new Gift();
         $gift->setReserved_gift(1);
 
-        $account = new Account();
-        $account->setId_account($_SESSION['id_account']);
-
-
         $giftModel = new GiftModel();
-        $listToOffer = $giftModel->giftToOffer($gift, $user, $account);
+        $listToOffer = $giftModel->giftToOffer($gift, $user);
+
 
         $this->render('gift/secretPage', ['giftList' => $giftLists, 'listToOffer' => $listToOffer]);
     }

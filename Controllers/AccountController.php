@@ -155,7 +155,7 @@ class AccountController extends Controller
     {
         $account = new Account();
         $account->setId_account($_SESSION['id_account']);
-        $account->setTag_account($_SESSION['tag_account']);
+        // $account->setTag_account($_SESSION['tag_account']);
 
         $idAccount = $account->getId_account();
 

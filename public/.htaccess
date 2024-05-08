@@ -10,7 +10,7 @@ RewriteRule ^signUpPage$ index.php?controller=Home&action=signUpPage [QSA,L]
 
 RewriteRule ^signInAccount$ index.php?controller=Account&action=signInAccount [QSA,L]
 RewriteRule ^signUpAccount$ index.php?controller=Account&action=signUpAccount [QSA,L]
-RewriteRule ^logOutAccount$ index.php?controller=Account&action=logutAccount [QSA,L]
+RewriteRule ^logOutAccount$ index.php?controller=Account&action=logOutAccount [QSA,L]
 RewriteRule ^editAccount$ index.php?controller=Account&action=editAccount [QSA,L]
 RewriteRule ^profileAccount$ index.php?controller=Account&action=profileAccount [QSA,L]
 RewriteRule ^deleteAccount$ index.php?controller=Account&action=deleteAccount [QSA,L]

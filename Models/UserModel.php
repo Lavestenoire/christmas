@@ -74,8 +74,13 @@ class UserModel extends DbConnect
     public function getUsersByTagAccount(Account $account)
     {
         try {
-            $this->request = $this->connection->prepare("SELECT * FROM c_user JOIN c_account ON c_user.id_account = c_account.id_account WHERE c_account.tag_account = :tag_account");
-            $this->request->bindValue('tag_account', $account->getTag_account());
+            $this->request = $this->connection->prepare(
+                "SELECT * FROM c_user 
+                JOIN c_account 
+                ON c_user.id_account = c_account.id_account 
+                WHERE c_account.id_account = :id_account"
+            );
+            $this->request->bindValue('id_account', $account->getId_account());
             $this->request->execute();
 
             return $this->request->fetchAll(PDO::FETCH_ASSOC);
