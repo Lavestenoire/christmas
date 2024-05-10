@@ -41,7 +41,9 @@ $title = "Fami'list - Ma liste";
                         <td>
                             <i class="fa-regular fa-pen-to-square edit-button"></i>
                         </td>
-                        <td><i class="fa-regular fa-trash-can deleteGiftBtn"></i></td>
+                        <td>
+                            <i class="fa-regular fa-trash-can deleteGiftBtn"></i>
+                        </td>
                     </tr>
             <?php }
             } ?>

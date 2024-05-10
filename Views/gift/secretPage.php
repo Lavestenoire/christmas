@@ -1,9 +1,10 @@
 <?php
 $title = "Fami'list - Page secrète";
-// var_dump($giftList);
 ?>
 
 <?php if (isset($_SESSION['id_account']) || isset($_SESSION['id_user'])) { ?>
+
+
     <h1 id="titreRouge">
         <?= $_SESSION['nickname_user'] ?>, bienvenue sur ta page secrète
     </h1>
@@ -12,7 +13,15 @@ $title = "Fami'list - Page secrète";
     </div>
 
     <h2 class="sousTitreVert">Choisis les cadeaux dans les listes des lutins de ta famille. Tu les retrouveras en bas de page dans ta liste de cadeaux à offrir.</h2>
-    <!-- listes des users avec un status == 0 (non connecté) -->
+    <?php
+    $signedInUsersString = implode(' et ', $signedInUserNames);
+    if (count($signedInUserNames) === 1) {
+        echo "<p class='signedInUserNames'>{$signedInUsersString} est aussi entrain de remplir sa liste !</p>";
+    } elseif (count($signedInUserNames) > 1) {
+        echo "<p class='signedInUserNames'>{$signedInUsersString} sont aussi entrain de remplir leurs listes !</p>";
+    } ?>
+
+
     <div id="containerList">
         <?php
         // Initialisation du total de cadeau non réservés toutes listes confondues

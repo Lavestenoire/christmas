@@ -23,32 +23,49 @@ togglePasswords.forEach(function (togglePassword) {
 // ############################################################
 //                AUTO COMPLETION INPUT CATEGORY
 // ############################################################
-function showHint(str) {
-    if (str.length == 0) {
+
+// It takes a string str as input.
+// If the input string is empty, it clears the suggestions element and returns.
+// It makes a fetch request to a server-side endpoint getCategoryHint with a query parameter q set to the first character of the input string (lowercased).
+// It parses the response as JSON and filters the categories to only include those that start with the input string (case-insensitive).
+// It generates an HTML string to display the filtered categories as a list, with each list item having an onclick event handler that calls the selectCategory function when clicked.
+// It sets the innerHTML of the suggestions element to the generated HTML string.
+function autoCompletion(str) {
+    if (str.length === 0) {
         document.getElementById("suggestions").innerHTML = "";
         return;
-    } else {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                var categories = JSON.parse(this.responseText);
-                var suggestionsHTML = "<ul>";
-                categories.forEach(function (category) {
-                    suggestionsHTML += "<li onclick='selectCategory(\"" + category.name_category + "\")'>" + category.name_category + "</li>";
-                });
-                suggestionsHTML += "</ul>";
-                document.getElementById("suggestions").innerHTML = suggestionsHTML;
-            }
-        };
-        xmlhttp.open("GET", "getCategoryHint?q=" + str, true);
-        xmlhttp.send();
     }
+    // on envoie grâce ) l'api fetch une requete au serveur en ajoutant une chaine de requête
+    fetch(`getCategoryHint?search=${str.toLowerCase().charAt(0)}`)
+        // Le serveur renvoie une réponse au format JSON, qui est ensuite convertie en un objet JavaScript grâce à la méthode json().
+        .then(response => response.json())
+        .then(categories => {
+            // La méthode filter() est une méthode d'array (tableau) en JavaScript qui permet de créer un nouveau tableau contenant uniquement les éléments qui remplissent une certaine condition.
+            const filteredCategories = categories.filter(category => category.name_category.toLowerCase().startsWith(str.toLowerCase()));
+            const suggestionsHTML = `
+            <ul>
+            ${filteredCategories.map(category => `
+                <li onclick="selectCategory('${category.name_category}')">
+                ${category.name_category}
+                </li>
+            `).join('')}
+            </ul>
+        `;
+            // La méthode map() est utilisée pour créer une chaîne de caractères suggestionsHTML contenant une liste HTML représentant chaque catégorie du tableau filteredCategories.
+            // la méthode join est appelée sur le tableau envoyé par la méthode map, et sert à concaténer les chaines de caractère en une seule.
+            // si on ne fait pas ça, alors un tableau est renvoyé
+
+            // Set the innerHTML of the suggestions element to the generated HTML string
+            document.getElementById("suggestions").innerHTML = suggestionsHTML;
+        })
+        .catch(error => console.error('Error fetching categories:', error));
 }
-// mettre à jour le champ de saisie lorsque l'utilisateur sélectionne une option dans le menu déroulant
+
 function selectCategory(category) {
     document.getElementById("category_gift").value = category;
-    document.getElementById("suggestions").innerHTML = ""; // Effacer les suggestions après la sélection
+    document.getElementById("suggestions").innerHTML = "";
 }
+
 
 
 // ############################################################
@@ -132,29 +149,25 @@ function cancelEditProfileAccount() {
     var editForm = document.querySelector(".editAccount");
     editForm.style.display = "none";
 }
-// function editAccountForm() {
-//     var editAccountForm = document.querySelector('.editAccountForm');
-//     editAccountForm.style.display = "block";
-// }
 
-// function cancelEditAccount() {
-//     var cancelBtn = document.querySelector('.editAccountForm');
-//     cancelBtn.style.display = "none";
-// }
 
 // ########################################
 //           EDIT GIFT
 // ########################################
-// Sélectionner tous les boutons "edit"
-const editButtons = document.querySelectorAll('.edit-button');
 
+const editButtons = document.querySelectorAll('.edit-button');
+// ajouter un écouteur d'événement au clic sur les boutons
 editButtons.forEach(button => {
     button.addEventListener('click', async event => {
+        // récupérer le plus proche élément parent avec la classe editGift
         const giftRow = event.target.closest('.idGift');
 
-        const inputFields = giftRow.querySelectorAll('.edit-input');
-        const divFields = giftRow.querySelectorAll('.gift-name, .gift-description, .gift-category');
 
+        const inputFields = giftRow.querySelectorAll('.edit-input');
+        // const divFields = giftRow.querySelectorAll('.gift-name, .gift-description, .gift-category');
+
+
+        // pour chaque input, s'il y a un élément avant, passer cet élément en none et l'input en block
         inputFields.forEach(input => {
             const divToReplace = input.previousElementSibling;
             if (divToReplace) {
@@ -167,14 +180,17 @@ editButtons.forEach(button => {
         const saveIcon = document.createElement('i');
         saveIcon.className = 'fa-regular fa-floppy-disk save-button';
 
+        // remplacer l'icone edit par l'icone save
         editIcon.replaceWith(saveIcon);
 
+        // écouteur d'événement au clic: pour chaque input, récupérer sa valeur
         saveIcon.addEventListener('click', async () => {
             const inputValues = {};
             inputFields.forEach(input => {
                 inputValues[input.name] = input.value;
             });
 
+            // créer un objet formData pour envoyer les données des input en POST via une requête ajax
             const formData = new FormData();
             console.log(inputValues);
             formData.append('id_gift', giftRow.dataset.id_gift);
@@ -184,6 +200,7 @@ editButtons.forEach(button => {
             formData.append('id_category', giftRow.dataset.id_category);
 
             try {
+                // envoyer une requête ajax pour update le cadeau
                 const response = await fetch('editGift', {
                     method: 'POST',
                     body: formData
@@ -193,9 +210,9 @@ editButtons.forEach(button => {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
-                const data = await response.text();
+                // const data = await response.text();
 
-                // Send an AJAX request to fetch the updated gift data
+                // envoyer une requête ajax pour récupérer le cadeau mis à jour
                 const updatedGiftResponse = await fetch('getUpdatedGift', {
                     method: 'POST',
                     headers: {
@@ -239,7 +256,6 @@ editButtons.forEach(button => {
 
                 saveIcon.replaceWith(editIcon);
 
-
             } catch (error) {
                 console.error("The AJAX request failed:", error);
             }
@@ -252,14 +268,6 @@ function traitement(name_gift, description_gift, name_category) {
     console.log('Le cadeau a été mis à jour avec succès : ', name_gift, description_gift, name_category);
 }
 
-for (const editButton of editButtons) {
-    editButton.addEventListener('click', async event => {
-        const parentElement = event.target.closest('.idGift');
-        if (parentElement) {
-            parentElement.classList.toggle('editing');
-        }
-    });
-}
 
 
 

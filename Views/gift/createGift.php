@@ -25,7 +25,7 @@ if (isset($_GET['message']) && $_GET['message'] == 'gift_added') {
                     </div>
                     <div class="mb-3 col-lg-12 col-12">
                         <label for="category_gift" class="form-label">Catégorie</label>
-                        <input type="text" name="category_gift" class="form-control" id="category_gift" aria-describedby="usernameHelp" onkeyup="showHint(this.value)">
+                        <input type="text" name="category_gift" class="form-control" id="category_gift" aria-describedby="usernameHelp" onkeyup="autoCompletion(this.value)">
                     </div>
                     <div id="suggestions"></div>
                     <!-- champs caché à 0 pour non réservé -->

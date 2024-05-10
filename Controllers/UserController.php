@@ -72,7 +72,8 @@ class UserController extends Controller
             $user->setPassword_user(password_hash($passwordUser, PASSWORD_DEFAULT));
             $user->setStatus_user(0);
             $user->setPicture_user(DEFAULT_AVATAR);
-            $user->setId_account($tag['tag_user']);
+            $user->setId_account($tag['id_account']);
+
 
             $userModel = new UserModel();
             $existingUser = $userModel->getUserByEmail($email_user);

@@ -191,7 +191,6 @@ class giftController extends Controller
 
     public function secretPage()
     {
-
         if (!isset($_SESSION['id_user'])) {
             header('Location: home');
             exit();
@@ -205,20 +204,15 @@ class giftController extends Controller
 
         $userModel = new UserModel();
         $userByTagAccount = $userModel->getUsersByTagAccount($id_account);
-
-
+        // In summary, the current user's ID is being passed as an argument to the giftList method to ensure that the method can retrieve the correct list of gifts for each user, regardless of whether the current user is being processed in the loop.
         $giftLists = [];
         foreach ($userByTagAccount as $value) {
             if ($value['id_user'] == $_SESSION['id_user']) {
                 continue;
             }
-
             $giftModel = new GiftModel();
-
             $user->setId_user($value['id_user']);
-
             $giftModel->giftList($user, $_SESSION['id_user']);
-
             $giftLists[$value['nickname_user']] = $giftModel->giftList($user);
         }
 
@@ -226,37 +220,15 @@ class giftController extends Controller
         $gift->setReserved_gift(1);
 
         $giftModel = new GiftModel();
-        $listToOffer = $giftModel->giftToOffer($gift, $user);
+        $listToOffer = $giftModel->giftToOffer($gift);
 
+        $signedInUsers = array_filter($userByTagAccount, function ($user) {
+            return $user['id_user'] != $_SESSION['id_user'] && $user['status_user'] == 1;
+        });
 
-        $this->render('gift/secretPage', ['giftList' => $giftLists, 'listToOffer' => $listToOffer]);
-    }
+        $signedInUserNames = array_column($signedInUsers, 'nickname_user');
 
-    // ############################################################
-    //           PAGE SECRÈTE UPDATE RESERVED_GIFT 
-    //      à la suppression d'un cadeau de la liste à offrir
-    // ############################################################
-    public function deleteGiftToOffer()
-    {
-        $id_gift = $_POST['id_gift'];
-        $gift = new Gift();
-        $gift->setId_gift($id_gift);
-        $gift->setReserved_gift(0);
-
-        $giftModel = new GiftModel($gift);
-        $giftModel->updateReservedGift($gift);
-        header('Location: secretPage');
-    }
-
-    // ############################################################
-    //                    SEARCH CATEGORY
-    // ############################################################
-    public function getCategoryHint()
-    {
-        $search = isset($_GET['q']) ? $_GET['q'] : '';
-        $giftModel = new giftModel();
-        $categories = $giftModel->getNameCategory($search);
-        echo json_encode($categories);
+        $this->render('gift/secretPage', ['giftList' => $giftLists, 'listToOffer' => $listToOffer, 'signedInUserNames' => $signedInUserNames]);
     }
 
     // ############################################################
@@ -284,5 +256,32 @@ class giftController extends Controller
             }
             header("Location: secretPage");
         }
+    }
+
+    // ############################################################
+    //           PAGE SECRÈTE UPDATE RESERVED_GIFT 
+    //      à la suppression d'un cadeau de la liste à offrir
+    // ############################################################
+    public function deleteGiftToOffer()
+    {
+        $id_gift = $_POST['id_gift'];
+        $gift = new Gift();
+        $gift->setId_gift($id_gift);
+        $gift->setReserved_gift(0);
+
+        $giftModel = new GiftModel($gift);
+        $giftModel->updateReservedGift($gift);
+        header('Location: secretPage');
+    }
+
+    // ############################################################
+    //                    SEARCH CATEGORY
+    // ############################################################
+    public function getCategoryHint()
+    {
+        $search = isset($_GET['search']) ? $_GET['search'] : '';
+        $giftModel = new giftModel();
+        $categories = $giftModel->getNameCategory($search);
+        echo json_encode($categories);
     }
 }
