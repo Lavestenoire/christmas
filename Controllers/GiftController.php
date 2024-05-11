@@ -192,7 +192,7 @@ class giftController extends Controller
     public function secretPage()
     {
         if (!isset($_SESSION['id_user'])) {
-            header('Location: home');
+            header('Location: Home');
             exit();
         }
 
@@ -204,7 +204,6 @@ class giftController extends Controller
 
         $userModel = new UserModel();
         $userByTagAccount = $userModel->getUsersByTagAccount($id_account);
-        // In summary, the current user's ID is being passed as an argument to the giftList method to ensure that the method can retrieve the correct list of gifts for each user, regardless of whether the current user is being processed in the loop.
         $giftLists = [];
         foreach ($userByTagAccount as $value) {
             if ($value['id_user'] == $_SESSION['id_user']) {
@@ -212,7 +211,6 @@ class giftController extends Controller
             }
             $giftModel = new GiftModel();
             $user->setId_user($value['id_user']);
-            $giftModel->giftList($user, $_SESSION['id_user']);
             $giftLists[$value['nickname_user']] = $giftModel->giftList($user);
         }
 

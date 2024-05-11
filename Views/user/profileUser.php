@@ -66,7 +66,7 @@ if (isset($_SESSION['id_user'])) { ?>
     </section>
 
 <?php } else if (!isset($_SESSION['id_user'])) {
-    header('Location: home');
+    header('Location: Home');
 } else {
     header('Location: signInUser');
     exit();

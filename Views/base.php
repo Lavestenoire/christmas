@@ -17,7 +17,7 @@
     <header>
         <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary container-fluid">
             <div class="container-fluid">
-                <a class="navbar-brand" href="home"> <!-- le lien href de home: home = réecriture d'URL = controller et action donc render -->
+                <a class="navbar-brand" href="Home"> <!-- le lien href de home: home = réecriture d'URL = controller et action donc render -->
                     <img src="pictures/logo.svg" alt="Logo">
                 </a>
                 <?php if (isset($_SESSION['tag_account'])) { ?>
@@ -34,7 +34,7 @@
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <?php if (isset($_SESSION['id_user'])) { ?>
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="home">
+                                <a class="nav-link active" aria-current="page" href="Home">
                                     <img src="pictures/icones/home.svg" alt="icone home" width=50>
                                     <span class="menuText">Home</span>
                                 </a>
@@ -71,7 +71,7 @@
                             </li>
                         <?php } else if (isset($_SESSION['id_account'])) { ?>
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="home">
+                                <a class="nav-link active" aria-current="page" href="Home">
                                     <img src="pictures/icones/home.svg" alt="icone home" width=50>
                                     <span class="menuText">Home</span>
                                 </a>
@@ -90,7 +90,7 @@
                             </li>
                         <?php } else { ?>
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="home">
+                                <a class="nav-link active" aria-current="page" href="Home">
                                     <img src="pictures/icones/home.svg" alt="icone home" width=50>
                                     <span class="menuText">Home</span>
                                 </a>

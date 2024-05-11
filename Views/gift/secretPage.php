@@ -100,7 +100,7 @@ $title = "Fami'list - Page secrète";
         <p>Toutes listes confondues, il reste <span class="countColor"><?= $totalUnreservedCount ?></span> cadeau<?= $totalUnreservedCount > 1 ? 'x' : '' ?> non réservé<?= $totalUnreservedCount > 1 ? 's' : '' ?></p>
     </div>
 <?php } else if (!isset($_SESSION['id_user'])) {
-    header('Location: home');
+    header('Location: Home');
 } else {
     header('Location: signInAccount');
     exit();

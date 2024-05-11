@@ -2,7 +2,7 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
-RewriteRule ^home$ index.php?controller=Home&action=index [QSA,L]
+RewriteRule ^Home$ index.php?controller=Home&action=index [QSA,L]
 RewriteRule ^cgu$ index.php?controller=Home&action=cgu [QSA,L]
 RewriteRule ^pdc$ index.php?controller=Home&action=pdc [QSA,L]
 

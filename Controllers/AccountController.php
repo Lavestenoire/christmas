@@ -72,7 +72,7 @@ class AccountController extends Controller
             $accountModel->signUpAccount($account, $password);
 
             // Redirection vers la page d'accueil
-            header('Location: home');
+            header('Location: Home');
             exit();
         } else {
             $csrfToken = Token::tokenGenerator();
@@ -121,7 +121,7 @@ class AccountController extends Controller
                 $_SESSION['tag_account'] = $accountInfos['tag_account'];
                 // var_dump($_SESSION['id_account']);
                 // die;
-                header("Location: home");
+                header("Location: Home");
                 exit();
             } else {
                 $_SESSION['error_message'] = "Le pseudo ou le mot de passe sont invalides";
@@ -144,7 +144,7 @@ class AccountController extends Controller
         $_SESSION['logOut_message'] = 'Vous avez bien été déconnecté.';
         session_unset();
         session_destroy();
-        header("Location: home");
+        header("Location: Home");
     }
 
 
@@ -241,6 +241,6 @@ class AccountController extends Controller
         unset($_SESSION['role_account']);
         unset($_SESSION['tag_account']);
 
-        header("Location: home");
+        header("Location: Home");
     }
 }

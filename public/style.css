@@ -623,6 +623,13 @@ footer ul li a {
     border: none;
 }
 
+.delete-button {
+    background-color: transparent;
+    border: none;
+    font-size: 1.5em;
+    margin: 0 auto
+}
+
 @media (min-width: 480px) {
     .listSecretPage {
         margin: 2em auto;

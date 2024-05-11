@@ -91,7 +91,7 @@ class UserController extends Controller
             }
             $userModel->signUpUser($user, $passwordUser);
 
-            header('Location: home');
+            header('Location: Home');
             exit();
         } else {
             $csrfToken = Token::tokenGenerator();
@@ -151,7 +151,7 @@ class UserController extends Controller
                 $_SESSION['status_user'] = $userData['status_user'];
                 $_SESSION['id_account'] = $userData['id_account'];
 
-                header('Location: home');
+                header('Location: Home');
                 exit();
             } else {
                 $_SESSION['error_message'] = "Les informations de connexion sont incorrectes.";
@@ -193,7 +193,7 @@ class UserController extends Controller
             unset($_SESSION['status_user']);
 
             // Rediriger vers la page de connexion
-            header('Location: home');
+            header('Location: Home');
             exit();
         } else {
             echo "Erreur lors de la déconnexion de l'utilisateur.";
@@ -297,17 +297,13 @@ class UserController extends Controller
     // ########################################
     public function deleteUser()
     {
+        var_dump($_POST['id_user']);
         $user = new User();
-        $user->setId_user($_SESSION['id_user']);
+        $user->setId_user($_POST['id_user']);
 
         $userModel = new UserModel();
         $userModel->deleteUser($user);
-        unset($_SESSION['id_user']);
-        unset($_SESSION['id_account']);
-        unset($_SESSION['nickname_user']);
-        unset($_SESSION['role_user']);
-        unset($_SESSION['status_user']);
 
-        header("Location: home");
+        header("Location: Home");
     }
 }

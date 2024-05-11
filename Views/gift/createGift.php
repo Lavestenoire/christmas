@@ -39,7 +39,7 @@ if (isset($_GET['message']) && $_GET['message'] == 'gift_added') {
         </section>
     </div>
 <?php } else if (!isset($_SESSION['id_user'])) {
-    header('Location: home');
+    header('Location: Home');
 } else {
     header('Location: signInAccount');
     exit();

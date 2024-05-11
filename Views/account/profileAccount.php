@@ -9,6 +9,10 @@ $title = "Fami'list - Profil";
         <div id="boxUserInAccountProfile">
             <div id="accountPictureUser"><img src="<?= $info['picture_user'] ?>" alt="avatar"></div>
             <div id="accountNameUser"><?= $info['nickname_user'] ?></div>
+            <form action="deleteUser" method="POST">
+                <input type="hidden" name="id_user" value="<?= $info['id_user'] ?>">
+                <button type="submit" class="delete-button"><i class="fa-solid fa-trash-can"></i></button>
+            </form>
         </div>
     <?php } ?>
 </div>
@@ -71,7 +75,7 @@ if (isset($_SESSION['id_account'])) { ?>
     </section>
 
 <?php } else if (!isset($_SESSION['id_account'])) {
-    header('Location: home');
+    header('Location: Home');
 } else {
     header('Location: signInAccount');
     exit();

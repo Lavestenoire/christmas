@@ -50,7 +50,7 @@ $title = "Fami'list - Ma liste";
         </table>
     </section>
 <?php } else if (!isset($_SESSION['id_user'])) {
-    header('Location: home');
+    header('Location: Home');
 } else {
     header('Location: signInAccount');
     exit();
